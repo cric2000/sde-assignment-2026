@@ -1,0 +1,13 @@
+{
+  "implementation_started_utc": "2026-11-06T14:14:31Z",
+  "recorded_end_utc": "2026-11-06T15:07:21Z",
+  "elapsed_hours": 0.8806,
+  "human_effort_hours": null,
+  "scope": "Measured AI-assisted implementation/evaluation elapsed time after the approved plan. Includes dependency setup, coding, tests, tool waits, baseline/load runs and documentation. Excludes earlier planning; does not measure independent candidate effort.",
+  "ai_use": "Codex generated implementation, tests, evaluation tooling and documentation. AI tools are permitted by the assignment. Candidate review/defence time is not measured.",
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests",
+    "passed": 42
+  },
+  "evidence_verification": "scripts/verify_evidence.py passed with real localhost supervisor HTTP routes, actual audit/exposure queries, packaged JSON, exact grade tables and required submission headings."
+}

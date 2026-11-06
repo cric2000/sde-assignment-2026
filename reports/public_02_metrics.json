@@ -1,0 +1,215 @@
+{
+  "name": "public_02_verified",
+  "scenario": "scenarios/public_02_incidents.yaml",
+  "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpu_count": 16,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "simulator_bootstrap_seconds": 3.831202833000134,
+  "peak_combined_rss_kib_sampled": 263104,
+  "memory_limit_imposed": false,
+  "wall_seconds": 30.522506089997478,
+  "wall_seconds_per_simulated_day": 3.052250608999748,
+  "ingest_events_per_second": 26938.912664420764,
+  "database_bytes": 63614976,
+  "final_state": {
+    "scenario": "public_02_incidents",
+    "sim_minute": 14400,
+    "ts": "2027-01-14T00:00:00+05:30",
+    "end_minute": 14400,
+    "finished": true,
+    "tick_minutes": 15,
+    "credits_remaining": 192.0,
+    "chunks": 491,
+    "last_event_id": 324314
+  },
+  "metrics": {
+    "origin": 29983350,
+    "scenario": "public_02_incidents",
+    "started_ts": "2027-01-04T00:00:00+05:30",
+    "observed_prompt:nw_renewal": "P1",
+    "qa_epoch:nw_renewal": 0,
+    "qa_evaluated_answers:nw_renewal": 9423,
+    "observed_prompt:nw_kyc": "P1",
+    "qa_epoch:nw_kyc": 0,
+    "qa_evaluated_answers:nw_kyc": 4718,
+    "observed_prompt:ks_cancel": "P3",
+    "qa_epoch:ks_cancel": 6570,
+    "qa_evaluated_answers:ks_cancel": 4940,
+    "event_watermark": 324314,
+    "events_ingested": 324314,
+    "chunks_after_history": 0,
+    "ingest_seconds": 12.03886749402227,
+    "refreshed_config_event": 264302,
+    "decision_lag_histogram": {
+      "1": 1775,
+      "10": 1250,
+      "11": 2000,
+      "12": 1275,
+      "13": 975,
+      "14": 2325,
+      "15": 925,
+      "16": 1625,
+      "17": 1600,
+      "18": 2125,
+      "19": 1550,
+      "2": 1750,
+      "20": 1700,
+      "21": 1725,
+      "22": 2075,
+      "23": 2075,
+      "24": 1025,
+      "25": 1550,
+      "26": 1850,
+      "27": 1475,
+      "28": 1775,
+      "29": 2400,
+      "3": 2125,
+      "30": 1450,
+      "31": 1600,
+      "32": 1975,
+      "33": 2050,
+      "34": 1750,
+      "35": 1225,
+      "36": 2550,
+      "37": 1550,
+      "38": 2000,
+      "39": 1675,
+      "4": 1775,
+      "40": 2075,
+      "41": 1600,
+      "42": 1350,
+      "43": 1475,
+      "44": 1700,
+      "45": 1425,
+      "46": 1500,
+      "47": 1450,
+      "48": 1975,
+      "49": 1350,
+      "5": 1675,
+      "50": 1400,
+      "51": 2600,
+      "52": 1725,
+      "53": 1800,
+      "54": 2475,
+      "55": 1100,
+      "56": 2050,
+      "57": 1350,
+      "58": 1800,
+      "59": 1725,
+      "6": 2350,
+      "60": 1700,
+      "7": 1825,
+      "8": 1975,
+      "9": 2000
+    },
+    "last_decision_event": 324314,
+    "decision_seconds": 5.175150555001892,
+    "decision_cycles": 240,
+    "decision_lag_minutes_max": 60,
+    "decision_compute_seconds_max": 0.46931688300173846,
+    "sim_minute": 14400,
+    "state": {
+      "chunks": 491,
+      "credits_remaining": 192.0,
+      "end_minute": 14400,
+      "finished": true,
+      "last_event_id": 324314,
+      "scenario": "public_02_incidents",
+      "sim_minute": 14400,
+      "tick_minutes": 15,
+      "ts": "2027-01-14T00:00:00+05:30"
+    },
+    "finished": true,
+    "peak_rss_kib": 96072,
+    "tick_seconds_max": 4.453513720000046,
+    "day_wall_markers": [
+      {
+        "cumulative_wall_seconds": 4.471631611999328,
+        "sim_minute": 0
+      },
+      {
+        "cumulative_wall_seconds": 7.1942752319992,
+        "sim_minute": 1440
+      },
+      {
+        "cumulative_wall_seconds": 9.483732286000304,
+        "sim_minute": 2880
+      },
+      {
+        "cumulative_wall_seconds": 12.029247102000227,
+        "sim_minute": 4320
+      },
+      {
+        "cumulative_wall_seconds": 14.552237379000871,
+        "sim_minute": 5760
+      },
+      {
+        "cumulative_wall_seconds": 17.236968992001493,
+        "sim_minute": 7200
+      },
+      {
+        "cumulative_wall_seconds": 19.684495498000615,
+        "sim_minute": 8640
+      },
+      {
+        "cumulative_wall_seconds": 21.94454203799978,
+        "sim_minute": 10080
+      },
+      {
+        "cumulative_wall_seconds": 24.490288277000218,
+        "sim_minute": 11520
+      },
+      {
+        "cumulative_wall_seconds": 27.201463797999168,
+        "sim_minute": 12960
+      },
+      {
+        "cumulative_wall_seconds": 30.134774803002074,
+        "sim_minute": 14400
+      }
+    ],
+    "chunks_after_events": 490,
+    "caller_window:ks_cancel:D1": 14280,
+    "caller_window:ks_cancel:D2": 3720,
+    "caller_window:nw_renewal:D1": 14280,
+    "caller_window:nw_renewal:D2": 14280,
+    "caller_window:nw_kyc:D1": 14160,
+    "caller_quarantine:ks_cancel": [
+      "D2"
+    ],
+    "controller_wall_seconds": 30.13527052000063
+  },
+  "crash": null,
+  "decision_lag_simulated_minutes": {
+    "p50": 30,
+    "p95": 58,
+    "max": 60,
+    "note": "call event timestamp to hourly decision, excluding history; wall-clock compute is reported separately"
+  },
+  "simulated_day_wall_seconds_excluding_bootstrap": [
+    2.7226436199998716,
+    2.2894570540011046,
+    2.5455148159999226,
+    2.5229902770006447,
+    2.684731613000622,
+    2.4475265059991216,
+    2.2600465399991663,
+    2.5457462390004366,
+    2.7111755209989497,
+    2.9333110050029063
+  ],
+  "controller_bootstrap_wall_seconds": 4.471631611999328,
+  "first_day_wall_seconds_including_controller_bootstrap": 7.1942752319992,
+  "integrity_check": "ok",
+  "duplicate_proposal_applications": 0,
+  "pending_proposals_at_finish": 0,
+  "unjoined_calls": 0,
+  "durable_event_count": 324314,
+  "source_last_event_matches_watermark": true
+}

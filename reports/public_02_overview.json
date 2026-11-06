@@ -1,0 +1,612 @@
+{
+  "metrics": {
+    "origin": 29983350,
+    "scenario": "public_02_incidents",
+    "started_ts": "2027-01-04T00:00:00+05:30",
+    "observed_prompt:nw_renewal": "P1",
+    "qa_epoch:nw_renewal": 0,
+    "qa_evaluated_answers:nw_renewal": 9423,
+    "observed_prompt:nw_kyc": "P1",
+    "qa_epoch:nw_kyc": 0,
+    "qa_evaluated_answers:nw_kyc": 4718,
+    "observed_prompt:ks_cancel": "P3",
+    "qa_epoch:ks_cancel": 6570,
+    "qa_evaluated_answers:ks_cancel": 4940,
+    "event_watermark": 324314,
+    "events_ingested": 324314,
+    "chunks_after_history": 0,
+    "ingest_seconds": 12.03886749402227,
+    "refreshed_config_event": 264302,
+    "decision_lag_histogram": {
+      "1": 1775,
+      "10": 1250,
+      "11": 2000,
+      "12": 1275,
+      "13": 975,
+      "14": 2325,
+      "15": 925,
+      "16": 1625,
+      "17": 1600,
+      "18": 2125,
+      "19": 1550,
+      "2": 1750,
+      "20": 1700,
+      "21": 1725,
+      "22": 2075,
+      "23": 2075,
+      "24": 1025,
+      "25": 1550,
+      "26": 1850,
+      "27": 1475,
+      "28": 1775,
+      "29": 2400,
+      "3": 2125,
+      "30": 1450,
+      "31": 1600,
+      "32": 1975,
+      "33": 2050,
+      "34": 1750,
+      "35": 1225,
+      "36": 2550,
+      "37": 1550,
+      "38": 2000,
+      "39": 1675,
+      "4": 1775,
+      "40": 2075,
+      "41": 1600,
+      "42": 1350,
+      "43": 1475,
+      "44": 1700,
+      "45": 1425,
+      "46": 1500,
+      "47": 1450,
+      "48": 1975,
+      "49": 1350,
+      "5": 1675,
+      "50": 1400,
+      "51": 2600,
+      "52": 1725,
+      "53": 1800,
+      "54": 2475,
+      "55": 1100,
+      "56": 2050,
+      "57": 1350,
+      "58": 1800,
+      "59": 1725,
+      "6": 2350,
+      "60": 1700,
+      "7": 1825,
+      "8": 1975,
+      "9": 2000
+    },
+    "last_decision_event": 324314,
+    "decision_seconds": 5.175150555001892,
+    "decision_cycles": 240,
+    "decision_lag_minutes_max": 60,
+    "decision_compute_seconds_max": 0.46931688300173846,
+    "sim_minute": 14400,
+    "state": {
+      "chunks": 491,
+      "credits_remaining": 192.0,
+      "end_minute": 14400,
+      "finished": true,
+      "last_event_id": 324314,
+      "scenario": "public_02_incidents",
+      "sim_minute": 14400,
+      "tick_minutes": 15,
+      "ts": "2027-01-14T00:00:00+05:30"
+    },
+    "finished": true,
+    "peak_rss_kib": 96072,
+    "tick_seconds_max": 4.453513720000046,
+    "day_wall_markers": [
+      {
+        "cumulative_wall_seconds": 4.471631611999328,
+        "sim_minute": 0
+      },
+      {
+        "cumulative_wall_seconds": 7.1942752319992,
+        "sim_minute": 1440
+      },
+      {
+        "cumulative_wall_seconds": 9.483732286000304,
+        "sim_minute": 2880
+      },
+      {
+        "cumulative_wall_seconds": 12.029247102000227,
+        "sim_minute": 4320
+      },
+      {
+        "cumulative_wall_seconds": 14.552237379000871,
+        "sim_minute": 5760
+      },
+      {
+        "cumulative_wall_seconds": 17.236968992001493,
+        "sim_minute": 7200
+      },
+      {
+        "cumulative_wall_seconds": 19.684495498000615,
+        "sim_minute": 8640
+      },
+      {
+        "cumulative_wall_seconds": 21.94454203799978,
+        "sim_minute": 10080
+      },
+      {
+        "cumulative_wall_seconds": 24.490288277000218,
+        "sim_minute": 11520
+      },
+      {
+        "cumulative_wall_seconds": 27.201463797999168,
+        "sim_minute": 12960
+      },
+      {
+        "cumulative_wall_seconds": 30.134774803002074,
+        "sim_minute": 14400
+      }
+    ],
+    "chunks_after_events": 490,
+    "caller_window:ks_cancel:D1": 14280,
+    "caller_window:ks_cancel:D2": 3720,
+    "caller_window:nw_renewal:D1": 14280,
+    "caller_window:nw_renewal:D2": 14280,
+    "caller_window:nw_kyc:D1": 14160,
+    "caller_quarantine:ks_cancel": [
+      "D2"
+    ],
+    "controller_wall_seconds": 30.13527052000063
+  },
+  "workflows": [
+    {
+      "workflow_id": "ks_cancel",
+      "tenant_id": "kestrel_finance",
+      "objective": {
+        "guardrail": {
+          "pickup_rate_max_drop": 0.02
+        },
+        "primary": "engagement_rate"
+      },
+      "counts": {
+        "dials": 48000,
+        "connected": 9853,
+        "engaged": 4992,
+        "flagged": 213
+      },
+      "pickup_rate": 0.20527083333333335,
+      "engagement_rate": 0.5066477215061402,
+      "leads_uploaded": 15000,
+      "leads_concluded": 4500,
+      "business_outcome": 0.3,
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        },
+        {
+          "id": "default",
+          "where": {}
+        }
+      ],
+      "experiment": {
+        "alpha": 0.004166666666666667,
+        "controls": {
+          "default": "V1",
+          "language_hi": "V1"
+        },
+        "design_mde": 0.15,
+        "dimension": "voice",
+        "expected_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 1.0
+              },
+              "voice": {
+                "V1": 0.5,
+                "V2": 0.16666666666666666,
+                "V3": 0.16666666666666666,
+                "V4": 0.16666666666666666
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            },
+            "language_hi": {
+              "caller_id": {
+                "D1": 1.0
+              },
+              "voice": {
+                "V1": 0.5,
+                "V2": 0.16666666666666666,
+                "V3": 0.16666666666666666,
+                "V4": 0.16666666666666666
+              }
+            }
+          },
+          "cohorts": [
+            {
+              "id": "language_hi",
+              "where": {
+                "lang": [
+                  "hi"
+                ]
+              }
+            }
+          ],
+          "prompt_version": "P3",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "guardrail_alpha": 0.004166666666666667,
+        "last_harm_block": 39,
+        "look": 1,
+        "minimum_effect": 0.01,
+        "options": [
+          "V1",
+          "V2",
+          "V3",
+          "V4"
+        ],
+        "original_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "prompt": "P3",
+        "start": 6780,
+        "status": "exploring",
+        "targets": {
+          "default": 270,
+          "language_hi": 270
+        },
+        "version": 5,
+        "winners": {}
+      }
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "tenant_id": "northwind_life",
+      "objective": {
+        "guardrail": {
+          "engagement_rate_max_drop": 0.02
+        },
+        "primary": "pickup_rate"
+      },
+      "counts": {
+        "dials": 20000,
+        "connected": 4856,
+        "engaged": 2910,
+        "flagged": 88
+      },
+      "pickup_rate": 0.2428,
+      "engagement_rate": 0.5992586490939045,
+      "leads_uploaded": 7000,
+      "leads_concluded": 2638,
+      "business_outcome": 0.37685714285714284,
+      "cohorts": [
+        {
+          "id": "default",
+          "where": {}
+        }
+      ],
+      "experiment": null
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "tenant_id": "northwind_life",
+      "objective": {
+        "guardrail": {
+          "pickup_rate_max_drop": 0.02
+        },
+        "primary": "engagement_rate"
+      },
+      "counts": {
+        "dials": 36000,
+        "connected": 9423,
+        "engaged": 5172,
+        "flagged": 126
+      },
+      "pickup_rate": 0.26175,
+      "engagement_rate": 0.5488697866921363,
+      "leads_uploaded": 11000,
+      "leads_concluded": 4719,
+      "business_outcome": 0.429,
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        },
+        {
+          "id": "default",
+          "where": {}
+        }
+      ],
+      "experiment": {
+        "alpha": 0.004166666666666667,
+        "controls": {
+          "default": "V1",
+          "language_hi": "V1"
+        },
+        "design_mde": 0.15,
+        "dimension": "voice",
+        "expected_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 0.5,
+                "V2": 0.16666666666666666,
+                "V3": 0.16666666666666666,
+                "V4": 0.16666666666666666
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            },
+            "language_hi": {
+              "voice": {
+                "V1": 0.5,
+                "V2": 0.16666666666666666,
+                "V3": 0.16666666666666666,
+                "V4": 0.16666666666666666
+              }
+            }
+          },
+          "cohorts": [
+            {
+              "id": "language_hi",
+              "where": {
+                "lang": [
+                  "hi"
+                ]
+              }
+            }
+          ],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "guardrail_alpha": 0.004166666666666667,
+        "last_harm_block": 22,
+        "look": 1,
+        "minimum_effect": 0.01,
+        "options": [
+          "V1",
+          "V2",
+          "V3",
+          "V4"
+        ],
+        "original_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "prompt": "P1",
+        "start": 720,
+        "status": "invalidated",
+        "targets": {
+          "default": 267,
+          "language_hi": 266
+        },
+        "version": 2,
+        "winners": {}
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "id": "ctl_7e085442217b4ecda3f6f2520ae916e0",
+      "workflow": "ks_cancel",
+      "minute": 0,
+      "kind": "experiment_start",
+      "status": "applied",
+      "approval": "apr_00002",
+      "updated": 795
+    },
+    {
+      "id": "ctl_27bc3eeab1cb46189c0f92f3fbd9df24",
+      "workflow": "nw_renewal",
+      "minute": 0,
+      "kind": "experiment_start",
+      "status": "applied",
+      "approval": "apr_00001",
+      "updated": 720
+    },
+    {
+      "id": "ctl_7a750c0c0e604013968b3f9d230cb60e",
+      "workflow": "ks_cancel",
+      "minute": 3720,
+      "kind": "caller_id_rotation",
+      "status": "applied",
+      "approval": "apr_00003",
+      "updated": 3765
+    },
+    {
+      "id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+      "workflow": "ks_cancel",
+      "minute": 5460,
+      "kind": "hallucination_fix",
+      "status": "applied",
+      "approval": "apr_00004",
+      "updated": 6555
+    }
+  ],
+  "incidents": [
+    {
+      "id": "inc_0484967b3c82d57a274539c8",
+      "workflow": "ks_cancel",
+      "kind": "caller_id",
+      "status": "recovered",
+      "minute": 3720,
+      "payload": {
+        "applied_minute": 3765,
+        "applied_version": 3,
+        "baseline": {
+          "D1": {
+            "connected": 1794,
+            "dials": 6437,
+            "engaged": 889,
+            "flagged": 31
+          },
+          "D2": {
+            "connected": 1785,
+            "dials": 6363,
+            "engaged": 878,
+            "flagged": 31
+          }
+        },
+        "before": {
+          "connected": 145,
+          "dials": 800,
+          "engaged": 72,
+          "flagged": 0
+        },
+        "last_attempt": 3720,
+        "post_apply": {
+          "connected": 278,
+          "dials": 1200,
+          "engaged": 146,
+          "flagged": 7
+        },
+        "prompt": "P1",
+        "proposal_id": "ctl_7a750c0c0e604013968b3f9d230cb60e",
+        "recent": {
+          "D1": {
+            "connected": 109,
+            "dials": 423,
+            "engaged": 50,
+            "flagged": 0
+          },
+          "D2": {
+            "connected": 36,
+            "dials": 377,
+            "engaged": 22,
+            "flagged": 0
+          }
+        },
+        "suspects": [
+          "D2"
+        ],
+        "window_minutes": 120,
+        "windows": 2
+      }
+    },
+    {
+      "id": "inc_79b77f7882fd8c6ab90c6fa6",
+      "workflow": "ks_cancel",
+      "kind": "hallucination",
+      "status": "recovered",
+      "minute": 5460,
+      "payload": {
+        "applied_minute": 6555,
+        "applied_version": 5,
+        "baseline": {
+          "connected": 16439,
+          "dials": 65018,
+          "engaged": 8288,
+          "flagged": 225
+        },
+        "detector": "prompt-epoch >=400 connected/10 flags; +3pp and 3-SE rise on two checks with >=200 new answers; overlapping evidence",
+        "last_attempt": 5460,
+        "post_apply": {
+          "connected": 226,
+          "dials": 1200,
+          "engaged": 118,
+          "flagged": 6
+        },
+        "prompt": "P3",
+        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+        "recent": {
+          "connected": 669,
+          "dials": 3000,
+          "engaged": 314,
+          "flagged": 43
+        },
+        "trigger_prompt": "P2",
+        "validated": {
+          "prompt": "P3",
+          "result": {
+            "credits_remaining": 192.0,
+            "failures": 6,
+            "n": 500,
+            "pass_rate": 0.988,
+            "prompt_version": "P3",
+            "ts": "2027-01-07T19:00:00+05:30",
+            "validation_run_id": "val_00001",
+            "workflow_id": "ks_cancel"
+          },
+          "validation_run_id": "val_00001"
+        },
+        "window_minutes": 435,
+        "windows": 2
+      }
+    }
+  ],
+  "paid": [
+    {
+      "id": "inc_79b77f7882fd8c6ab90c6fa6:suggest",
+      "workflow": "ks_cancel",
+      "minute": 5460,
+      "kind": "suggest",
+      "cost": 3,
+      "status": "done"
+    },
+    {
+      "id": "inc_79b77f7882fd8c6ab90c6fa6:validate:P3",
+      "workflow": "ks_cancel",
+      "minute": 5460,
+      "kind": "validation",
+      "cost": 5,
+      "status": "done"
+    }
+  ]
+}

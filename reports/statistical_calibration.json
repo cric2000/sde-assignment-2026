@@ -1,0 +1,37 @@
+{
+  "trials_per_case": 200,
+  "seed_range": [
+    0,
+    199
+  ],
+  "people_per_trial": 800,
+  "arms": 4,
+  "looks": 2,
+  "per_comparison_alpha": 0.008333333333333333,
+  "nominal_primary_family_budget": 0.05,
+  "practical_effect_threshold": 0.01,
+  "guardrail_noninferiority_margin": 0.02,
+  "limitations": "synthetic clustered normal-approximation calibration; not an exact finite-sample guarantee or incident-detector calibration",
+  "null": {
+    "any_primary_pass": 1,
+    "any_full_promotion_pass": 1,
+    "arm_a_full_promotion_pass": 0,
+    "primary_pass_fraction": 0.005,
+    "full_pass_fraction": 0.005
+  },
+  "positive_effect": {
+    "any_primary_pass": 200,
+    "any_full_promotion_pass": 125,
+    "arm_a_full_promotion_pass": 125,
+    "primary_pass_fraction": 1.0,
+    "full_pass_fraction": 0.625
+  },
+  "guardrail_harm": {
+    "any_primary_pass": 200,
+    "any_full_promotion_pass": 0,
+    "arm_a_full_promotion_pass": 0,
+    "primary_pass_fraction": 1.0,
+    "full_pass_fraction": 0.0
+  },
+  "wall_seconds": 9.822435609999957
+}

@@ -1,0 +1,454 @@
+{
+  "id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+  "workflow": "ks_cancel",
+  "minute": 5460,
+  "kind": "hallucination_fix",
+  "status": "applied",
+  "base": 4,
+  "body": {
+    "affected_leads": 3444,
+    "base_version": 4,
+    "change_summary": "Apply a validated prompt to mitigate a sustained QA-flag spike. Prompt affects all campaigns immediately; engagement must be verified after application.",
+    "diff": {
+      "prompt_version": {
+        "after": "P3",
+        "before": "P2"
+      }
+    },
+    "dry_run": {
+      "active_leads_upper_bound": 3444,
+      "cohort_definition": "43b4e43c7afcf61e1a1a7592",
+      "cohorts": {
+        "default": 1372,
+        "language_hi": 2072
+      },
+      "counterfactual_lift": "unknown",
+      "kind": "observed_population_exposure_replay",
+      "limitation": "campaign-age filtered upper bound; remaining attempt/gap eligibility is not exposed",
+      "mid_flight": "allowed",
+      "priority_components": {
+        "formula": "severity*(0.5+0.5*exposure)",
+        "observed_exposure_fraction": 0.7653333333333333,
+        "severity_or_conservative_lift": 0.95
+      },
+      "unique_people": 3444
+    },
+    "evidence": {
+      "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+      "population_evidence": {
+        "baseline": {
+          "connected": 16439,
+          "dials": 65018,
+          "engaged": 8288,
+          "flagged": 225
+        },
+        "recent": {
+          "connected": 669,
+          "dials": 3000,
+          "engaged": 314,
+          "flagged": 43
+        }
+      },
+      "validation_run_id": "val_00001"
+    },
+    "expires_in_hours": 12,
+    "impact_score": 0.8385333333333334,
+    "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+    "proposed_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 1.0
+          },
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        },
+        "language_hi": {
+          "caller_id": {
+            "D1": 1.0
+          },
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P3",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    },
+    "rationale": "Apply a validated prompt to mitigate a sustained QA-flag spike. Prompt affects all campaigns immediately; engagement must be verified after application.",
+    "workflow_id": "ks_cancel"
+  },
+  "context": {
+    "evidence": {
+      "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+      "population_evidence": {
+        "baseline": {
+          "connected": 16439,
+          "dials": 65018,
+          "engaged": 8288,
+          "flagged": 225
+        },
+        "recent": {
+          "connected": 669,
+          "dials": 3000,
+          "engaged": 314,
+          "flagged": 43
+        }
+      },
+      "validation_run_id": "val_00001"
+    },
+    "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+    "original_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 1.0
+          },
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        },
+        "language_hi": {
+          "caller_id": {
+            "D1": 1.0
+          },
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P2",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    }
+  },
+  "approval": "apr_00004",
+  "submitted": 6420,
+  "updated": 6555,
+  "authority": {
+    "approval_id": "apr_00004",
+    "approver": "simulated client approver; named identity not supplied"
+  },
+  "timeline": [
+    {
+      "id": 21,
+      "workflow": "ks_cancel",
+      "minute": 5460,
+      "kind": "incident_detected",
+      "payload": {
+        "evidence": {
+          "baseline": {
+            "connected": 16439,
+            "dials": 65018,
+            "engaged": 8288,
+            "flagged": 225
+          },
+          "detector": "prompt-epoch >=400 connected/10 flags; +3pp and 3-SE rise on two checks with >=200 new answers; overlapping evidence",
+          "recent": {
+            "connected": 669,
+            "dials": 3000,
+            "engaged": 314,
+            "flagged": 43
+          },
+          "trigger_prompt": "P2",
+          "window_minutes": 435,
+          "windows": 2
+        },
+        "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+        "kind": "hallucination"
+      }
+    },
+    {
+      "id": 22,
+      "workflow": "ks_cancel",
+      "minute": 5460,
+      "kind": "proposal_created",
+      "payload": {
+        "dimensions": [
+          "prompt_version"
+        ],
+        "evidence": {
+          "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+          "population_evidence": {
+            "baseline": {
+              "connected": 16439,
+              "dials": 65018,
+              "engaged": 8288,
+              "flagged": 225
+            },
+            "recent": {
+              "connected": 669,
+              "dials": 3000,
+              "engaged": 314,
+              "flagged": 43
+            }
+          },
+          "validation_run_id": "val_00001"
+        },
+        "kind": "hallucination_fix",
+        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3"
+      }
+    },
+    {
+      "id": 23,
+      "workflow": "ks_cancel",
+      "minute": 5460,
+      "kind": "incident_awaiting_permission",
+      "payload": {
+        "detail": null,
+        "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+        "kind": "hallucination"
+      }
+    },
+    {
+      "id": 25,
+      "workflow": "ks_cancel",
+      "minute": 6420,
+      "kind": "proposal_sending",
+      "payload": {
+        "detail": {
+          "auto_not_used": [
+            "human_required:prompt_version",
+            "client_preference:human_for_agent_changes"
+          ]
+        },
+        "kind": "hallucination_fix",
+        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3"
+      }
+    },
+    {
+      "id": 26,
+      "workflow": "ks_cancel",
+      "minute": 6420,
+      "kind": "approval_submitted",
+      "payload": {
+        "approval_id": "apr_00004",
+        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3"
+      }
+    },
+    {
+      "id": 27,
+      "workflow": "ks_cancel",
+      "minute": 6555,
+      "kind": "proposal_applying",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00004",
+          "remote_approval": {
+            "apply_by": "2027-01-08T14:48:00+05:30",
+            "approval_id": "apr_00004",
+            "base_version": 4,
+            "changed_dims": [
+              "prompt_version"
+            ],
+            "created_at": "2027-01-08T11:00:00+05:30",
+            "decided_at": "2027-01-08T12:48:00+05:30",
+            "expires_at": "2027-01-08T23:00:00+05:30",
+            "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+            "reasons": [],
+            "status": "approved",
+            "workflow_id": "ks_cancel"
+          }
+        },
+        "kind": "hallucination_fix",
+        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3"
+      }
+    },
+    {
+      "id": 28,
+      "workflow": "ks_cancel",
+      "minute": 6555,
+      "kind": "proposal_applied",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00004",
+          "version": 5
+        },
+        "kind": "hallucination_fix",
+        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3"
+      }
+    },
+    {
+      "id": 29,
+      "workflow": "ks_cancel",
+      "minute": 6780,
+      "kind": "incident_recovered",
+      "payload": {
+        "detail": "flags returned near baseline; no supported engagement degradation observed (not proof of noninferiority)",
+        "incident_id": "inc_79b77f7882fd8c6ab90c6fa6",
+        "kind": "hallucination"
+      }
+    },
+    {
+      "id": 30,
+      "workflow": "ks_cancel",
+      "minute": 6780,
+      "kind": "experiment_epoch_reset",
+      "payload": {
+        "changed_dimensions": [
+          "prompt_version"
+        ],
+        "experiment": {
+          "alpha": 0.004166666666666667,
+          "controls": {
+            "default": "V1",
+            "language_hi": "V1"
+          },
+          "design_mde": 0.15,
+          "dimension": "voice",
+          "expected_config": {
+            "allocations": {
+              "default": {
+                "caller_id": {
+                  "D1": 1.0
+                },
+                "voice": {
+                  "V1": 0.5,
+                  "V2": 0.16666666666666666,
+                  "V3": 0.16666666666666666,
+                  "V4": 0.16666666666666666
+                },
+                "welcome_message": {
+                  "W1": 1.0
+                }
+              },
+              "language_hi": {
+                "caller_id": {
+                  "D1": 1.0
+                },
+                "voice": {
+                  "V1": 0.5,
+                  "V2": 0.16666666666666666,
+                  "V3": 0.16666666666666666,
+                  "V4": 0.16666666666666666
+                }
+              }
+            },
+            "cohorts": [
+              {
+                "id": "language_hi",
+                "where": {
+                  "lang": [
+                    "hi"
+                  ]
+                }
+              }
+            ],
+            "prompt_version": "P3",
+            "schedule": {
+              "hour_weights": {},
+              "lead_preferred_hour": {}
+            }
+          },
+          "guardrail_alpha": 0.004166666666666667,
+          "last_harm_block": 15,
+          "look": 0,
+          "minimum_effect": 0.01,
+          "options": [
+            "V1",
+            "V2",
+            "V3",
+            "V4"
+          ],
+          "original_config": {
+            "allocations": {
+              "default": {
+                "caller_id": {
+                  "D1": 0.5,
+                  "D2": 0.5
+                },
+                "voice": {
+                  "V1": 1.0
+                },
+                "welcome_message": {
+                  "W1": 1.0
+                }
+              }
+            },
+            "cohorts": [],
+            "prompt_version": "P1",
+            "schedule": {
+              "hour_weights": {},
+              "lead_preferred_hour": {}
+            }
+          },
+          "prompt": "P3",
+          "start": 6780,
+          "status": "exploring",
+          "targets": {
+            "default": 270,
+            "language_hi": 270
+          },
+          "version": 5,
+          "winners": {}
+        },
+        "observed_version": 5,
+        "reason": "external configuration change; preserve new settings and spent alpha budget"
+      }
+    }
+  ],
+  "before": {
+    "dials": 4800,
+    "connected": 1002,
+    "engaged": 468,
+    "pickup_rate": 0.20875,
+    "engagement_rate": 0.46706586826347307,
+    "from_minute": 5115,
+    "to_minute": 6555,
+    "causal_claim": false
+  },
+  "after": {
+    "dials": 4800,
+    "connected": 977,
+    "engaged": 546,
+    "pickup_rate": 0.20354166666666668,
+    "engagement_rate": 0.5588536335721597,
+    "from_minute": 6555,
+    "to_minute": 7995,
+    "causal_claim": false
+  }
+}

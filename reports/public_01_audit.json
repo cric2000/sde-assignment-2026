@@ -1,0 +1,539 @@
+{
+  "id": "ctl_cc2038c5922e47f4bb94feb92bd429d6",
+  "workflow": "nw_renewal",
+  "minute": 1020,
+  "kind": "experiment_start",
+  "status": "applied",
+  "base": 1,
+  "body": {
+    "affected_leads": 2397,
+    "base_version": 1,
+    "change_summary": "Test voice alternatives on supported cohorts; retain 50% reference traffic. No variant is a winner until measured primary lift and guardrail safety pass. Follow-up includes at least 200 newly answered calls since the prior rejection; no una",
+    "diff": {
+      "allocations": {
+        "after": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 0.5,
+              "V2": 0.16666666666666666,
+              "V3": 0.16666666666666666,
+              "V4": 0.16666666666666666
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          },
+          "language_hi": {
+            "voice": {
+              "V1": 0.5,
+              "V2": 0.16666666666666666,
+              "V3": 0.16666666666666666,
+              "V4": 0.16666666666666666
+            }
+          }
+        },
+        "before": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          }
+        }
+      },
+      "cohorts": {
+        "after": [
+          {
+            "id": "language_hi",
+            "where": {
+              "lang": [
+                "hi"
+              ]
+            }
+          }
+        ],
+        "before": []
+      }
+    },
+    "dry_run": {
+      "active_leads_upper_bound": 2397,
+      "cohort_definition": "43b4e43c7afcf61e1a1a7592",
+      "cohorts": {
+        "default": 1207,
+        "language_hi": 1190
+      },
+      "counterfactual_lift": "unknown",
+      "kind": "observed_population_exposure_replay",
+      "limitation": "campaign-age filtered upper bound; remaining attempt/gap eligibility is not exposed",
+      "mid_flight": "allowed",
+      "priority_components": {
+        "formula": "severity*(0.5+0.5*exposure)",
+        "observed_exposure_fraction": 0.7263636363636363,
+        "severity_or_conservative_lift": 0.1
+      },
+      "unique_people": 2397
+    },
+    "evidence": {
+      "follow_up": {
+        "new_population_observations": {
+          "connected": 209,
+          "dials": 900,
+          "engaged": 108,
+          "flagged": 1
+        },
+        "prior_proposal_id": "ctl_680439a360914af5b48a728ebe48ce7c",
+        "prior_status": "rejected",
+        "treatment_outcomes_claimed": false
+      },
+      "historical_support": {
+        "default": {
+          "connected": 6561,
+          "dials": 24049,
+          "engaged": 3565,
+          "flagged": 98
+        },
+        "language_hi": {
+          "connected": 6628,
+          "dials": 24755,
+          "engaged": 3585,
+          "flagged": 77
+        }
+      },
+      "plan": {
+        "alpha": 0.004166666666666667,
+        "controls": {
+          "default": "V1",
+          "language_hi": "V1"
+        },
+        "design_mde": 0.15,
+        "dimension": "voice",
+        "guardrail_alpha": 0.004166666666666667,
+        "look": 0,
+        "minimum_effect": 0.01,
+        "options": [
+          "V1",
+          "V2",
+          "V3",
+          "V4"
+        ],
+        "original_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "prompt": "P1",
+        "status": "exploring",
+        "targets": {
+          "default": 268,
+          "language_hi": 268
+        },
+        "winners": {}
+      }
+    },
+    "expires_in_hours": 24,
+    "impact_score": 0.08631818181818182,
+    "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6",
+    "proposed_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 0.5,
+            "D2": 0.5
+          },
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        },
+        "language_hi": {
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P1",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    },
+    "rationale": "Test voice alternatives on supported cohorts; retain 50% reference traffic. No variant is a winner until measured primary lift and guardrail safety pass. Follow-up includes at least 200 newly answered calls since the prior rejection; no unapproved treatment outcomes are claimed.",
+    "workflow_id": "nw_renewal"
+  },
+  "context": {
+    "evidence": {
+      "follow_up": {
+        "new_population_observations": {
+          "connected": 209,
+          "dials": 900,
+          "engaged": 108,
+          "flagged": 1
+        },
+        "prior_proposal_id": "ctl_680439a360914af5b48a728ebe48ce7c",
+        "prior_status": "rejected",
+        "treatment_outcomes_claimed": false
+      },
+      "historical_support": {
+        "default": {
+          "connected": 6561,
+          "dials": 24049,
+          "engaged": 3565,
+          "flagged": 98
+        },
+        "language_hi": {
+          "connected": 6628,
+          "dials": 24755,
+          "engaged": 3585,
+          "flagged": 77
+        }
+      },
+      "plan": {
+        "alpha": 0.004166666666666667,
+        "controls": {
+          "default": "V1",
+          "language_hi": "V1"
+        },
+        "design_mde": 0.15,
+        "dimension": "voice",
+        "guardrail_alpha": 0.004166666666666667,
+        "look": 0,
+        "minimum_effect": 0.01,
+        "options": [
+          "V1",
+          "V2",
+          "V3",
+          "V4"
+        ],
+        "original_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "prompt": "P1",
+        "status": "exploring",
+        "targets": {
+          "default": 268,
+          "language_hi": 268
+        },
+        "winners": {}
+      }
+    },
+    "experiment": {
+      "alpha": 0.004166666666666667,
+      "controls": {
+        "default": "V1",
+        "language_hi": "V1"
+      },
+      "design_mde": 0.15,
+      "dimension": "voice",
+      "guardrail_alpha": 0.004166666666666667,
+      "look": 0,
+      "minimum_effect": 0.01,
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4"
+      ],
+      "original_config": {
+        "allocations": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          }
+        },
+        "cohorts": [],
+        "prompt_version": "P1",
+        "schedule": {
+          "hour_weights": {},
+          "lead_preferred_hour": {}
+        }
+      },
+      "prompt": "P1",
+      "status": "exploring",
+      "targets": {
+        "default": 268,
+        "language_hi": 268
+      },
+      "winners": {}
+    },
+    "original_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 0.5,
+            "D2": 0.5
+          },
+          "voice": {
+            "V1": 1.0
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        }
+      },
+      "cohorts": [],
+      "prompt_version": "P1",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    }
+  },
+  "approval": "apr_00003",
+  "submitted": 2040,
+  "updated": 2295,
+  "authority": {
+    "approval_id": "apr_00003",
+    "approver": "simulated client approver; named identity not supplied"
+  },
+  "timeline": [
+    {
+      "id": 10,
+      "workflow": "nw_renewal",
+      "minute": 1020,
+      "kind": "proposal_created",
+      "payload": {
+        "dimensions": [
+          "cohorts",
+          "voice"
+        ],
+        "evidence": {
+          "follow_up": {
+            "new_population_observations": {
+              "connected": 209,
+              "dials": 900,
+              "engaged": 108,
+              "flagged": 1
+            },
+            "prior_proposal_id": "ctl_680439a360914af5b48a728ebe48ce7c",
+            "prior_status": "rejected",
+            "treatment_outcomes_claimed": false
+          },
+          "historical_support": {
+            "default": {
+              "connected": 6561,
+              "dials": 24049,
+              "engaged": 3565,
+              "flagged": 98
+            },
+            "language_hi": {
+              "connected": 6628,
+              "dials": 24755,
+              "engaged": 3585,
+              "flagged": 77
+            }
+          },
+          "plan": {
+            "alpha": 0.004166666666666667,
+            "controls": {
+              "default": "V1",
+              "language_hi": "V1"
+            },
+            "design_mde": 0.15,
+            "dimension": "voice",
+            "guardrail_alpha": 0.004166666666666667,
+            "look": 0,
+            "minimum_effect": 0.01,
+            "options": [
+              "V1",
+              "V2",
+              "V3",
+              "V4"
+            ],
+            "original_config": {
+              "allocations": {
+                "default": {
+                  "caller_id": {
+                    "D1": 0.5,
+                    "D2": 0.5
+                  },
+                  "voice": {
+                    "V1": 1.0
+                  },
+                  "welcome_message": {
+                    "W1": 1.0
+                  }
+                }
+              },
+              "cohorts": [],
+              "prompt_version": "P1",
+              "schedule": {
+                "hour_weights": {},
+                "lead_preferred_hour": {}
+              }
+            },
+            "prompt": "P1",
+            "status": "exploring",
+            "targets": {
+              "default": 268,
+              "language_hi": 268
+            },
+            "winners": {}
+          }
+        },
+        "kind": "experiment_start",
+        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+      }
+    },
+    {
+      "id": 11,
+      "workflow": "nw_renewal",
+      "minute": 2040,
+      "kind": "proposal_sending",
+      "payload": {
+        "detail": {
+          "auto_not_used": [
+            "human_required:cohorts",
+            "human_required:voice"
+          ]
+        },
+        "kind": "experiment_start",
+        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+      }
+    },
+    {
+      "id": 12,
+      "workflow": "nw_renewal",
+      "minute": 2040,
+      "kind": "approval_submitted",
+      "payload": {
+        "approval_id": "apr_00003",
+        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+      }
+    },
+    {
+      "id": 13,
+      "workflow": "nw_renewal",
+      "minute": 2295,
+      "kind": "proposal_applying",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00003",
+          "remote_approval": {
+            "apply_by": "2027-01-05T15:49:00+05:30",
+            "approval_id": "apr_00003",
+            "base_version": 1,
+            "changed_dims": [
+              "cohorts",
+              "voice"
+            ],
+            "created_at": "2027-01-05T10:00:00+05:30",
+            "decided_at": "2027-01-05T13:49:00+05:30",
+            "expires_at": "2027-01-06T10:00:00+05:30",
+            "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6",
+            "reasons": [],
+            "status": "approved",
+            "workflow_id": "nw_renewal"
+          }
+        },
+        "kind": "experiment_start",
+        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+      }
+    },
+    {
+      "id": 14,
+      "workflow": "nw_renewal",
+      "minute": 2295,
+      "kind": "proposal_applied",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00003",
+          "version": 2
+        },
+        "kind": "experiment_start",
+        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+      }
+    }
+  ],
+  "before": {
+    "dials": 3600,
+    "connected": 891,
+    "engaged": 468,
+    "pickup_rate": 0.2475,
+    "engagement_rate": 0.5252525252525253,
+    "from_minute": 855,
+    "to_minute": 2295,
+    "causal_claim": false
+  },
+  "after": {
+    "dials": 3600,
+    "connected": 924,
+    "engaged": 492,
+    "pickup_rate": 0.25666666666666665,
+    "engagement_rate": 0.5324675324675324,
+    "from_minute": 2295,
+    "to_minute": 3735,
+    "causal_claim": false
+  }
+}

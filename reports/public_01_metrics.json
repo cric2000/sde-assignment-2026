@@ -1,0 +1,217 @@
+{
+  "name": "public_01_recovery_final",
+  "scenario": "scenarios/public_01_dev.yaml",
+  "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpu_count": 16,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "simulator_bootstrap_seconds": 3.573017263002839,
+  "peak_combined_rss_kib_sampled": 249568,
+  "memory_limit_imposed": false,
+  "wall_seconds": 24.30482630500046,
+  "wall_seconds_per_simulated_day": 3.0381032881250576,
+  "ingest_events_per_second": 34101.739753559064,
+  "database_bytes": 58232832,
+  "final_state": {
+    "scenario": "public_01_dev",
+    "sim_minute": 11520,
+    "ts": "2027-01-12T00:00:00+05:30",
+    "end_minute": 11520,
+    "finished": true,
+    "tick_minutes": 15,
+    "credits_remaining": 200.0,
+    "chunks": 393,
+    "last_event_id": 297029
+  },
+  "metrics": {
+    "process_starts": 2,
+    "origin": 29983350,
+    "scenario": "public_01_dev",
+    "started_ts": "2027-01-04T00:00:00+05:30",
+    "observed_prompt:nw_renewal": "P1",
+    "qa_epoch:nw_renewal": 0,
+    "qa_evaluated_answers:nw_renewal": 7471,
+    "observed_prompt:nw_kyc": "P1",
+    "qa_epoch:nw_kyc": 0,
+    "qa_evaluated_answers:nw_kyc": 3534,
+    "observed_prompt:ks_cancel": "P1",
+    "qa_epoch:ks_cancel": 0,
+    "qa_evaluated_answers:ks_cancel": 9062,
+    "event_watermark": 297029,
+    "events_ingested": 297029,
+    "chunks_after_history": 0,
+    "ingest_seconds": 8.710083478043089,
+    "refreshed_config_event": 208936,
+    "decision_lag_histogram": {
+      "1": 1725,
+      "10": 1475,
+      "11": 900,
+      "12": 1300,
+      "13": 1800,
+      "14": 1425,
+      "15": 1125,
+      "16": 1150,
+      "17": 1300,
+      "18": 1625,
+      "19": 1550,
+      "2": 1125,
+      "20": 1200,
+      "21": 1850,
+      "22": 1225,
+      "23": 1025,
+      "24": 1375,
+      "25": 1150,
+      "26": 1625,
+      "27": 1325,
+      "28": 1525,
+      "29": 1575,
+      "3": 1725,
+      "30": 1300,
+      "31": 1450,
+      "32": 1375,
+      "33": 1600,
+      "34": 1575,
+      "35": 1475,
+      "36": 1300,
+      "37": 1050,
+      "38": 1275,
+      "39": 1650,
+      "4": 975,
+      "40": 1850,
+      "41": 1150,
+      "42": 1050,
+      "43": 950,
+      "44": 1450,
+      "45": 1600,
+      "46": 725,
+      "47": 1350,
+      "48": 1625,
+      "49": 1525,
+      "5": 1625,
+      "50": 1350,
+      "51": 1250,
+      "52": 1475,
+      "53": 1900,
+      "54": 1575,
+      "55": 1550,
+      "56": 1625,
+      "57": 1450,
+      "58": 1175,
+      "59": 1550,
+      "6": 1425,
+      "60": 675,
+      "7": 1550,
+      "8": 1050,
+      "9": 1575
+    },
+    "last_decision_event": 297029,
+    "decision_seconds": 6.038123664984596,
+    "decision_cycles": 192,
+    "decision_lag_minutes_max": 60,
+    "decision_compute_seconds_max": 0.39055121000274085,
+    "sim_minute": 11520,
+    "state": {
+      "chunks": 393,
+      "credits_remaining": 200.0,
+      "end_minute": 11520,
+      "finished": true,
+      "last_event_id": 297029,
+      "scenario": "public_01_dev",
+      "sim_minute": 11520,
+      "tick_minutes": 15,
+      "ts": "2027-01-12T00:00:00+05:30"
+    },
+    "finished": true,
+    "controller_wall_seconds": 23.68047140600538,
+    "peak_rss_kib": 95668,
+    "tick_seconds_max": 3.7457515909991344,
+    "day_wall_markers": [
+      {
+        "cumulative_wall_seconds": 3.7613907080012723,
+        "sim_minute": 0
+      },
+      {
+        "cumulative_wall_seconds": 6.63101014100539,
+        "sim_minute": 1440
+      },
+      {
+        "cumulative_wall_seconds": 8.473887460004335,
+        "sim_minute": 2880
+      },
+      {
+        "cumulative_wall_seconds": 10.44238812200274,
+        "sim_minute": 4320
+      },
+      {
+        "cumulative_wall_seconds": 12.695323879004718,
+        "sim_minute": 5760
+      },
+      {
+        "cumulative_wall_seconds": 15.170920612003101,
+        "sim_minute": 7200
+      },
+      {
+        "cumulative_wall_seconds": 17.799462058002973,
+        "sim_minute": 8640
+      },
+      {
+        "cumulative_wall_seconds": 20.656930124005157,
+        "sim_minute": 10080
+      },
+      {
+        "cumulative_wall_seconds": 23.680017998005496,
+        "sim_minute": 11520
+      }
+    ],
+    "chunks_after_events": 392,
+    "caller_window:ks_cancel:D1": 11400,
+    "caller_window:ks_cancel:D2": 11400,
+    "caller_window:nw_renewal:D1": 11400,
+    "caller_window:nw_renewal:D2": 11400,
+    "caller_window:nw_kyc:D1": 11280
+  },
+  "crash": {
+    "signal": "SIGKILL",
+    "pending_proposal": [
+      "ctl_680439a360914af5b48a728ebe48ce7c",
+      "apr_00001",
+      "pending"
+    ],
+    "checkpoint_before": {
+      "event_watermark": "191403",
+      "events_ingested": "191403",
+      "sim_minute": "585"
+    },
+    "killed_returncode": -9
+  },
+  "decision_lag_simulated_minutes": {
+    "p50": 30,
+    "p95": 57,
+    "max": 60,
+    "note": "call event timestamp to hourly decision, excluding history; wall-clock compute is reported separately"
+  },
+  "simulated_day_wall_seconds_excluding_bootstrap": [
+    2.869619433004118,
+    1.8428773189989442,
+    1.9685006619984051,
+    2.2529357570019783,
+    2.4755967329983832,
+    2.628541445999872,
+    2.857468066002184,
+    3.023087874000339
+  ],
+  "controller_bootstrap_wall_seconds": 3.7613907080012723,
+  "timing_caveat": "harness wall time includes SIGKILL/restart; controller checkpoints can omit the killed segment's last uncommitted timing interval",
+  "first_day_wall_seconds_including_controller_bootstrap": 6.63101014100539,
+  "integrity_check": "ok",
+  "duplicate_proposal_applications": 0,
+  "pending_proposals_at_finish": 0,
+  "unjoined_calls": 0,
+  "durable_event_count": 297029,
+  "source_last_event_matches_watermark": true
+}

@@ -1,0 +1,1166 @@
+{
+  "id": "ctl_bde7077843c14554b146de841f0b0c1b",
+  "workflow": "kest_renewal_0",
+  "minute": 2040,
+  "kind": "experiment_inconclusive_restore",
+  "status": "applied",
+  "base": 2,
+  "body": {
+    "affected_leads": 80598,
+    "base_version": 2,
+    "change_summary": "No conclusive voice winner after two planned looks; restore the reference allocation.",
+    "diff": {
+      "allocations": {
+        "after": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          },
+          "language_hi": {
+            "voice": {
+              "V1": 1.0
+            }
+          }
+        },
+        "before": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 0.5,
+              "V2": 0.16666666666666666,
+              "V3": 0.16666666666666666,
+              "V4": 0.16666666666666666
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          },
+          "language_hi": {
+            "voice": {
+              "V1": 0.5,
+              "V2": 0.16666666666666666,
+              "V3": 0.16666666666666666,
+              "V4": 0.16666666666666666
+            }
+          }
+        }
+      }
+    },
+    "dry_run": {
+      "active_leads_upper_bound": 80598,
+      "cohort_definition": "43b4e43c7afcf61e1a1a7592",
+      "cohorts": {
+        "default": 40596,
+        "language_hi": 40002
+      },
+      "counterfactual_lift": "unknown",
+      "kind": "observed_population_exposure_replay",
+      "limitation": "includes cadence-expired leads; exact remaining eligibility is not exposed",
+      "mid_flight": "allowed",
+      "unique_people": 68227
+    },
+    "evidence": {
+      "alpha": 0.004166666666666667,
+      "look": 2,
+      "results": {
+        "default": {
+          "V2": {
+            "guardrail": {
+              "candidate_n": 2619,
+              "candidate_people": 2552,
+              "candidate_rate": 0.2565864833906071,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": 0.007287120333282243,
+              "se": 0.009849347352429854
+            },
+            "guardrail_lower_bound": -0.018697991958264798,
+            "passed": false,
+            "primary": {
+              "candidate_n": 672,
+              "candidate_people": 669,
+              "candidate_rate": 0.5892857142857143,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": 0.03895357325352222,
+              "se": 0.022008423921511908
+            },
+            "primary_lower_bound": -0.019110311235166287
+          },
+          "V3": {
+            "guardrail": {
+              "candidate_n": 2675,
+              "candidate_people": 2576,
+              "candidate_rate": 0.25644859813084114,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": 0.007149235073516308,
+              "se": 0.009810543469641215
+            },
+            "guardrail_lower_bound": -0.018733502592024467,
+            "passed": false,
+            "primary": {
+              "candidate_n": 686,
+              "candidate_people": 679,
+              "candidate_rate": 0.5043731778425656,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": -0.045958963189626445,
+              "se": 0.022062378475182845
+            },
+            "primary_lower_bound": -0.1041651936719745
+          },
+          "V4": {
+            "guardrail": {
+              "candidate_n": 2594,
+              "candidate_people": 2513,
+              "candidate_rate": 0.23631457208943715,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": -0.012984790967887683,
+              "se": 0.00970451757936497
+            },
+            "guardrail_lower_bound": -0.03858780505723031,
+            "passed": false,
+            "primary": {
+              "candidate_n": 613,
+              "candidate_people": 611,
+              "candidate_rate": 0.5742251223491027,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": 0.023892981316910644,
+              "se": 0.022937329099690384
+            },
+            "primary_lower_bound": -0.03662159401447745
+          }
+        },
+        "language_hi": {
+          "V2": {
+            "guardrail": {
+              "candidate_n": 2616,
+              "candidate_people": 2525,
+              "candidate_rate": 0.25382262996941896,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": -0.005898019332204296,
+              "se": 0.00978006610232788
+            },
+            "guardrail_lower_bound": -0.03170034986175424,
+            "passed": false,
+            "primary": {
+              "candidate_n": 664,
+              "candidate_people": 659,
+              "candidate_rate": 0.5271084337349398,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": -0.024732651536378047,
+              "se": 0.0222151747554849
+            },
+            "primary_lower_bound": -0.08334199791659319
+          },
+          "V3": {
+            "guardrail": {
+              "candidate_n": 2593,
+              "candidate_people": 2507,
+              "candidate_rate": 0.2549170844581566,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": -0.004803564843466668,
+              "se": 0.009850337100364655
+            },
+            "guardrail_lower_bound": -0.030791288344701608,
+            "passed": false,
+            "primary": {
+              "candidate_n": 661,
+              "candidate_people": 660,
+              "candidate_rate": 0.573373676248109,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": 0.021532590976791166,
+              "se": 0.02212663743124016
+            },
+            "primary_lower_bound": -0.03684317116376112
+          },
+          "V4": {
+            "guardrail": {
+              "candidate_n": 2606,
+              "candidate_people": 2509,
+              "candidate_rate": 0.26630851880276285,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": 0.006587869501139598,
+              "se": 0.009992674763368776
+            },
+            "guardrail_lower_bound": -0.019775377374805645,
+            "passed": false,
+            "primary": {
+              "candidate_n": 694,
+              "candidate_people": 687,
+              "candidate_rate": 0.5389048991354467,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": -0.012936186135871108,
+              "se": 0.021868061713739957
+            },
+            "primary_lower_bound": -0.07062975900898402
+          }
+        }
+      }
+    },
+    "expires_in_hours": 24,
+    "impact_score": 0.05,
+    "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b",
+    "proposed_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 0.5,
+            "D2": 0.5
+          },
+          "voice": {
+            "V1": 1.0
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        },
+        "language_hi": {
+          "voice": {
+            "V1": 1.0
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P1",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    },
+    "rationale": "No conclusive voice winner after two planned looks; restore the reference allocation.",
+    "workflow_id": "kest_renewal_0"
+  },
+  "context": {
+    "evidence": {
+      "alpha": 0.004166666666666667,
+      "look": 2,
+      "results": {
+        "default": {
+          "V2": {
+            "guardrail": {
+              "candidate_n": 2619,
+              "candidate_people": 2552,
+              "candidate_rate": 0.2565864833906071,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": 0.007287120333282243,
+              "se": 0.009849347352429854
+            },
+            "guardrail_lower_bound": -0.018697991958264798,
+            "passed": false,
+            "primary": {
+              "candidate_n": 672,
+              "candidate_people": 669,
+              "candidate_rate": 0.5892857142857143,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": 0.03895357325352222,
+              "se": 0.022008423921511908
+            },
+            "primary_lower_bound": -0.019110311235166287
+          },
+          "V3": {
+            "guardrail": {
+              "candidate_n": 2675,
+              "candidate_people": 2576,
+              "candidate_rate": 0.25644859813084114,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": 0.007149235073516308,
+              "se": 0.009810543469641215
+            },
+            "guardrail_lower_bound": -0.018733502592024467,
+            "passed": false,
+            "primary": {
+              "candidate_n": 686,
+              "candidate_people": 679,
+              "candidate_rate": 0.5043731778425656,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": -0.045958963189626445,
+              "se": 0.022062378475182845
+            },
+            "primary_lower_bound": -0.1041651936719745
+          },
+          "V4": {
+            "guardrail": {
+              "candidate_n": 2594,
+              "candidate_people": 2513,
+              "candidate_rate": 0.23631457208943715,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": -0.012984790967887683,
+              "se": 0.00970451757936497
+            },
+            "guardrail_lower_bound": -0.03858780505723031,
+            "passed": false,
+            "primary": {
+              "candidate_n": 613,
+              "candidate_people": 611,
+              "candidate_rate": 0.5742251223491027,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": 0.023892981316910644,
+              "se": 0.022937329099690384
+            },
+            "primary_lower_bound": -0.03662159401447745
+          }
+        },
+        "language_hi": {
+          "V2": {
+            "guardrail": {
+              "candidate_n": 2616,
+              "candidate_people": 2525,
+              "candidate_rate": 0.25382262996941896,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": -0.005898019332204296,
+              "se": 0.00978006610232788
+            },
+            "guardrail_lower_bound": -0.03170034986175424,
+            "passed": false,
+            "primary": {
+              "candidate_n": 664,
+              "candidate_people": 659,
+              "candidate_rate": 0.5271084337349398,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": -0.024732651536378047,
+              "se": 0.0222151747554849
+            },
+            "primary_lower_bound": -0.08334199791659319
+          },
+          "V3": {
+            "guardrail": {
+              "candidate_n": 2593,
+              "candidate_people": 2507,
+              "candidate_rate": 0.2549170844581566,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": -0.004803564843466668,
+              "se": 0.009850337100364655
+            },
+            "guardrail_lower_bound": -0.030791288344701608,
+            "passed": false,
+            "primary": {
+              "candidate_n": 661,
+              "candidate_people": 660,
+              "candidate_rate": 0.573373676248109,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": 0.021532590976791166,
+              "se": 0.02212663743124016
+            },
+            "primary_lower_bound": -0.03684317116376112
+          },
+          "V4": {
+            "guardrail": {
+              "candidate_n": 2606,
+              "candidate_people": 2509,
+              "candidate_rate": 0.26630851880276285,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": 0.006587869501139598,
+              "se": 0.009992674763368776
+            },
+            "guardrail_lower_bound": -0.019775377374805645,
+            "passed": false,
+            "primary": {
+              "candidate_n": 694,
+              "candidate_people": 687,
+              "candidate_rate": 0.5389048991354467,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": -0.012936186135871108,
+              "se": 0.021868061713739957
+            },
+            "primary_lower_bound": -0.07062975900898402
+          }
+        }
+      }
+    },
+    "experiment": {
+      "alpha": 0.004166666666666667,
+      "controls": {
+        "default": "V1",
+        "language_hi": "V1"
+      },
+      "decay_hits": 0,
+      "design_mde": 0.15,
+      "dimension": "voice",
+      "expected_config": {
+        "allocations": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 0.5,
+              "V2": 0.16666666666666666,
+              "V3": 0.16666666666666666,
+              "V4": 0.16666666666666666
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          },
+          "language_hi": {
+            "voice": {
+              "V1": 0.5,
+              "V2": 0.16666666666666666,
+              "V3": 0.16666666666666666,
+              "V4": 0.16666666666666666
+            }
+          }
+        },
+        "cohorts": [
+          {
+            "id": "language_hi",
+            "where": {
+              "lang": [
+                "hi"
+              ]
+            }
+          }
+        ],
+        "prompt_version": "P1",
+        "schedule": {
+          "hour_weights": {},
+          "lead_preferred_hour": {}
+        }
+      },
+      "guardrail_alpha": 0.004166666666666667,
+      "last_harm_block": 5,
+      "look": 2,
+      "minimum_effect": 0.01,
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4"
+      ],
+      "original_config": {
+        "allocations": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          }
+        },
+        "cohorts": [],
+        "prompt_version": "P1",
+        "schedule": {
+          "hour_weights": {},
+          "lead_preferred_hour": {}
+        }
+      },
+      "promotion_results": {
+        "default": {
+          "V2": {
+            "guardrail": {
+              "candidate_n": 2619,
+              "candidate_people": 2552,
+              "candidate_rate": 0.2565864833906071,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": 0.007287120333282243,
+              "se": 0.009849347352429854
+            },
+            "guardrail_lower_bound": -0.018697991958264798,
+            "passed": false,
+            "primary": {
+              "candidate_n": 672,
+              "candidate_people": 669,
+              "candidate_rate": 0.5892857142857143,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": 0.03895357325352222,
+              "se": 0.022008423921511908
+            },
+            "primary_lower_bound": -0.019110311235166287
+          },
+          "V3": {
+            "guardrail": {
+              "candidate_n": 2675,
+              "candidate_people": 2576,
+              "candidate_rate": 0.25644859813084114,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": 0.007149235073516308,
+              "se": 0.009810543469641215
+            },
+            "guardrail_lower_bound": -0.018733502592024467,
+            "passed": false,
+            "primary": {
+              "candidate_n": 686,
+              "candidate_people": 679,
+              "candidate_rate": 0.5043731778425656,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": -0.045958963189626445,
+              "se": 0.022062378475182845
+            },
+            "primary_lower_bound": -0.1041651936719745
+          },
+          "V4": {
+            "guardrail": {
+              "candidate_n": 2594,
+              "candidate_people": 2513,
+              "candidate_rate": 0.23631457208943715,
+              "control_n": 7850,
+              "control_people": 7087,
+              "control_rate": 0.24929936305732484,
+              "difference": -0.012984790967887683,
+              "se": 0.00970451757936497
+            },
+            "guardrail_lower_bound": -0.03858780505723031,
+            "passed": false,
+            "primary": {
+              "candidate_n": 613,
+              "candidate_people": 611,
+              "candidate_rate": 0.5742251223491027,
+              "control_n": 1957,
+              "control_people": 1933,
+              "control_rate": 0.5503321410321921,
+              "difference": 0.023892981316910644,
+              "se": 0.022937329099690384
+            },
+            "primary_lower_bound": -0.03662159401447745
+          }
+        },
+        "language_hi": {
+          "V2": {
+            "guardrail": {
+              "candidate_n": 2616,
+              "candidate_people": 2525,
+              "candidate_rate": 0.25382262996941896,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": -0.005898019332204296,
+              "se": 0.00978006610232788
+            },
+            "guardrail_lower_bound": -0.03170034986175424,
+            "passed": false,
+            "primary": {
+              "candidate_n": 664,
+              "candidate_people": 659,
+              "candidate_rate": 0.5271084337349398,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": -0.024732651536378047,
+              "se": 0.0222151747554849
+            },
+            "primary_lower_bound": -0.08334199791659319
+          },
+          "V3": {
+            "guardrail": {
+              "candidate_n": 2593,
+              "candidate_people": 2507,
+              "candidate_rate": 0.2549170844581566,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": -0.004803564843466668,
+              "se": 0.009850337100364655
+            },
+            "guardrail_lower_bound": -0.030791288344701608,
+            "passed": false,
+            "primary": {
+              "candidate_n": 661,
+              "candidate_people": 660,
+              "candidate_rate": 0.573373676248109,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": 0.021532590976791166,
+              "se": 0.02212663743124016
+            },
+            "primary_lower_bound": -0.03684317116376112
+          },
+          "V4": {
+            "guardrail": {
+              "candidate_n": 2606,
+              "candidate_people": 2509,
+              "candidate_rate": 0.26630851880276285,
+              "control_n": 7947,
+              "control_people": 7137,
+              "control_rate": 0.25972064930162325,
+              "difference": 0.006587869501139598,
+              "se": 0.009992674763368776
+            },
+            "guardrail_lower_bound": -0.019775377374805645,
+            "passed": false,
+            "primary": {
+              "candidate_n": 694,
+              "candidate_people": 687,
+              "candidate_rate": 0.5389048991354467,
+              "control_n": 2064,
+              "control_people": 2024,
+              "control_rate": 0.5518410852713178,
+              "difference": -0.012936186135871108,
+              "se": 0.021868061713739957
+            },
+            "primary_lower_bound": -0.07062975900898402
+          }
+        }
+      },
+      "prompt": "P1",
+      "start": 900,
+      "status": "inconclusive",
+      "targets": {
+        "default": 268,
+        "language_hi": 267
+      },
+      "version": 2,
+      "winners": {}
+    },
+    "original_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 0.5,
+            "D2": 0.5
+          },
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        },
+        "language_hi": {
+          "voice": {
+            "V1": 0.5,
+            "V2": 0.16666666666666666,
+            "V3": 0.16666666666666666,
+            "V4": 0.16666666666666666
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P1",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    }
+  },
+  "approval": "apr_00016",
+  "submitted": 2100,
+  "updated": 2295,
+  "authority": {
+    "approval_id": "apr_00016",
+    "approver": "simulated client approver; named identity not supplied"
+  },
+  "timeline": [
+    {
+      "id": 75,
+      "workflow": "kest_renewal_0",
+      "minute": 2040,
+      "kind": "experiment_look",
+      "payload": {
+        "alpha": 0.004166666666666667,
+        "dimension": "voice",
+        "look": 2,
+        "results": {
+          "default": {
+            "V2": {
+              "guardrail": {
+                "candidate_n": 2619,
+                "candidate_people": 2552,
+                "candidate_rate": 0.2565864833906071,
+                "control_n": 7850,
+                "control_people": 7087,
+                "control_rate": 0.24929936305732484,
+                "difference": 0.007287120333282243,
+                "se": 0.009849347352429854
+              },
+              "guardrail_lower_bound": -0.018697991958264798,
+              "passed": false,
+              "primary": {
+                "candidate_n": 672,
+                "candidate_people": 669,
+                "candidate_rate": 0.5892857142857143,
+                "control_n": 1957,
+                "control_people": 1933,
+                "control_rate": 0.5503321410321921,
+                "difference": 0.03895357325352222,
+                "se": 0.022008423921511908
+              },
+              "primary_lower_bound": -0.019110311235166287
+            },
+            "V3": {
+              "guardrail": {
+                "candidate_n": 2675,
+                "candidate_people": 2576,
+                "candidate_rate": 0.25644859813084114,
+                "control_n": 7850,
+                "control_people": 7087,
+                "control_rate": 0.24929936305732484,
+                "difference": 0.007149235073516308,
+                "se": 0.009810543469641215
+              },
+              "guardrail_lower_bound": -0.018733502592024467,
+              "passed": false,
+              "primary": {
+                "candidate_n": 686,
+                "candidate_people": 679,
+                "candidate_rate": 0.5043731778425656,
+                "control_n": 1957,
+                "control_people": 1933,
+                "control_rate": 0.5503321410321921,
+                "difference": -0.045958963189626445,
+                "se": 0.022062378475182845
+              },
+              "primary_lower_bound": -0.1041651936719745
+            },
+            "V4": {
+              "guardrail": {
+                "candidate_n": 2594,
+                "candidate_people": 2513,
+                "candidate_rate": 0.23631457208943715,
+                "control_n": 7850,
+                "control_people": 7087,
+                "control_rate": 0.24929936305732484,
+                "difference": -0.012984790967887683,
+                "se": 0.00970451757936497
+              },
+              "guardrail_lower_bound": -0.03858780505723031,
+              "passed": false,
+              "primary": {
+                "candidate_n": 613,
+                "candidate_people": 611,
+                "candidate_rate": 0.5742251223491027,
+                "control_n": 1957,
+                "control_people": 1933,
+                "control_rate": 0.5503321410321921,
+                "difference": 0.023892981316910644,
+                "se": 0.022937329099690384
+              },
+              "primary_lower_bound": -0.03662159401447745
+            }
+          },
+          "language_hi": {
+            "V2": {
+              "guardrail": {
+                "candidate_n": 2616,
+                "candidate_people": 2525,
+                "candidate_rate": 0.25382262996941896,
+                "control_n": 7947,
+                "control_people": 7137,
+                "control_rate": 0.25972064930162325,
+                "difference": -0.005898019332204296,
+                "se": 0.00978006610232788
+              },
+              "guardrail_lower_bound": -0.03170034986175424,
+              "passed": false,
+              "primary": {
+                "candidate_n": 664,
+                "candidate_people": 659,
+                "candidate_rate": 0.5271084337349398,
+                "control_n": 2064,
+                "control_people": 2024,
+                "control_rate": 0.5518410852713178,
+                "difference": -0.024732651536378047,
+                "se": 0.0222151747554849
+              },
+              "primary_lower_bound": -0.08334199791659319
+            },
+            "V3": {
+              "guardrail": {
+                "candidate_n": 2593,
+                "candidate_people": 2507,
+                "candidate_rate": 0.2549170844581566,
+                "control_n": 7947,
+                "control_people": 7137,
+                "control_rate": 0.25972064930162325,
+                "difference": -0.004803564843466668,
+                "se": 0.009850337100364655
+              },
+              "guardrail_lower_bound": -0.030791288344701608,
+              "passed": false,
+              "primary": {
+                "candidate_n": 661,
+                "candidate_people": 660,
+                "candidate_rate": 0.573373676248109,
+                "control_n": 2064,
+                "control_people": 2024,
+                "control_rate": 0.5518410852713178,
+                "difference": 0.021532590976791166,
+                "se": 0.02212663743124016
+              },
+              "primary_lower_bound": -0.03684317116376112
+            },
+            "V4": {
+              "guardrail": {
+                "candidate_n": 2606,
+                "candidate_people": 2509,
+                "candidate_rate": 0.26630851880276285,
+                "control_n": 7947,
+                "control_people": 7137,
+                "control_rate": 0.25972064930162325,
+                "difference": 0.006587869501139598,
+                "se": 0.009992674763368776
+              },
+              "guardrail_lower_bound": -0.019775377374805645,
+              "passed": false,
+              "primary": {
+                "candidate_n": 694,
+                "candidate_people": 687,
+                "candidate_rate": 0.5389048991354467,
+                "control_n": 2064,
+                "control_people": 2024,
+                "control_rate": 0.5518410852713178,
+                "difference": -0.012936186135871108,
+                "se": 0.021868061713739957
+              },
+              "primary_lower_bound": -0.07062975900898402
+            }
+          }
+        },
+        "winners": {}
+      }
+    },
+    {
+      "id": 76,
+      "workflow": "kest_renewal_0",
+      "minute": 2040,
+      "kind": "proposal_created",
+      "payload": {
+        "dimensions": [
+          "voice"
+        ],
+        "evidence": {
+          "alpha": 0.004166666666666667,
+          "look": 2,
+          "results": {
+            "default": {
+              "V2": {
+                "guardrail": {
+                  "candidate_n": 2619,
+                  "candidate_people": 2552,
+                  "candidate_rate": 0.2565864833906071,
+                  "control_n": 7850,
+                  "control_people": 7087,
+                  "control_rate": 0.24929936305732484,
+                  "difference": 0.007287120333282243,
+                  "se": 0.009849347352429854
+                },
+                "guardrail_lower_bound": -0.018697991958264798,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 672,
+                  "candidate_people": 669,
+                  "candidate_rate": 0.5892857142857143,
+                  "control_n": 1957,
+                  "control_people": 1933,
+                  "control_rate": 0.5503321410321921,
+                  "difference": 0.03895357325352222,
+                  "se": 0.022008423921511908
+                },
+                "primary_lower_bound": -0.019110311235166287
+              },
+              "V3": {
+                "guardrail": {
+                  "candidate_n": 2675,
+                  "candidate_people": 2576,
+                  "candidate_rate": 0.25644859813084114,
+                  "control_n": 7850,
+                  "control_people": 7087,
+                  "control_rate": 0.24929936305732484,
+                  "difference": 0.007149235073516308,
+                  "se": 0.009810543469641215
+                },
+                "guardrail_lower_bound": -0.018733502592024467,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 686,
+                  "candidate_people": 679,
+                  "candidate_rate": 0.5043731778425656,
+                  "control_n": 1957,
+                  "control_people": 1933,
+                  "control_rate": 0.5503321410321921,
+                  "difference": -0.045958963189626445,
+                  "se": 0.022062378475182845
+                },
+                "primary_lower_bound": -0.1041651936719745
+              },
+              "V4": {
+                "guardrail": {
+                  "candidate_n": 2594,
+                  "candidate_people": 2513,
+                  "candidate_rate": 0.23631457208943715,
+                  "control_n": 7850,
+                  "control_people": 7087,
+                  "control_rate": 0.24929936305732484,
+                  "difference": -0.012984790967887683,
+                  "se": 0.00970451757936497
+                },
+                "guardrail_lower_bound": -0.03858780505723031,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 613,
+                  "candidate_people": 611,
+                  "candidate_rate": 0.5742251223491027,
+                  "control_n": 1957,
+                  "control_people": 1933,
+                  "control_rate": 0.5503321410321921,
+                  "difference": 0.023892981316910644,
+                  "se": 0.022937329099690384
+                },
+                "primary_lower_bound": -0.03662159401447745
+              }
+            },
+            "language_hi": {
+              "V2": {
+                "guardrail": {
+                  "candidate_n": 2616,
+                  "candidate_people": 2525,
+                  "candidate_rate": 0.25382262996941896,
+                  "control_n": 7947,
+                  "control_people": 7137,
+                  "control_rate": 0.25972064930162325,
+                  "difference": -0.005898019332204296,
+                  "se": 0.00978006610232788
+                },
+                "guardrail_lower_bound": -0.03170034986175424,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 664,
+                  "candidate_people": 659,
+                  "candidate_rate": 0.5271084337349398,
+                  "control_n": 2064,
+                  "control_people": 2024,
+                  "control_rate": 0.5518410852713178,
+                  "difference": -0.024732651536378047,
+                  "se": 0.0222151747554849
+                },
+                "primary_lower_bound": -0.08334199791659319
+              },
+              "V3": {
+                "guardrail": {
+                  "candidate_n": 2593,
+                  "candidate_people": 2507,
+                  "candidate_rate": 0.2549170844581566,
+                  "control_n": 7947,
+                  "control_people": 7137,
+                  "control_rate": 0.25972064930162325,
+                  "difference": -0.004803564843466668,
+                  "se": 0.009850337100364655
+                },
+                "guardrail_lower_bound": -0.030791288344701608,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 661,
+                  "candidate_people": 660,
+                  "candidate_rate": 0.573373676248109,
+                  "control_n": 2064,
+                  "control_people": 2024,
+                  "control_rate": 0.5518410852713178,
+                  "difference": 0.021532590976791166,
+                  "se": 0.02212663743124016
+                },
+                "primary_lower_bound": -0.03684317116376112
+              },
+              "V4": {
+                "guardrail": {
+                  "candidate_n": 2606,
+                  "candidate_people": 2509,
+                  "candidate_rate": 0.26630851880276285,
+                  "control_n": 7947,
+                  "control_people": 7137,
+                  "control_rate": 0.25972064930162325,
+                  "difference": 0.006587869501139598,
+                  "se": 0.009992674763368776
+                },
+                "guardrail_lower_bound": -0.019775377374805645,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 694,
+                  "candidate_people": 687,
+                  "candidate_rate": 0.5389048991354467,
+                  "control_n": 2064,
+                  "control_people": 2024,
+                  "control_rate": 0.5518410852713178,
+                  "difference": -0.012936186135871108,
+                  "se": 0.021868061713739957
+                },
+                "primary_lower_bound": -0.07062975900898402
+              }
+            }
+          }
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b"
+      }
+    },
+    {
+      "id": 81,
+      "workflow": "kest_renewal_0",
+      "minute": 2100,
+      "kind": "proposal_sending",
+      "payload": {
+        "detail": {
+          "auto_not_used": [
+            "human_required:voice",
+            "client_preference:human_for_agent_changes"
+          ]
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b"
+      }
+    },
+    {
+      "id": 82,
+      "workflow": "kest_renewal_0",
+      "minute": 2100,
+      "kind": "approval_submitted",
+      "payload": {
+        "approval_id": "apr_00016",
+        "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b"
+      }
+    },
+    {
+      "id": 95,
+      "workflow": "kest_renewal_0",
+      "minute": 2295,
+      "kind": "proposal_applying",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00016",
+          "remote_approval": {
+            "apply_by": "2027-01-05T15:49:00+05:30",
+            "approval_id": "apr_00016",
+            "base_version": 2,
+            "changed_dims": [
+              "voice"
+            ],
+            "created_at": "2027-01-05T11:00:00+05:30",
+            "decided_at": "2027-01-05T13:49:00+05:30",
+            "expires_at": "2027-01-06T11:00:00+05:30",
+            "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b",
+            "reasons": [],
+            "status": "approved",
+            "workflow_id": "kest_renewal_0"
+          }
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b"
+      }
+    },
+    {
+      "id": 96,
+      "workflow": "kest_renewal_0",
+      "minute": 2295,
+      "kind": "proposal_applied",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00016",
+          "version": 3
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_bde7077843c14554b146de841f0b0c1b"
+      }
+    }
+  ],
+  "before": {
+    "dials": 54000,
+    "connected": 14360,
+    "engaged": 7879,
+    "pickup_rate": 0.2659259259259259,
+    "engagement_rate": 0.5486768802228412,
+    "from_minute": 855,
+    "to_minute": 2295,
+    "causal_claim": false
+  },
+  "after": {
+    "dials": 54000,
+    "connected": 14414,
+    "engaged": 7860,
+    "pickup_rate": 0.2669259259259259,
+    "engagement_rate": 0.5453031774663522,
+    "from_minute": 2295,
+    "to_minute": 3735,
+    "causal_claim": false
+  }
+}

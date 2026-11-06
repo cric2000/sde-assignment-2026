@@ -1,0 +1,23 @@
+{
+  "public_01": {
+    "evaluation_name": "public_01_recovery_final",
+    "state_directory": ".controller-state/public_01_recovery_final",
+    "controller_log": "runs/public_01_recovery_final/controller.log",
+    "simulator_baseline_and_candidate": "runs/public_01_recovery_final/",
+    "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
+  },
+  "public_02": {
+    "evaluation_name": "public_02_verified",
+    "state_directory": ".controller-state/public_02_verified",
+    "controller_log": "runs/public_02_verified/controller.log",
+    "simulator_baseline_and_candidate": "runs/public_02_verified/",
+    "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
+  },
+  "public_03": {
+    "evaluation_name": "public_03",
+    "state_directory": ".controller-state/public_03",
+    "controller_log": "runs/public_03/controller.log",
+    "simulator_baseline_and_candidate": "runs/public_03/",
+    "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
+  }
+}
