@@ -49,6 +49,9 @@ def main():
         os.sched_setaffinity(0, sorted(os.sched_getaffinity(0))[:a.cpus])
     output = ROOT / "runs" / a.name
     output.mkdir(parents=True, exist_ok=False)
+    state_dir = ROOT / ".controller-state" / a.name
+    if state_dir.exists():
+        raise RuntimeError("controller state directory already exists; choose a new evaluation name")
     reports = ROOT / "reports"
     reports.mkdir(exist_ok=True)
     python = sys.executable
@@ -57,7 +60,7 @@ def main():
             subprocess.run([python, "-m", "sim", "baseline", "--scenario", a.scenario,
                             "--run-dir", str(output / "baseline")], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True)
     url = f"http://127.0.0.1:{a.port}"
-    env = os.environ | {"CONTROLLER_PYTHON": python, "CONTROLLER_STATE_DIR": str(output / "controller")}
+    env = os.environ | {"CONTROLLER_PYTHON": python, "CONTROLLER_STATE_DIR": str(state_dir)}
     with (output / "server.log").open("w") as server_log, (output / "controller.log").open("w") as controller_log:
         server_started = time.monotonic()
         server = subprocess.Popen([python, "-m", "sim", "serve", "--scenario", a.scenario,
@@ -80,7 +83,7 @@ def main():
                                               stdout=controller_log, stderr=subprocess.STDOUT)
                 crash_evidence = None
                 if a.crash:
-                    dbpath = output / "controller" / "state.db"
+                    dbpath = state_dir / "state.db"
                     deadline = time.monotonic() + 180
                     while time.monotonic() < deadline and controller.poll() is None:
                         try:
@@ -119,7 +122,7 @@ def main():
                     raise RuntimeError("controller exited before simulator finished")
                 sys.path.insert(0, str(ROOT))
                 from controller.inspect import Reader
-                reader = Reader(output / "controller" / "state.db")
+                reader = Reader(state_dir / "state.db")
                 overview = reader.overview()
                 metrics = overview["metrics"]
                 summary = {"name": a.name, "scenario": a.scenario, "python": sys.version, "platform": platform.platform(),
@@ -129,7 +132,7 @@ def main():
                            "wall_seconds": elapsed,
                            "wall_seconds_per_simulated_day": elapsed / (final["sim_minute"] / 1440),
                            "ingest_events_per_second": metrics["events_ingested"] / metrics["ingest_seconds"],
-                           "database_bytes": (output / "controller" / "state.db").stat().st_size,
+                           "database_bytes": (state_dir / "state.db").stat().st_size,
                            "final_state": final, "metrics": metrics, "crash": crash_evidence}
                 histogram = metrics.get("decision_lag_histogram", {})
                 def lag_percentile(fraction):
@@ -143,6 +146,14 @@ def main():
                 summary["decision_lag_simulated_minutes"] = {"p50": lag_percentile(0.5), "p95": lag_percentile(0.95),
                     "max": max([int(k) for k in histogram] or [0]),
                     "note": "call event timestamp to hourly decision, excluding history; wall-clock compute is reported separately"}
+                markers = metrics.get("day_wall_markers", [])
+                summary["simulated_day_wall_seconds_excluding_bootstrap"] = [
+                    b["cumulative_wall_seconds"] - a["cumulative_wall_seconds"] for a, b in zip(markers, markers[1:])]
+                summary["controller_bootstrap_wall_seconds"] = markers[0]["cumulative_wall_seconds"] if markers else None
+                if a.crash:
+                    summary["timing_caveat"] = "harness wall time includes SIGKILL/restart; controller checkpoints can omit the killed segment's last uncommitted timing interval"
+                if len(markers) > 1:
+                    summary["first_day_wall_seconds_including_controller_bootstrap"] = markers[1]["cumulative_wall_seconds"]
                 with reader.db:
                     summary["integrity_check"] = reader.db.execute("PRAGMA integrity_check").fetchone()[0]
                     summary["duplicate_proposal_applications"] = reader.db.execute("SELECT COUNT(*) FROM "

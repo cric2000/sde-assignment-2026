@@ -35,16 +35,35 @@ class Governance:
             return None
         if self.active(wid):
             return None
+        previous = self.store.db.execute("SELECT * FROM proposals WHERE workflow=? AND kind=? AND status='rejected' "
+                                          "ORDER BY updated DESC LIMIT 1", (wid, kind)).fetchone()
+        follow_up = None
+        if previous and json.loads(previous["body"])["proposed_config"] == config:
+            fresh = self.store.counts(wid, ((previous["updated"] + 59) // 60) * 60, minute).get("all", {})
+            if minute - previous["updated"] < 180 or fresh.get("connected", 0) < 200:
+                return None
+            follow_up = {"prior_proposal_id": previous["id"], "prior_status": "rejected",
+                         "new_population_observations": fresh, "treatment_outcomes_claimed": False}
         proposal_id = "ctl_" + uuid.uuid4().hex
         # Count observed active leads only; exact remaining dial eligibility is not exposed.
-        exposure = self.store.db.execute("SELECT COUNT(*) leads,COUNT(DISTINCT person) people FROM leads "
-                                         "WHERE workflow=? AND concluded=0", (wid,)).fetchone()
+        cadence_days = len(workflow.get("cadence", [1, 1, 1]))
+        earliest_campaign = (minute // 1440 - cadence_days + 1) * 1440
+        exposure_filter = "l.workflow=? AND l.concluded=0 AND c.minute>=? AND c.minute<=?"
+        exposure_args = (wid, earliest_campaign, minute)
+        exposure = self.store.db.execute("SELECT COUNT(*) leads,COUNT(DISTINCT l.person) people FROM leads l "
+            "JOIN campaigns c ON l.campaign=c.id WHERE " + exposure_filter, exposure_args).fetchone()
         cohort_counts = {}
         matcher = Cohorts(config)
-        for row in self.store.db.execute("SELECT features,COUNT(*) n FROM leads WHERE workflow=? "
-                                          "AND concluded=0 GROUP BY features", (wid,)):
+        for row in self.store.db.execute("SELECT l.features,COUNT(*) n FROM leads l JOIN campaigns c ON l.campaign=c.id WHERE "
+                                          + exposure_filter + " GROUP BY l.features", exposure_args):
             cid = matcher.match(json.loads(row["features"]))
             cohort_counts[cid] = cohort_counts.get(cid, 0) + row["n"]
+        exposure_fraction = min(1, exposure["leads"] / max(1, workflow.get("daily_batch", {}).get("size", 1) * cadence_days))
+        priority = max(0, min(1, impact)) * (0.5 + 0.5 * exposure_fraction)
+        evidence = deepcopy(evidence)
+        if follow_up:
+            evidence["follow_up"] = follow_up
+            rationale += " Follow-up includes at least 200 newly answered calls since the prior rejection; no unapproved treatment outcomes are claimed."
         body = {"proposal_id": proposal_id, "workflow_id": wid, "base_version": current["version"],
                 "proposed_config": config, "change_summary": rationale[:240],
                 "diff": config_diff(current["config"], config), "affected_leads": exposure["leads"],
@@ -52,8 +71,10 @@ class Governance:
                             "unique_people": exposure["people"], "cohorts": cohort_counts,
                             "cohort_definition": matcher.version, "counterfactual_lift": "unknown",
                             "mid_flight": workflow["mid_flight"],
-                            "limitation": "includes cadence-expired leads; exact remaining eligibility is not exposed"},
-                "impact_score": max(0, min(1, impact)), "rationale": rationale,
+                            "priority_components": {"severity_or_conservative_lift": impact,
+                                "observed_exposure_fraction": exposure_fraction, "formula": "severity*(0.5+0.5*exposure)"},
+                            "limitation": "campaign-age filtered upper bound; remaining attempt/gap eligibility is not exposed"},
+                "impact_score": priority, "rationale": rationale,
                 "evidence": evidence, "expires_in_hours": workflow["governance"]["proposal_ttl_hours"]}
         context = deepcopy(context or {})
         context["original_config"] = current["config"]

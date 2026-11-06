@@ -1,5 +1,6 @@
 import json
 import time
+import logging
 
 
 class Ingester:
@@ -26,6 +27,9 @@ class Ingester:
                 if len(batch) >= self.batch_size:
                     count += self.store.ingest(batch, self.store.get("origin"))
                     batch.clear()
+                    if count and count % 100000 == 0:
+                        logging.getLogger("controller").info(json.dumps({"event": "ingest_checkpoint", "chunk": chunk,
+                            "events_this_drain": count, "seconds": round(time.monotonic() - start, 2)}))
             if batch:
                 count += self.store.ingest(batch, self.store.get("origin"))
             with self.store.transaction():

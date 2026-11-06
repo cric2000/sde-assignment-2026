@@ -50,8 +50,21 @@ class Reader:
     def why(self, wid, at=None):
         meta = self.meta()
         minute = timestamp_minute(at) - meta["origin"] if at else meta.get("sim_minute", 0)
-        proposal = self.db.execute("SELECT * FROM proposals WHERE workflow=? AND status='applied' AND updated<=? "
-                                    "ORDER BY updated DESC LIMIT 1", (wid, minute)).fetchone()
+        change = self.db.execute("SELECT minute,payload FROM events WHERE workflow=? AND type='config_changed' "
+                                  "AND minute<=? ORDER BY id DESC LIMIT 1", (wid, minute)).fetchone()
+        event = json.loads(change["payload"]) if change else None
+        if event and event["actor"] == "supervisor":
+            snapshot = self.db.execute("SELECT payload FROM configs WHERE workflow=? AND version=?", (wid, event["version"])).fetchone()
+            return {"workflow": wid, "at_minute": minute, "change": event,
+                    "authority": "client supervisor", "rationale": "not provided by the HTTP contract",
+                    "observed_config": json.loads(snapshot[0]) if snapshot else None,
+                    "timeline": self.timeline(wid, change["minute"], min(meta["sim_minute"], change["minute"] + 1440))}
+        proposal = None
+        if event and event.get("proposal_id"):
+            proposal = self.db.execute("SELECT * FROM proposals WHERE id=?", (event["proposal_id"],)).fetchone()
+        if proposal is None:
+            proposal = self.db.execute("SELECT * FROM proposals WHERE workflow=? AND status='applied' AND updated<=? "
+                                       "ORDER BY updated DESC LIMIT 1", (wid, minute)).fetchone()
         if not proposal:
             return {"workflow": wid, "at_minute": minute, "change": None,
                     "decisions": self.timeline(wid, max(0, minute - 1440), minute)}
@@ -75,8 +88,17 @@ class Reader:
 
     def exposure(self, lead):
         row = self.db.execute("SELECT * FROM leads WHERE id=?", (lead,)).fetchone()
-        return {"lead": dict(row) if row else None, "calls": [dict(r) for r in self.db.execute(
-            "SELECT * FROM calls WHERE lead=? ORDER BY minute,id", (lead,))],
+        calls = []
+        for record in self.db.execute("SELECT * FROM calls WHERE lead=? ORDER BY minute,id", (lead,)):
+            call = dict(record)
+            snapshot = self.db.execute("SELECT payload FROM configs WHERE workflow=? AND version=?", (call["workflow"], call["version"])).fetchone()
+            call["agent_config_snapshot"] = json.loads(snapshot[0]) if snapshot else None
+            prompt_change = self.db.execute("SELECT payload FROM events WHERE workflow=? AND type='config_changed' AND minute<=? "
+                "AND EXISTS (SELECT 1 FROM json_each(json_extract(payload,'$.changed_dims')) WHERE value='prompt_version') "
+                "ORDER BY id DESC LIMIT 1", (call["workflow"], call["minute"])).fetchone()
+            call["prompt_change_authority"] = json.loads(prompt_change[0]) if prompt_change else "business default"
+            calls.append(call)
+        return {"lead": dict(row) if row else None, "calls": calls,
             "note": "actual call prompt is recorded separately from campaign-locked config version"}
 
 

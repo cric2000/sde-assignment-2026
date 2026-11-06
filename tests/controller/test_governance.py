@@ -118,3 +118,34 @@ def test_shared_cohort_order_and_schedule_validation(workflow, config):
     config["schedule"]["hour_weights"] = {"default": {"8": 1}}
     with pytest.raises(ValueError):
         validate_config(workflow, config)
+
+
+def test_rejected_intent_requires_cooldown_and_new_observations(store, workflow, api):
+    gov = Governance(api, store)
+    first = propose(gov, workflow, api)
+    gov.reconcile({"test": workflow}, 600, "2027-01-04T10:00:00+05:30")
+    api.approvals[0]["status"] = "rejected"
+    gov.reconcile({"test": workflow}, 615, "2027-01-04T10:15:00+05:30")
+    assert propose(gov, workflow, api) is None
+    config = deepcopy(api.current["config"])
+    config["allocations"]["default"]["voice"] = {"V1": 0.5, "V2": 0.5}
+    store.counts = lambda *args: {"all": {"dials": 500, "connected": 250, "engaged": 100, "flagged": 1}}
+    successor = gov.propose(workflow, api.current, config, 900, "experiment_start", "new evidence", {"plan": "unchanged"})
+    assert successor and successor != first
+    body = json.loads(store.db.execute("SELECT body FROM proposals WHERE id=?", (successor,)).fetchone()[0])
+    assert body["evidence"]["follow_up"]["prior_proposal_id"] == first
+    assert body["evidence"]["follow_up"]["treatment_outcomes_claimed"] is False
+
+
+def test_exposure_estimate_filters_expired_campaigns(store, workflow, api):
+    with store.transaction():
+        for name, minute in (("old", -14400), ("current", 0)):
+            store.db.execute("INSERT INTO campaigns VALUES (?,?,?,?,?)", (name, "test", minute, 1, 1))
+            store.db.execute("INSERT INTO leads(id,workflow,campaign,person,features) VALUES (?,?,?,?,?)",
+                              (name, "test", name, name, '{"lang":"en"}'))
+    gov = Governance(api, store)
+    pid = propose(gov, workflow, api)
+    body = json.loads(store.db.execute("SELECT body FROM proposals WHERE id=?", (pid,)).fetchone()[0])
+    assert body["affected_leads"] == 1
+    assert body["dry_run"]["cohorts"] == {"default": 1}
+    assert "priority_components" in body["dry_run"]

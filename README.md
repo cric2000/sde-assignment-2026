@@ -1,5 +1,7 @@
 # Outcome-First Agent Loop — Senior Engineer Assignment
 
+**Implementation:** see [docs/CONTROLLER.md](docs/CONTROLLER.md) for setup, recovery, evaluation and supervisor queries, [SUBMISSION.md](SUBMISSION.md) for results and decisions, and [docs/RUNBOOK.md](docs/RUNBOOK.md) for operations. The original assignment brief follows.
+
 **Formi · Agentic Universe** · Greenfield · Suggested effort 12–16 hours across 7 calendar days
 
 ---

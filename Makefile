@@ -1,11 +1,12 @@
 SCENARIO ?= scenarios/public_01_dev.yaml
+PYTHON ?= python3
 NAME ?= $(basename $(notdir $(SCENARIO)))
 
 baseline:
-	python -m sim baseline --scenario $(SCENARIO) --run-dir runs/base_$(NAME)
+	$(PYTHON) -m sim baseline --scenario $(SCENARIO) --run-dir runs/base_$(NAME)
 serve:
-	python -m sim serve --scenario $(SCENARIO) --run-dir runs/mine_$(NAME) --force
+	$(PYTHON) -m sim serve --scenario $(SCENARIO) --run-dir runs/mine_$(NAME)
 grade:
-	mkdir -p reports && python -m sim grade --run runs/mine_$(NAME) --baseline runs/base_$(NAME) --out reports/$(NAME).md
+	mkdir -p reports && $(PYTHON) -m sim grade --run runs/mine_$(NAME) --baseline runs/base_$(NAME) --out reports/$(NAME).md
 test:
-	python -m pytest -q tests
+	$(PYTHON) -m pytest -q tests

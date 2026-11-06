@@ -76,6 +76,7 @@ def test_rejected_recommendation_does_not_add_statistical_looks(store, api, work
 
 def test_supported_language_creates_one_shared_governed_cohort(store, api, workflow):
     with store.transaction():
+        store.db.execute("INSERT INTO campaigns VALUES (?,?,?,?,?)", ("history", "test", -60, 2000, 1))
         for language in ("en", "hi"):
             for i in range(1000):
                 person = language + str(i)
@@ -112,3 +113,19 @@ def test_decay_restores_only_owned_dimension(store, api, workflow):
     proposed = json.loads(row["body"])["proposed_config"]
     assert proposed["prompt_version"] == "P2"
     assert proposed["allocations"]["default"]["voice"] == {"V1": 1}
+
+
+def test_expired_recommendation_keeps_safety_monitor_without_new_looks(store, api, workflow):
+    saved = experiment(api.current["config"])
+    saved["look"] = 2
+    saved["recommendation"] = {"minute": 0}
+    with store.transaction():
+        store.save_experiment("test", saved)
+    engine = Experiments(store, Governance(api, store))
+    engine.evaluate(workflow, api.current, 1500, saved)
+    assert store.experiment("test")["status"] == "monitor_only"
+    checks = []
+    engine.monitor_harm = lambda *args: checks.append(True) or False
+    engine.evaluate = lambda *args: (_ for _ in ()).throw(AssertionError("no third look"))
+    engine.step(workflow, api.current, 1560)
+    assert checks == [True]

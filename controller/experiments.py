@@ -18,15 +18,17 @@ class Experiments:
         if self.governance.active(wid):
             return
         if experiment:
-            if experiment["status"] in ("exploring", "promoted"):
+            if experiment["status"] in ("exploring", "promoted", "monitor_only"):
                 if current["config"] != experiment["expected_config"]:
                     changed = changed_dimensions(experiment["expected_config"], current["config"])
                     owned_change = experiment["dimension"] in changed or "cohorts" in changed
                     # Other dimensions start a new evidence epoch, without resetting
                     # spent looks/alpha. Supervisor edits to our dimension are authoritative.
-                    can_resume = not owned_change and (experiment["status"] == "promoted" or experiment["look"] < 2)
+                    can_resume = not owned_change
                     with self.store.transaction():
                         if can_resume:
+                            if experiment["status"] == "exploring" and experiment["look"] >= 2:
+                                experiment["status"] = "monitor_only"
                             experiment.update(start=minute, version=current["version"],
                                 prompt=current["config"]["prompt_version"], expected_config=current["config"])
                             experiment.pop("recommendation", None)
@@ -38,10 +40,11 @@ class Experiments:
                             "changed_dimensions": changed,
                             "observed_version": current["version"], "experiment": experiment})
                     return
-                if experiment["status"] == "exploring":
+                if experiment["status"] in ("exploring", "monitor_only"):
                     if self.monitor_harm(workflow, current, minute, experiment):
                         return
-                    self.evaluate(workflow, current, minute, experiment)
+                    if experiment["status"] == "exploring":
+                        self.evaluate(workflow, current, minute, experiment)
                 else:
                     self.decay(workflow, current, minute, experiment)
             return
@@ -138,8 +141,10 @@ class Experiments:
             recommendation = experiment["recommendation"]
             if minute - recommendation["minute"] > 1440:
                 with self.store.transaction():
-                    experiment["status"] = "recommendation_expired"
+                    experiment["status"] = "monitor_only"
                     self.store.save_experiment(wid, experiment)
+                    self.store.decision(wid, minute, "recommendation_expired", {
+                        "reason": "decision evidence expired; preserve spent looks and continue safety monitoring"})
                 return
             if minute - experiment.get("last_recommendation_attempt", -10000) >= 180:
                 self.governance.propose(workflow, current, recommendation["config"], minute,

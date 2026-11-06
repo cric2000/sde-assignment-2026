@@ -49,11 +49,13 @@ class Loop:
 
     def run(self):
         started = time.monotonic()
+        wall_before_start = self.store.get("controller_wall_seconds", 0)
         state = self.api.get("/sim/state")
         origin = timestamp_minute(state["ts"]) - state["sim_minute"]
         if self.store.get("origin", origin) != origin or state["sim_minute"] < self.store.get("sim_minute", 0):
             raise RuntimeError("Simulator world reset or wrong state directory. Use a new CONTROLLER_STATE_DIR for a new run.")
         with self.store.transaction():
+            self.store.set("process_starts", self.store.get("process_starts", 0) + 1)
             self.store.set("origin", origin)
             self.store.set("scenario", state["scenario"])
             self.store.set("started_ts", self.store.get("started_ts", state["ts"]))
@@ -110,9 +112,16 @@ class Loop:
                         self.store.set("sim_minute", minute)
                         self.store.set("state", state)
                         self.store.set("finished", state["finished"])
-                        self.store.set("peak_rss_kib", resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+                        self.store.set("controller_wall_seconds", wall_before_start + time.monotonic() - started)
+                        self.store.set("peak_rss_kib", max(self.store.get("peak_rss_kib", 0), resource.getrusage(resource.RUSAGE_SELF).ru_maxrss))
                         self.store.set("tick_seconds_max", max(elapsed, self.store.get("tick_seconds_max", 0)))
                     if minute % 1440 == 0 or state["finished"]:
+                        with self.store.transaction():
+                            markers = self.store.get("day_wall_markers", [])
+                            if not markers or markers[-1]["sim_minute"] != minute:
+                                markers.append({"sim_minute": minute,
+                                    "cumulative_wall_seconds": wall_before_start + time.monotonic() - started})
+                                self.store.set("day_wall_markers", markers)
                         LOG.info(json.dumps({"event": "progress", "sim_minute": minute, "finished": state["finished"],
                                              "events": self.store.get("events_ingested", 0), "credits": state["credits_remaining"],
                                              "last_ingest_events": n, "last_ingest_seconds": round(ingest_elapsed, 3)}))
@@ -133,5 +142,5 @@ class Loop:
                     time.sleep(min(2 ** failures, 15))
         finally:
             with self.store.transaction():
-                self.store.set("controller_wall_seconds", self.store.get("controller_wall_seconds", 0) + time.monotonic() - started)
-                self.store.set("peak_rss_kib", resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+                self.store.set("controller_wall_seconds", wall_before_start + time.monotonic() - started)
+                self.store.set("peak_rss_kib", max(self.store.get("peak_rss_kib", 0), resource.getrusage(resource.RUSAGE_SELF).ru_maxrss))
