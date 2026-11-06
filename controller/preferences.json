@@ -1,0 +1,7 @@
+{
+  "kestrel_finance": {
+    "human_requests_per_24h": 2,
+    "not_before_hour": 11,
+    "human_for_agent_changes": true
+  }
+}

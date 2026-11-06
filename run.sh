@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
-# Replace this with your controller. Contract: ./run.sh <SIM_URL> runs until the scenario finishes.
+# Local Python process; no Docker or dependency installation during a run.
 set -euo pipefail
 SIM_URL="${1:?usage: ./run.sh <SIM_URL>}"
-echo "No controller yet — running the naive example against $SIM_URL" >&2
-exec python examples/naive_controller.py --url "$SIM_URL"
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
+if [[ -n "${CONTROLLER_PYTHON:-}" ]]; then
+  PYTHON_BIN="$CONTROLLER_PYTHON"
+elif [[ -x .venv/bin/python ]]; then
+  PYTHON_BIN=.venv/bin/python
+else
+  PYTHON_BIN=python3
+fi
+exec "$PYTHON_BIN" -m controller --url "$SIM_URL"
