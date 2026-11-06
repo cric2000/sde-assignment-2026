@@ -34,6 +34,12 @@ class Loop:
             if isinstance(history, dict):
                 history = history.get("history", history.get("versions", []))
             with self.store.transaction():
+                prompt = self.configs[wid]["config"]["prompt_version"]
+                if self.store.get("observed_prompt:" + wid) != prompt:
+                    self.store.set("observed_prompt:" + wid, prompt)
+                    self.store.set("qa_epoch:" + wid, minute)
+                    self.store.set("qa_evaluated_answers:" + wid, 0)
+                    self.store.set("hallucination_hits:" + wid + ":" + prompt, 0)
                 self.store.set("workflow:" + wid, self.workflows[wid])
                 for snapshot in history:
                     if "config" in snapshot:
@@ -88,9 +94,16 @@ class Loop:
                         self.governance.reconcile(self.workflows, minute, state["ts"])
                         decision_elapsed = time.monotonic() - decision_started
                         with self.store.transaction():
+                            histogram = self.store.get("decision_lag_histogram", {})
+                            for row in self.store.db.execute("SELECT minute,COUNT(*) n FROM events WHERE id>? "
+                                "AND type='call' AND minute>=0 GROUP BY minute", (self.store.get("last_decision_event", -1),)):
+                                lag = str(max(0, minute - row["minute"]))
+                                histogram[lag] = histogram.get(lag, 0) + row["n"]
+                            self.store.set("decision_lag_histogram", histogram)
+                            self.store.set("last_decision_event", self.store.get("event_watermark", -1))
                             self.store.set("decision_seconds", self.store.get("decision_seconds", 0) + decision_elapsed)
                             self.store.set("decision_cycles", self.store.get("decision_cycles", 0) + 1)
-                            self.store.set("decision_lag_minutes_max", max(60, self.store.get("decision_lag_minutes_max", 0)))
+                            self.store.set("decision_lag_minutes_max", max([int(k) for k in histogram] or [0]))
                             self.store.set("decision_compute_seconds_max", max(decision_elapsed, self.store.get("decision_compute_seconds_max", 0)))
                     elapsed = time.monotonic() - tick_started
                     with self.store.transaction():

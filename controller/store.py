@@ -154,7 +154,7 @@ class Store:
             self.set("events_ingested", self.get("events_ingested", 0) + len(fresh))
             return len(fresh)
 
-    def counts(self, wid, start, end, group=None, prompt=None):
+    def counts(self, wid, start, end, group=None, prompt=None, hours=None):
         allowed = {None, "caller_id", "prompt", "voice", "welcome", "cohort"}
         if group not in allowed:
             raise ValueError("unsupported aggregate dimension")
@@ -164,6 +164,9 @@ class Store:
         if prompt:
             sql += " AND prompt=?"
             args.append(prompt)
+        if hours:
+            sql += " AND ((bucket % 24 + 24) % 24) IN (" + ",".join("?" for _ in hours) + ")"
+            args.extend(hours)
         if group:
             sql += f" GROUP BY {group}"
         return {r["arm"]: {k: r[k] or 0 for k in ("dials", "connected", "engaged", "flagged")}

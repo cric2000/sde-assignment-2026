@@ -50,37 +50,57 @@ class Incidents:
                 self.respond_prompt(workflow, current, minute, incident, payload)
             elif incident["kind"] == "caller_id":
                 self.respond_caller(workflow, current, minute, incident, payload)
-        # Independent non-overlapping 2-hour windows; a single call never triggers action.
-        if minute < 120 or minute % 120:
+        if minute < 120:
             return
         historical = self.store.counts(wid, -100000, 0).get("all", {})
-        recent = self.store.counts(wid, minute - 120, minute, prompt=current["config"]["prompt_version"]).get("all", {})
+        # Cumulative prompt-epoch evidence, with >=200 new pickups between checks.
+        # These are overlapping detector checks, NOT independent winner tests.
+        window_start = self.store.get("qa_epoch:" + wid, 0)
+        recent = self.store.counts(wid, window_start, minute, prompt=current["config"]["prompt_version"]).get("all", {})
         if not self.open(wid, "hallucination"):
             old_rate, new_rate = rate(historical, "flag_rate"), rate(recent, "flag_rate")
-            enough = recent.get("connected", 0) >= 200 and recent.get("flagged", 0) >= 10 and old_rate is not None
+            enough = recent.get("connected", 0) >= 400 and recent.get("flagged", 0) >= 10 and old_rate is not None
             se = math.sqrt(old_rate * (1 - old_rate) / max(1, historical.get("connected", 0)) +
                            (new_rate or 0) * (1 - (new_rate or 0)) / max(1, recent.get("connected", 0))) if old_rate is not None else 1
             signal = bool(enough and new_rate - old_rate >= 0.03 and new_rate - old_rate > 3 * se)
             key = "hallucination_hits:" + wid + ":" + current["config"]["prompt_version"]
-            hits = self.store.get(key, 0) + 1 if signal else 0
-            with self.store.transaction():
-                self.store.set(key, hits)
+            hits = self.store.get(key, 0)
+            evaluated = self.store.get("qa_evaluated_answers:" + wid, 0)
+            if recent.get("connected", 0) >= 400 and recent["connected"] - evaluated >= 200:
+                hits = hits + 1 if signal else 0
+                with self.store.transaction():
+                    self.store.set(key, hits)
+                    self.store.set("qa_evaluated_answers:" + wid, recent["connected"])
             if hits >= 2:
                 incident = self.create(wid, "hallucination", minute, {
                     "trigger_prompt": current["config"]["prompt_version"], "baseline": historical,
-                    "recent": recent, "windows": 2, "window_minutes": 120,
-                    "detector": "minimum 200 connected/10 flags; +3pp and 3-SE rise for two windows"})
+                    "recent": recent, "windows": 2, "window_minutes": minute - window_start,
+                    "detector": "prompt-epoch >=400 connected/10 flags; +3pp and 3-SE rise on two checks with >=200 new answers; overlapping evidence"})
                 self.respond_prompt(workflow, current, minute, incident, json.loads(incident["payload"]))
+        if minute % 120:
+            return
         if not self.open(wid, "caller_id"):
-            baseline = self.store.counts(wid, -100000, max(0, minute - 360), "caller_id")
+            # Match time-of-day: afternoon answer rates cannot be compared with an all-day mean.
+            hours = [(minute // 60 - 2) % 24, (minute // 60 - 1) % 24]
+            baseline = self.store.counts(wid, -100000, minute - 120, "caller_id", hours=hours)
             latest = self.store.counts(wid, minute - 120, minute, "caller_id")
             suspects = []
             for did, counts in latest.items():
-                signal = counts["dials"] >= 200 and proportion_drop(baseline.get(did, {}), counts, "pickup_rate", 0.05)
+                checked_key = "caller_window:" + wid + ":" + did
+                if self.store.get(checked_key) == minute:
+                    continue
+                peer_counts = {key: sum(v[key] for other, v in latest.items() if other != did)
+                               for key in ("dials", "connected", "engaged", "flagged")}
+                peer_rate = rate(peer_counts, "pickup_rate")
+                peers_agree = peer_rate is None or peer_counts["dials"] < 200 or (peer_rate - rate(counts, "pickup_rate") >= 0.05)
+                minimum_drop = 0.05 if peer_counts["dials"] >= 200 else 0.10
+                signal = (counts["dials"] >= 200 and baseline.get(did, {}).get("dials", 0) >= 400
+                          and peers_agree and proportion_drop(baseline.get(did, {}), counts, "pickup_rate", minimum_drop))
                 key = "caller_hits:" + wid + ":" + did
                 hits = self.store.get(key, 0) + 1 if signal else 0
                 with self.store.transaction():
                     self.store.set(key, hits)
+                    self.store.set(checked_key, minute)
                 if hits >= 2:
                     suspects.append(did)
             if suspects:
@@ -96,7 +116,11 @@ class Incidents:
         if minute - payload.get("last_attempt", -10000) < 180:
             return
         suspects = set(payload["suspects"])
-        alternatives = [did for did in workflow["options"]["caller_id"] if did not in suspects]
+        quarantine_key = "caller_quarantine:" + workflow["workflow_id"]
+        quarantine = set(self.store.get(quarantine_key, [])) | suspects
+        with self.store.transaction():
+            self.store.set(quarantine_key, sorted(quarantine))
+        alternatives = [did for did in workflow["options"]["caller_id"] if did not in quarantine]
         if not alternatives:
             self.save(incident, "needs_review", payload, minute, "no permitted caller-ID alternative")
             return
@@ -110,7 +134,7 @@ class Incidents:
             if not any(weights.get(did, 0) > 0 for did in suspects):
                 continue
             # A full rotation seeks human approval if above max_shift; do not staircase around policy.
-            remaining = {did: weight for did, weight in weights.items() if did not in suspects and weight > 0}
+            remaining = {did: weight for did, weight in weights.items() if did not in quarantine and weight > 0}
             if not remaining:
                 remaining = {chosen: 1.0}
             total = sum(remaining.values())
@@ -193,7 +217,7 @@ class Incidents:
         proposed = deepcopy(current["config"])
         proposed["prompt_version"] = payload["validated"]["prompt"]
         pid = self.governance.propose(workflow, current, proposed, minute, "hallucination_fix",
-            "Apply a validated grounded prompt to mitigate a sustained QA-flag spike. "
+            "Apply a validated prompt to mitigate a sustained QA-flag spike. "
             "Prompt affects all campaigns immediately; engagement must be verified after application.",
             {"validation_run_id": payload["validated"]["validation_run_id"], "incident_id": incident["id"],
              "population_evidence": {"baseline": payload["baseline"], "recent": payload["recent"]}},

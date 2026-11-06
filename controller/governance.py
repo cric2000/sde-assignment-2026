@@ -102,6 +102,11 @@ class Governance:
         start = max(start, preference.get("not_before_hour", start))
         if not start <= hour < end:
             return False
+        # Avoid requests that cannot receive even a worst-case in-hours response.
+        latency = policy.get("approver_latency_minutes", [0, 0])[-1] / 60
+        latest = max(start, end - latency)
+        if hour > latest:
+            return False
         limit = min(policy["max_requests_per_24h"], preference.get("human_requests_per_24h", 10**6))
         count = self.store.db.execute("SELECT COUNT(*) FROM proposals WHERE workflow=? AND submitted>?",
                                      (workflow["workflow_id"], minute - 1440)).fetchone()[0]

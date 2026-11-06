@@ -2,7 +2,9 @@
 
 from copy import deepcopy
 
-from .model import Cohorts, distribution
+import json
+
+from .model import Cohorts, changed_dimensions, distribution
 from .statistics import contrast, lower_bound, rate, sample_target
 
 
@@ -18,15 +20,27 @@ class Experiments:
         if experiment:
             if experiment["status"] in ("exploring", "promoted"):
                 if current["config"] != experiment["expected_config"]:
-                    # Preserve new config, including supervisor changes. Never overwrite by snapshot.
+                    changed = changed_dimensions(experiment["expected_config"], current["config"])
+                    owned_change = experiment["dimension"] in changed or "cohorts" in changed
+                    # Other dimensions start a new evidence epoch, without resetting
+                    # spent looks/alpha. Supervisor edits to our dimension are authoritative.
+                    can_resume = not owned_change and (experiment["status"] == "promoted" or experiment["look"] < 2)
                     with self.store.transaction():
-                        experiment["status"] = "invalidated"
+                        if can_resume:
+                            experiment.update(start=minute, version=current["version"],
+                                prompt=current["config"]["prompt_version"], expected_config=current["config"])
+                            experiment.pop("recommendation", None)
+                        else:
+                            experiment["status"] = "invalidated"
                         self.store.save_experiment(wid, experiment)
-                        self.store.decision(wid, minute, "experiment_invalidated", {
-                            "reason": "configuration changed outside this experiment; evidence epoch ended",
+                        self.store.decision(wid, minute, "experiment_epoch_reset" if can_resume else "experiment_invalidated", {
+                            "reason": "external configuration change; preserve new settings and spent alpha budget",
+                            "changed_dimensions": changed,
                             "observed_version": current["version"], "experiment": experiment})
                     return
                 if experiment["status"] == "exploring":
+                    if self.monitor_harm(workflow, current, minute, experiment):
+                        return
                     self.evaluate(workflow, current, minute, experiment)
                 else:
                     self.decay(workflow, current, minute, experiment)
@@ -38,13 +52,31 @@ class Experiments:
         options = sorted(workflow["options"][self.dimension])
         if len(options) < 2:
             return
-        baseline = self.store.counts(wid, -100000, 0, "cohort")
-        cohorts = [c for c in Cohorts(config).ids() if baseline.get(c, {}).get("connected", 0) >= 500]
+        proposed = deepcopy(config)
+        # One supported language + default is the maximum new segmentation. This
+        # avoids dilution across the full Cartesian feature space and is governed.
+        if not config.get("cohorts"):
+            languages = self.store.db.execute("""SELECT json_extract(l.features,'$.lang') lang,
+                SUM(c.connected) connected,COUNT(DISTINCT c.person) people
+                FROM calls c JOIN leads l ON c.lead=l.id WHERE c.workflow=? AND c.minute<0
+                GROUP BY lang HAVING SUM(c.connected)>=1000 AND COUNT(DISTINCT c.person)>=200
+                ORDER BY connected DESC,lang""", (wid,)).fetchall()
+            if len(languages) >= 2:
+                language = languages[0]["lang"]
+                proposed["cohorts"] = [{"id": "language_" + language, "where": {"lang": [language]}}]
+        matcher = Cohorts(proposed)
+        baseline = {cid: {"dials": 0, "connected": 0, "engaged": 0, "flagged": 0} for cid in matcher.ids()}
+        for row in self.store.db.execute("""SELECT l.features,COUNT(*) dials,SUM(c.connected) connected,
+                SUM(c.engaged) engaged,SUM(c.flagged) flagged FROM calls c JOIN leads l ON c.lead=l.id
+                WHERE c.workflow=? AND c.minute<0 GROUP BY l.features""", (wid,)):
+            cid = matcher.match(json.loads(row["features"]))
+            for key in baseline[cid]:
+                baseline[cid][key] += row[key]
+        cohorts = [c for c in matcher.ids() if baseline[c]["connected"] >= 500]
         if not cohorts:
             return
         alpha = 0.05 / (2 * (len(options) - 1) * len(cohorts))
         controls, targets = {}, {}
-        proposed = deepcopy(config)
         for cid in cohorts:
             weights = distribution(config, cid, self.dimension)
             control = sorted(weights, key=lambda v: (-weights[v], v))[0]
@@ -65,6 +97,40 @@ class Experiments:
         if proposal:
             with self.store.transaction():
                 self.store.set("experiment_attempt:" + wid, minute)
+
+    def monitor_harm(self, workflow, current, minute, experiment):
+        """Safety stopping is separate from the finite winner-test budget."""
+        block = minute // 360
+        if block <= experiment.get("last_harm_block", experiment["start"] // 360):
+            return False
+        experiment["last_harm_block"] = block
+        metric, drop = next(iter(workflow["objective"]["guardrail"].items()))
+        metric = metric.removesuffix("_max_drop")
+        harmful = []
+        for cid, control in experiment["controls"].items():
+            rows = self.store.person_arms(workflow["workflow_id"], max(experiment["start"], minute - 360),
+                minute, experiment["dimension"], cid, experiment["prompt"], experiment["version"])
+            for arm in experiment["options"]:
+                if arm == control:
+                    continue
+                for kpi, limit in ((metric, drop), (workflow["objective"]["primary"], 0.1)):
+                    result = contrast(rows, arm, control, kpi)
+                    if result and min(result["candidate_people"], result["control_people"]) >= 100 and result["difference"] + 3 * result["se"] < -limit:
+                        harmful.append({"cohort": cid, "arm": arm, "kpi": kpi, "evidence": result})
+        with self.store.transaction():
+            self.store.save_experiment(workflow["workflow_id"], experiment)
+        if not harmful:
+            return False
+        proposed = deepcopy(current["config"])
+        for cid in experiment["controls"]:
+            proposed["allocations"].setdefault(cid, {})[experiment["dimension"]] = distribution(
+                experiment["original_config"], cid, experiment["dimension"])
+        next_experiment = deepcopy(experiment)
+        next_experiment["status"] = "stopped_for_harm"
+        self.governance.propose(workflow, current, proposed, minute, "experiment_safety_stop",
+            "Population evidence indicates material experiment harm; seek permission to restore reference allocation.",
+            {"harm_signals": harmful, "winner_claim": False}, {"experiment": next_experiment}, impact=0.9)
+        return True
 
     def evaluate(self, workflow, current, minute, experiment):
         wid, dimension = workflow["workflow_id"], experiment["dimension"]
