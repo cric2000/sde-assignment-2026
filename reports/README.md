@@ -13,6 +13,7 @@
 | [provenance.json](provenance.json) | Evaluation names, controller-state directories and raw log locations |
 | [performance.md](performance.md), `performance_*_metrics.json` | Separate before/after optimization benchmark and regression checks |
 | [performance_regressions.json](performance_regressions.json) | Post-optimization completion/recovery checks and complete official grade text |
+| [ingestion_batches.md](ingestion_batches.md), [ingest_batches_v1.json](ingest_batches_v1.json) | Component profiling and repeated batch-size experiment; existing 4,000-event default retained |
 
 The public and welcome reports are selected completed verification runs, selected by completion rather than highest lift. Stable filenames preserve the official grader text unchanged; metrics retain the original evaluation names. The separate welcome run uses the same development scenario with a different experiment dimension. Harmful changes, inconclusive experiments and incident latency are disclosed in SUBMISSION.md. Later performance measurements are recorded separately without replacing these outcome reports.
 

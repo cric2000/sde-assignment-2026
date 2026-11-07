@@ -57,3 +57,49 @@ def test_both_chunk_kinds_are_merged_in_global_order(store):
 def test_out_of_order_batch_is_rejected(store):
     with pytest.raises(ValueError):
         store.ingest([event(2), event(1)], 0)
+
+
+@pytest.mark.parametrize("batch_size", [4000, 8000, 16000])
+def test_interrupted_large_batch_replays_from_durable_prefix_after_reopen(tmp_path, batch_size):
+    import json
+    import httpx
+    from controller.store import Store
+
+    total = batch_size + 5
+
+    class Stream:
+        def __init__(self, interrupt=False):
+            self.interrupt = interrupt
+
+        def get(self, path, kind, after):
+            return [{"chunk": 0}] if kind == "history" and after < 0 else []
+
+        def lines(self, chunk):
+            for eid in range(1, total + 1):
+                if self.interrupt and eid == batch_size + 2:
+                    raise httpx.ReadError("stream interrupted after one committed batch")
+                yield json.dumps(event(eid, "lead" if eid == 1 else "call"))
+
+    path = tmp_path / "replay.db"
+    first = Store(path)
+    with first.transaction():
+        first.set("origin", timestamp_minute(START.isoformat()))
+    try:
+        with pytest.raises(httpx.ReadError):
+            Ingester(Stream(interrupt=True), first, batch_size).drain()
+        assert first.get("event_watermark") == batch_size
+        assert first.get("chunks_after_history") is None
+    finally:
+        first.close()
+
+    reopened = Store(path)
+    try:
+        Ingester(Stream(), reopened, batch_size).drain()
+        assert reopened.get("event_watermark") == total
+        assert reopened.get("events_ingested") == total
+        assert reopened.db.execute("SELECT SUM(dials),SUM(engaged) FROM rollups").fetchone()[:] == (total - 1, total - 1)
+        assert reopened.db.execute("SELECT concluded FROM leads").fetchone()[0] == 1
+        assert Ingester(Stream(), reopened, batch_size).drain()[0] == 0
+        assert reopened.db.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+    finally:
+        reopened.close()

@@ -72,7 +72,7 @@ def main():
     keep = {name + suffix for name in selected for suffix in (".md", "_metrics.json", "_overview.json", "_audit.json")}
     keep |= {"README.md", "crash_recovery.md", "provenance.json", "statistical_calibration.json",
              "performance.md", "performance_before_metrics.json", "performance_after_metrics.json",
-             "performance_regressions.json"}
+             "performance_regressions.json", "ingestion_batches.md", "ingest_batches_v1.json"}
     for path in list(reports.iterdir()):
         if path.is_file() and path.name not in keep:
             path.rename(archive / path.name)
