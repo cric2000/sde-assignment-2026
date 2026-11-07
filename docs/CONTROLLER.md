@@ -31,6 +31,14 @@ To recover a killed controller, run exactly the same command with the same state
 
 ## Reproduce the evidence
 
+For routine changes, use the quick check first:
+
+```bash
+make check PYTHON=.venv/bin/python
+```
+
+This runs unit tests and the offline evidence verifier. Full simulations are needed when changing controller behavior or measuring performance; documentation-only edits do not require another load run.
+
 These harness commands run baseline, simulator, controller and official grading. Each name must be new: existing results are never overwritten.
 
 ```bash
@@ -41,6 +49,8 @@ python scripts/evaluate.py --name check_welcome --baseline --dimension welcome_m
 ```
 
 By default the Linux harness restricts itself and its child processes to four available CPU cores. It samples combined simulator/controller RSS and records controller peak RSS. It does not impose an 8-GB memory cgroup; the report states this. For an isolated load measurement, run it without other evaluation processes.
+
+The harness prints startup stages and a periodic progress message, saves complete metrics to JSON, and prints a compact terminal summary. Add `--verbose` to print the full metrics. Add `--profile` for a diagnostic cProfile run; `runs/<name>/controller.prof` can be inspected with `python -m pstats`. Profiling adds overhead and bypasses the shell entrypoint to instrument the Python module, so profiled runs are excluded from submission benchmark packaging.
 
 The --crash mode waits for a persisted pending approval, sends SIGKILL, restarts against the same world and validates completion, SQLite integrity, final watermark, joined calls and duplicate local application records. Unit tests separately inject lost remote acknowledgements, partial transactions, stale supervisor edits and paid-call ambiguity. Together these exercise different recovery boundaries.
 
@@ -90,6 +100,8 @@ Open /docs for GET /overview, /workflows/{id}/timeline and /metrics. This is a l
 SQLite WAL, synchronous=FULL and one writer provide local durable transactions. Event IDs and the watermark commit with calls, lead joins and rollups. Ingestion consumes globally ordered chunks from both history and events, so no later chunk can advance the watermark past an unprocessed earlier chunk. A partial chunk is replayed safely. The HTTP schema promises strictly increasing event IDs; it does not need contiguous IDs.
 
 The events table stores replayable control events; lead/call records are normalised into dedicated tables to avoid duplicating large JSON payloads. Hourly rollups keep routine detection inexpensive. Experiment comparisons group actual calls by person to account for repeated attempts. Raw history joins for initial cohort support and person-level comparisons are measurable growth costs; SQLite is not production HA.
+
+A partial index covers configuration-change events so the loop does not scan ordinary events to find the latest edit. Timestamp parsing has a bounded 4,096-entry cache. Before grouping person-level experiment observations, rollups provide an upper bound on connected samples. Insufficient counts skip the expensive query; partial-hour overcounts still undergo exact timestamp and person checks before any statistical look. These optimizations preserve the existing transactions, sample thresholds and authority boundary.
 
 Simulated decision lag is measured from ingested call timestamps to the hourly decision cycle, with a weighted histogram. It includes cadence but cannot prove real production freshness because simulator time waits for the controller. HTTP/ingestion/decision wall time and startup are separate measurements. Decisions don't occur every 15-minute tick; approval reconciliation does.
 

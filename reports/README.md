@@ -11,8 +11,10 @@
 | [statistical_calibration.json](statistical_calibration.json) | Synthetic null, power and guardrail calibration with reproducible seeds |
 | [crash_recovery.md](crash_recovery.md) | Real SIGKILL/restart method, checkpoint and outcome |
 | [provenance.json](provenance.json) | Evaluation names, controller-state directories and raw log locations |
+| [performance.md](performance.md), `performance_*_metrics.json` | Separate before/after optimization benchmark and regression checks |
+| [performance_regressions.json](performance_regressions.json) | Post-optimization completion/recovery checks and complete official grade text |
 
-These are the latest completed verification runs, selected by completion rather than highest lift. Stable filenames preserve the official grader text unchanged; metrics retain the original evaluation names. The separate welcome run uses the same development scenario with a different experiment dimension. Harmful changes, inconclusive experiments and incident latency are disclosed in SUBMISSION.md.
+The public and welcome reports are selected completed verification runs, selected by completion rather than highest lift. Stable filenames preserve the official grader text unchanged; metrics retain the original evaluation names. The separate welcome run uses the same development scenario with a different experiment dimension. Harmful changes, inconclusive experiments and incident latency are disclosed in SUBMISSION.md. Later performance measurements are recorded separately without replacing these outcome reports.
 
 Raw simulator outputs and runtime databases are ignored. The controller's audit state is separate under `.controller-state/`; it never reads simulator outputs or grader reports. Earlier reports, an interrupted welcome run and internal planning notes are retained locally under ignored `runs/` archives. They are not submission evidence.
 

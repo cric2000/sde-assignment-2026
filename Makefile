@@ -10,3 +10,7 @@ grade:
 	mkdir -p reports && $(PYTHON) -m sim grade --run runs/mine_$(NAME) --baseline runs/base_$(NAME) --out reports/$(NAME).md
 test:
 	$(PYTHON) -m pytest -q tests
+
+.PHONY: baseline serve grade test check
+check: test
+	$(PYTHON) scripts/verify_evidence.py

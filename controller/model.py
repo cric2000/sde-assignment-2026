@@ -4,6 +4,7 @@ import hashlib
 import json
 from dataclasses import dataclass
 from datetime import datetime
+from functools import lru_cache
 
 DIMENSIONS = ("welcome_message", "voice", "caller_id")
 
@@ -16,6 +17,7 @@ def digest(value):
     return hashlib.sha256(dumps(value).encode()).hexdigest()[:24]
 
 
+@lru_cache(maxsize=4096)
 def timestamp_minute(ts):
     return int(datetime.fromisoformat(ts).timestamp() // 60)
 

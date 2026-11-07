@@ -43,6 +43,8 @@ def main():
     p.add_argument("--baseline", action="store_true")
     p.add_argument("--crash", action="store_true")
     p.add_argument("--dimension", choices=["voice", "welcome_message"], default="voice")
+    p.add_argument("--profile", action="store_true", help="write controller.prof; instrumented timings are not benchmark results")
+    p.add_argument("--verbose", action="store_true", help="print full metrics as well as saving them")
     p.add_argument("--probe", action="store_true")
     p.add_argument("--cpus", type=int, default=4, help="Linux CPU affinity inherited by simulator/controller")
     a = p.parse_args()
@@ -57,13 +59,18 @@ def main():
     reports.mkdir(exist_ok=True)
     python = sys.executable
     if a.baseline:
+        print(f"Running baseline; log: {output / 'baseline.log'}", flush=True)
         with (output / "baseline.log").open("w") as log:
             subprocess.run([python, "-m", "sim", "baseline", "--scenario", a.scenario,
                             "--run-dir", str(output / "baseline")], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True)
     url = f"http://127.0.0.1:{a.port}"
     controller_command = [str(ROOT / "run.sh"), url, "--dimension", a.dimension]
+    if a.profile:
+        controller_command = [python, "-m", "cProfile", "-o", str(output / "controller.prof"),
+                              "-m", "controller", "--url", url, "--dimension", a.dimension]
     env = os.environ | {"CONTROLLER_PYTHON": python, "CONTROLLER_STATE_DIR": str(state_dir)}
     with (output / "server.log").open("w") as server_log, (output / "controller.log").open("w") as controller_log:
+        print(f"Starting simulator; log: {output / 'server.log'}", flush=True)
         server_started = time.monotonic()
         server = subprocess.Popen([python, "-m", "sim", "serve", "--scenario", a.scenario,
                                     "--run-dir", str(output / "candidate"), "--port", str(a.port)],
@@ -73,6 +80,7 @@ def main():
             with httpx.Client(base_url=url, timeout=180, trust_env=False) as client:
                 wait_ready(client, server)
                 simulator_bootstrap_seconds = time.monotonic() - server_started
+                print(f"Simulator ready in {simulator_bootstrap_seconds:.1f}s.", flush=True)
                 if a.probe:
                     probe = {path: client.get(path).json() for path in ("/sim/state", "/workflows")}
                     wid = probe["/workflows"][0]["workflow_id"]
@@ -81,6 +89,7 @@ def main():
                     print(json.dumps(probe, indent=2))
                     return
                 started = time.monotonic()
+                print(f"Running controller; log: {output / 'controller.log'}", flush=True)
                 controller = subprocess.Popen(controller_command, cwd=ROOT, env=env,
                                               stdout=controller_log, stderr=subprocess.STDOUT)
                 crash_evidence = None
@@ -106,6 +115,7 @@ def main():
                     if not crash_evidence:
                         raise RuntimeError("did not observe pending approval for crash injection")
                 peak_combined_rss = 0
+                next_progress = time.monotonic() + 15
                 while controller.poll() is None:
                     combined = 0
                     for process in (server, controller):
@@ -115,10 +125,14 @@ def main():
                         except (OSError, StopIteration):
                             pass
                     peak_combined_rss = max(combined, peak_combined_rss)
+                    if time.monotonic() >= next_progress:
+                        print(f"Controller running: {time.monotonic() - started:.0f}s elapsed; checkpoints in controller.log", flush=True)
+                        next_progress = time.monotonic() + 15
                     time.sleep(0.5)
                 if controller.returncode:
                     raise RuntimeError(f"controller exited {controller.returncode}; inspect {output / 'controller.log'}")
                 elapsed = time.monotonic() - started
+                print("Controller finished; verifying database and exporting evidence.", flush=True)
                 final = client.get("/sim/state").json()
                 if not final["finished"]:
                     raise RuntimeError("controller exited before simulator finished")
@@ -128,6 +142,7 @@ def main():
                 overview = reader.overview()
                 metrics = overview["metrics"]
                 summary = {"name": a.name, "scenario": a.scenario, "dimension": a.dimension,
+                           "profiled": a.profile,
                            "python": sys.version, "platform": platform.platform(),
                            "cpu_count": os.cpu_count(), "cpu_affinity": sorted(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else None,
                            "simulator_bootstrap_seconds": simulator_bootstrap_seconds,
@@ -171,7 +186,12 @@ def main():
                 reader.close()
                 (reports / (a.name + "_metrics.json")).write_text(json.dumps(summary, indent=2))
                 (reports / (a.name + "_overview.json")).write_text(json.dumps(overview, indent=2))
-                print(json.dumps(summary, indent=2))
+                printed = summary if a.verbose else {key: summary[key] for key in (
+                    "name", "dimension", "profiled", "wall_seconds", "ingest_events_per_second", "final_state",
+                    "integrity_check", "source_last_event_matches_watermark", "duplicate_proposal_applications",
+                    "pending_proposals_at_finish", "unjoined_calls")}
+                print(json.dumps(printed, indent=2), flush=True)
+                print(f"Full metrics: {reports / (a.name + '_metrics.json')}", flush=True)
         finally:
             if controller is not None and controller.poll() is None:
                 controller.terminate()
@@ -183,6 +203,7 @@ def main():
                 server.kill()
                 server.wait()
     if a.baseline:
+        print("Grading completed run.", flush=True)
         subprocess.run([python, "-m", "sim", "grade", "--run", str(output / "candidate"),
                         "--baseline", str(output / "baseline"), "--out", str(reports / (a.name + ".md"))], cwd=ROOT, check=True)
 

@@ -129,3 +129,46 @@ def test_expired_recommendation_keeps_safety_monitor_without_new_looks(store, ap
     engine.evaluate = lambda *args: (_ for _ in ()).throw(AssertionError("no third look"))
     engine.step(workflow, api.current, 1560)
     assert checks == [True]
+
+
+def observed_calls(store, minute, count_per_arm=210):
+    from datetime import datetime, timezone
+    calls = []
+    for i in range(count_per_arm):
+        for arm in ("V1", "V2"):
+            eid = len(calls) + 1
+            calls.append({"event_id": eid, "type": "call", "workflow_id": "test",
+                "ts": datetime.fromtimestamp(minute * 60, timezone.utc).isoformat(),
+                "lead_id": str(eid), "person_id": str(eid), "campaign_id": "campaign", "config_version": 1,
+                "cohort_id": "default", "variant": {"voice": arm, "welcome_message": "W1", "caller_id": "D1", "prompt_version": "P1"},
+                "connected": True, "engaged": i % 10 < (9 if arm == "V2" else 3)})
+    store.ingest(calls, 0)
+
+
+def test_insufficient_rollup_support_skips_person_grouping_without_spending_look(store, api, workflow):
+    saved = experiment(api.current["config"])
+    observed_calls(store, 30, count_per_arm=20)
+    store.person_arms = lambda *args: (_ for _ in ()).throw(AssertionError("unnecessary person aggregation"))
+    Experiments(store, Governance(api, store)).evaluate(workflow, api.current, 60, saved)
+    assert saved["look"] == 1
+    assert store.db.execute("SELECT COUNT(*) FROM decisions WHERE kind='experiment_look'").fetchone()[0] == 0
+
+
+def test_partial_hour_readiness_does_not_use_calls_before_experiment_start(store, api, workflow):
+    saved = experiment(api.current["config"])
+    saved.update(start=150, look=0)
+    observed_calls(store, 120)
+    assert store.connected_upper_bounds("test", 150, 180, "voice", "default", "P1", 1)["V2"] == 210
+    Experiments(store, Governance(api, store)).evaluate(workflow, api.current, 180, saved)
+    assert saved["look"] == 0
+    assert store.db.execute("SELECT COUNT(*) FROM proposals").fetchone()[0] == 0
+
+
+def test_supported_exact_observations_still_produce_governed_promotion(store, api, workflow):
+    saved = experiment(api.current["config"])
+    saved["look"] = 0
+    observed_calls(store, 30)
+    Experiments(store, Governance(api, store)).evaluate(workflow, api.current, 60, saved)
+    assert saved["look"] == 1
+    assert store.db.execute("SELECT kind,status FROM proposals").fetchone()[:] == ("experiment_promotion", "draft")
+    assert api.applies == 0

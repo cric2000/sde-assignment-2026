@@ -1,6 +1,6 @@
 # Outcome-First Agent Loop — Submission
 
-**Name:** Anmol Lamba · **Date:** 7 November 2026 · **Hours actually spent:** Approximately 4 hours (estimated; AI-assisted implementation, testing and review) · **Language / storage:** Python / SQLite WAL
+**Name:** Anmol Lamba · **Date:** 7 November 2026 · **Hours actually spent:** Approximately 5 hours (estimated; AI-assisted implementation, testing and review) · **Language / storage:** Python / SQLite WAL
 
 ## 0. TL;DR
 
@@ -171,6 +171,8 @@ The complete five-day public_03 run processed 9,737,474 events: 5,537,379 histor
 
 All load measures separate controller RSS from sampled combined RSS. Four-core affinity is imposed; an 8-GB cgroup limit is not. The simulator waits while the controller computes, so simulated event-to-decision lag is a cadence/evidence-freshness measure, not a paced production-stream latency benchmark. The latter is not built. Full history bootstrap is measured separately from day processing.
 
+Subsequent performance tuning added a partial index for configuration-change events, bounded timestamp caching and a rollup readiness check before person-level grouping. In a separate comparison against commit `047823f`, controller-driven load runtime fell from 457.91 to 419.35 seconds (8.4% less time), with identical event counts and clean integrity. This comparison is recorded in [reports/performance.md](reports/performance.md); the table above preserves the selected verification run. WAL/FULL durability, exact statistical gates and governance remain unchanged.
+
 At 10x the documented event envelope, the ten-minute target requires roughly 14,167 events/sec before other work. Current measured ingest headroom alone cannot establish a 10x end-to-end pass. Initial raw-history joins, person-level comparisons, growing SQLite indexes and long-term event retention are growth costs. Partition by tenant/workflow with serial mutation ownership and time-partitioned events/rollups in existing Postgres. Use transactional outbox/job claiming and fencing. Keep Redis optional and non-authoritative; add a broker when replay/backpressure requirements justify its operational cost.
 
 ## 9. Reliability
@@ -235,7 +237,7 @@ Untouched workflows also differ from baseline across simulator trajectories. Do 
 
 The separate welcome-message evaluation completed public_01 with +0.4% relative conclusion rate. Its four applications were two beneficial, one neutral and one harmful. Both experiments remained inconclusive and restored their reference allocations through approval. See reports/welcome_message.md. Public_03 demonstrated one approved voice promotion followed by seven decay checks; adverse decay through approved rollback remains unexercised end to end.
 
-All four submitted evaluations completed with source-matching watermarks, clean SQLite integrity, zero duplicate applications, zero unjoined calls and zero pending remote-intent states. reports/provenance.json records their exact evaluation names. These are the latest completed verification runs, selected by completion rather than highest outcome lift. Superseded reports and the interrupted welcome evaluation are archived locally outside the submitted evidence set.
+All four submitted evaluations completed with source-matching watermarks, clean SQLite integrity, zero duplicate applications, zero unjoined calls and zero pending remote-intent states. reports/provenance.json records their exact evaluation names. These verification runs were selected by completion rather than highest outcome lift. Superseded reports and the interrupted welcome evaluation are archived locally outside the submitted evidence set.
 
 ## 12. Trade-offs & rejected alternatives
 

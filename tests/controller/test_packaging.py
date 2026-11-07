@@ -7,9 +7,10 @@ import pytest
 from scripts import package_evidence
 
 
-def evaluation(reports, name, *, finished=True, duplicates=0):
+def evaluation(reports, name, *, finished=True, duplicates=0, profiled=False):
     reports.mkdir(exist_ok=True)
     metrics = {
+        "profiled": profiled,
         "final_state": {"finished": finished, "sim_minute": 1440, "end_minute": 1440, "last_event_id": 10},
         "integrity_check": "ok", "source_last_event_matches_watermark": True,
         "metrics": {"event_watermark": 10, "events_ingested": 10}, "durable_event_count": 10,
@@ -21,11 +22,12 @@ def evaluation(reports, name, *, finished=True, duplicates=0):
     (reports / f"{name}.md").write_text("official grade")
 
 
-@pytest.mark.parametrize("problem", ["unfinished", "duplicates", "missing_audit"])
+@pytest.mark.parametrize("problem", ["unfinished", "duplicates", "missing_audit", "profiled"])
 def test_invalid_packaging_leaves_existing_evidence_untouched(tmp_path, monkeypatch, problem):
     reports = tmp_path / "reports"
     evaluation(reports, "valid")
-    evaluation(reports, "invalid", finished=problem != "unfinished", duplicates=int(problem == "duplicates"))
+    evaluation(reports, "invalid", finished=problem != "unfinished", duplicates=int(problem == "duplicates"),
+               profiled=problem == "profiled")
     if problem == "missing_audit":
         (reports / "invalid_audit.json").unlink()
     existing = reports / "public_01.md"

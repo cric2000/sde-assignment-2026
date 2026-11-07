@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS chunks(id INTEGER PRIMARY KEY, kind TEXT, done INTEGER DEFAULT 0);
 CREATE TABLE IF NOT EXISTS events(
  id INTEGER PRIMARY KEY, minute INTEGER, workflow TEXT, type TEXT, payload TEXT);
+CREATE INDEX IF NOT EXISTS events_config_changes ON events(id) WHERE type='config_changed';
 CREATE TABLE IF NOT EXISTS leads(
  id TEXT PRIMARY KEY, workflow TEXT, campaign TEXT, person TEXT, features TEXT, concluded INTEGER DEFAULT 0);
 CREATE INDEX IF NOT EXISTS leads_workflow ON leads(workflow,concluded);
@@ -171,6 +172,21 @@ class Store:
             sql += f" GROUP BY {group}"
         return {r["arm"]: {k: r[k] or 0 for k in ("dials", "connected", "engaged", "flagged")}
                 for r in self.db.execute(sql, args)}
+
+    def connected_upper_bounds(self, wid, start, end, dimension, cohort, prompt, minimum_version):
+        """Cheap readiness check; partial boundary hours can only overcount.
+
+        Exact call timestamps and person support are still checked before a look.
+        Rollups and calls commit together, so an insufficient upper bound safely
+        avoids grouping all person-level observations on every hourly cycle.
+        """
+        if dimension not in ("voice", "welcome_message", "caller_id"):
+            raise ValueError("unsupported experiment dimension")
+        column = {"welcome_message": "welcome"}.get(dimension, dimension)
+        return {row["arm"]: row["connected"] for row in self.db.execute(
+            f"SELECT {column} arm,SUM(connected) connected FROM rollups WHERE workflow=? "
+            "AND bucket>=? AND bucket<? AND cohort=? AND prompt=? AND version>=? "
+            f"GROUP BY {column}", (wid, start // 60, (end + 59) // 60, cohort, prompt, minimum_version))}
 
     def person_arms(self, wid, start, end, dimension, cohort, prompt, minimum_version):
         if dimension not in ("voice", "welcome_message", "caller_id"):

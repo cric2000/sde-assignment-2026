@@ -155,6 +155,14 @@ class Experiments:
                     self.store.save_experiment(wid, experiment)
             return
         observations = {}
+        # Check every cohort before doing any person-level aggregation. The
+        # rollup bounds never decide a winner or spend a statistical look.
+        for cid in experiment["controls"]:
+            upper = self.store.connected_upper_bounds(wid, experiment["start"], minute, dimension, cid,
+                                                       experiment["prompt"], experiment["version"])
+            needed = experiment["targets"][cid] * (experiment["look"] + 1)
+            if any(upper.get(arm, 0) < needed for arm in experiment["options"]):
+                return
         for cid, control in experiment["controls"].items():
             rows = self.store.person_arms(wid, experiment["start"], minute, dimension, cid,
                                            experiment["prompt"], experiment["version"])

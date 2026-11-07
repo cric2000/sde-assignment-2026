@@ -24,6 +24,8 @@ def validate_evaluations(reports, selected):
             raise FileNotFoundError(f"missing official grade for {source}; no evidence was packaged")
         metrics = json.loads((reports / (source + "_metrics.json")).read_text())
         state = metrics["final_state"]
+        if metrics.get("profiled", False):
+            raise ValueError(f"profiled evaluation is diagnostic, not benchmark evidence: {source}")
         complete = state["finished"] and state["sim_minute"] == state["end_minute"]
         clean = (metrics["integrity_check"] == "ok"
                  and metrics["source_last_event_matches_watermark"]
@@ -68,7 +70,9 @@ def main():
                               "simulator_baseline_and_candidate": f"runs/{source}/",
                               "note": "controller state and simulator output are separate; only the external harness reads grading outputs"}
     keep = {name + suffix for name in selected for suffix in (".md", "_metrics.json", "_overview.json", "_audit.json")}
-    keep |= {"README.md", "crash_recovery.md", "provenance.json", "statistical_calibration.json"}
+    keep |= {"README.md", "crash_recovery.md", "provenance.json", "statistical_calibration.json",
+             "performance.md", "performance_before_metrics.json", "performance_after_metrics.json",
+             "performance_regressions.json"}
     for path in list(reports.iterdir()):
         if path.is_file() and path.name not in keep:
             path.rename(archive / path.name)

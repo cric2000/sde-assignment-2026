@@ -1,0 +1,226 @@
+[
+  {
+    "name": "perf_dev_v1",
+    "dimension": "voice",
+    "wall_seconds": 29.39917424100031,
+    "final_state": {
+      "scenario": "public_01_dev",
+      "sim_minute": 11520,
+      "ts": "2027-01-12T00:00:00+05:30",
+      "end_minute": 11520,
+      "finished": true,
+      "tick_minutes": 15,
+      "credits_remaining": 200.0,
+      "chunks": 393,
+      "last_event_id": 297032
+    },
+    "integrity_check": "ok",
+    "source_last_event_matches_watermark": true,
+    "duplicate_proposal_applications": 0,
+    "pending_proposals_at_finish": 0,
+    "unjoined_calls": 0,
+    "crash": {
+      "signal": "SIGKILL",
+      "pending_proposal": [
+        "ctl_c35ebfc780034701bcb73242741367ea",
+        "apr_00001",
+        "pending"
+      ],
+      "checkpoint_before": {
+        "event_watermark": "191403",
+        "events_ingested": "191403",
+        "sim_minute": "585"
+      },
+      "killed_returncode": -9
+    },
+    "process_starts": 2,
+    "incidents": [],
+    "paid": [],
+    "official_grade": "# Grade report \u2014 public_01_dev\n\n## Outcomes vs baseline (no-op controller)\n\n| workflow | conclusion rate | \u0394 | pickup | \u0394 | engagement | \u0394 | engagement gap captured | hallucinated calls (base) |\n|---|---|---|---|---|---|---|---|---|\n| ks_cancel | 0.351 | +5.6% | 0.246 | +3.1% | 0.500 | +1.8% | 9% | 66 (47) |\n| nw_kyc | 0.350 | -3.8% | 0.235 | -2.8% | 0.586 | -0.8% | 0% | 26 (21) |\n| nw_renewal | 0.412 | -1.9% | 0.262 | -0.7% | 0.537 | -1.6% | 1% | 40 (42) |\n| ALL | 0.371 | +0.8% | 0.249 | +0.6% | 0.529 | -0.2% | 3% | 132 (110) |\n\n## Changes applied by the controller\n\n4 applied \u2014 neutral: 2, beneficial: 1, harmful: 1\n\n- nw_renewal v2 (controller_approved) dims=['cohorts', 'voice'] engage\u0394=+0.001 did\u0394=+0.000 \u2192 **neutral**\n- ks_cancel v2 (controller_approved) dims=['cohorts', 'voice'] engage\u0394=+0.014 did\u0394=+0.000 \u2192 **beneficial**\n- nw_renewal v3 (controller_approved) dims=['voice'] engage\u0394=-0.002 did\u0394=+0.000 \u2192 **neutral**\n- ks_cancel v3 (controller_approved) dims=['voice'] engage\u0394=-0.014 did\u0394=+0.000 \u2192 **harmful**\n\n## Governance\n\n```\n{\n  \"approval_requests\": 4,\n  \"decisions\": {\n    \"approved\": 4,\n    \"expired\": 0\n  },\n  \"rejection_reasons\": {},\n  \"applied_via_approval\": 4,\n  \"auto_applied\": 0,\n  \"auto_apply_rejected\": 0,\n  \"apply_conflicts\": 0,\n  \"lapsed\": 0,\n  \"peak_requests_per_24h\": {\n    \"nw_renewal\": 1,\n    \"ks_cancel\": 1\n  }\n}\n```\n\n## Incidents\n\n```\n[]\n```\n\n## Decaying variants \u2014 share of in-population calls still on the variant, by day after onset\n\n```\n{}\n```\n\nCredits used: 0 \u00b7 validation runs: 0 \u00b7 LLM fix calls: 0",
+    "local_state_directory": ".controller-state/perf_dev_v1",
+    "local_run_directory": "runs/perf_dev_v1"
+  },
+  {
+    "name": "perf_incidents_v1",
+    "dimension": "voice",
+    "wall_seconds": 31.02809583399994,
+    "final_state": {
+      "scenario": "public_02_incidents",
+      "sim_minute": 14400,
+      "ts": "2027-01-14T00:00:00+05:30",
+      "end_minute": 14400,
+      "finished": true,
+      "tick_minutes": 15,
+      "credits_remaining": 192.0,
+      "chunks": 491,
+      "last_event_id": 324314
+    },
+    "integrity_check": "ok",
+    "source_last_event_matches_watermark": true,
+    "duplicate_proposal_applications": 0,
+    "pending_proposals_at_finish": 0,
+    "unjoined_calls": 0,
+    "crash": null,
+    "process_starts": 1,
+    "incidents": [
+      {
+        "id": "inc_3a09d51aa4f2058daf390b0c",
+        "workflow": "ks_cancel",
+        "kind": "caller_id",
+        "status": "recovered",
+        "minute": 3720,
+        "payload": {
+          "applied_minute": 3780,
+          "applied_version": 3,
+          "baseline": {
+            "D1": {
+              "connected": 1826,
+              "dials": 6433,
+              "engaged": 910,
+              "flagged": 31
+            },
+            "D2": {
+              "connected": 1777,
+              "dials": 6367,
+              "engaged": 869,
+              "flagged": 30
+            }
+          },
+          "before": {
+            "connected": 152,
+            "dials": 800,
+            "engaged": 77,
+            "flagged": 2
+          },
+          "last_attempt": 3720,
+          "post_apply": {
+            "connected": 268,
+            "dials": 1200,
+            "engaged": 138,
+            "flagged": 5
+          },
+          "prompt": "P1",
+          "proposal_id": "ctl_db5d048a525e47a2a8e3a1ff6ed742da",
+          "recent": {
+            "D1": {
+              "connected": 109,
+              "dials": 397,
+              "engaged": 55,
+              "flagged": 2
+            },
+            "D2": {
+              "connected": 43,
+              "dials": 403,
+              "engaged": 22,
+              "flagged": 0
+            }
+          },
+          "suspects": [
+            "D2"
+          ],
+          "window_minutes": 120,
+          "windows": 2
+        }
+      },
+      {
+        "id": "inc_6829be76b1c7d0170f2694ee",
+        "workflow": "ks_cancel",
+        "kind": "hallucination",
+        "status": "recovered",
+        "minute": 5520,
+        "payload": {
+          "applied_minute": 6540,
+          "applied_version": 5,
+          "baseline": {
+            "connected": 16439,
+            "dials": 65018,
+            "engaged": 8288,
+            "flagged": 225
+          },
+          "detector": "prompt-epoch >=400 connected/10 flags; +3pp and 3-SE rise on two checks with >=200 new answers; overlapping evidence",
+          "last_attempt": 5520,
+          "post_apply": {
+            "connected": 227,
+            "dials": 1200,
+            "engaged": 132,
+            "flagged": 0
+          },
+          "prompt": "P3",
+          "proposal_id": "ctl_d540e7410bf4415ab9e97368c23d8e70",
+          "recent": {
+            "connected": 676,
+            "dials": 3400,
+            "engaged": 311,
+            "flagged": 39
+          },
+          "trigger_prompt": "P2",
+          "validated": {
+            "prompt": "P3",
+            "result": {
+              "credits_remaining": 192.0,
+              "failures": 6,
+              "n": 500,
+              "pass_rate": 0.988,
+              "prompt_version": "P3",
+              "ts": "2027-01-07T20:00:00+05:30",
+              "validation_run_id": "val_00001",
+              "workflow_id": "ks_cancel"
+            },
+            "validation_run_id": "val_00001"
+          },
+          "window_minutes": 495,
+          "windows": 2
+        }
+      }
+    ],
+    "paid": [
+      {
+        "id": "inc_6829be76b1c7d0170f2694ee:suggest",
+        "workflow": "ks_cancel",
+        "minute": 5520,
+        "kind": "suggest",
+        "cost": 3,
+        "status": "done"
+      },
+      {
+        "id": "inc_6829be76b1c7d0170f2694ee:validate:P3",
+        "workflow": "ks_cancel",
+        "minute": 5520,
+        "kind": "validation",
+        "cost": 5,
+        "status": "done"
+      }
+    ],
+    "official_grade": "# Grade report \u2014 public_02_incidents\n\n## Outcomes vs baseline (no-op controller)\n\n| workflow | conclusion rate | \u0394 | pickup | \u0394 | engagement | \u0394 | engagement gap captured | hallucinated calls (base) |\n|---|---|---|---|---|---|---|---|---|\n| ks_cancel | 0.288 | +16.2% | 0.199 | +8.4% | 0.503 | +5.5% | 35% | 109 (330) |\n| nw_kyc | 0.374 | -0.2% | 0.241 | -0.5% | 0.595 | +0.5% | 0% | 24 (31) |\n| nw_renewal | 0.429 | +0.5% | 0.261 | -0.5% | 0.551 | +0.6% | 0% | 58 (55) |\n| ALL | 0.353 | +5.6% | 0.228 | +2.9% | 0.541 | +2.0% | 14% | 191 (416) |\n\n## Changes applied by the controller\n\n4 applied \u2014 harmful: 1, neutral: 1, beneficial: 2\n\n- nw_renewal v2 (controller_approved) dims=['cohorts', 'voice'] engage\u0394=-0.012 did\u0394=+0.000 \u2192 **harmful**\n- ks_cancel v2 (controller_approved) dims=['cohorts', 'voice'] engage\u0394=+0.005 did\u0394=+0.000 \u2192 **neutral**\n- ks_cancel v3 (controller_approved) dims=['caller_id'] engage\u0394=+0.000 did\u0394=+0.483 \u2192 **beneficial**\n- ks_cancel v5 (controller_approved) dims=['prompt_version'] engage\u0394=+0.137 did\u0394=+0.000 \u2192 **beneficial**\n\n## Governance\n\n```\n{\n  \"approval_requests\": 4,\n  \"decisions\": {\n    \"approved\": 4,\n    \"expired\": 0\n  },\n  \"rejection_reasons\": {},\n  \"applied_via_approval\": 4,\n  \"auto_applied\": 0,\n  \"auto_apply_rejected\": 0,\n  \"apply_conflicts\": 0,\n  \"lapsed\": 0,\n  \"peak_requests_per_24h\": {\n    \"nw_renewal\": 1,\n    \"ks_cancel\": 1\n  }\n}\n```\n\n## Incidents\n\n```\n[\n  {\n    \"type\": \"did_flagged\",\n    \"workflow\": \"ks_cancel\",\n    \"at\": \"D2 10:00\",\n    \"flagged_did_share_by_day\": {\n      \"2\": 0.248,\n      \"3\": 0.0,\n      \"4\": 0.0,\n      \"5\": 0.0,\n      \"6\": 0.0,\n      \"7\": 0.0,\n      \"8\": 0.0,\n      \"9\": 0.0\n    }\n  },\n  {\n    \"type\": \"supervisor_edit\",\n    \"workflow\": \"ks_cancel\",\n    \"at\": \"D3 11:30\",\n    \"mttr_minutes\": 1530,\n    \"fixed_by\": \"controller_approved\"\n  },\n  {\n    \"type\": \"supervisor_edit\",\n    \"workflow\": \"nw_renewal\",\n    \"at\": \"D5 15:00\"\n  }\n]\n```\n\n## Decaying variants \u2014 share of in-population calls still on the variant, by day after onset\n\n```\n{}\n```\n\nCredits used: 8 \u00b7 validation runs: 1 \u00b7 LLM fix calls: 1",
+    "local_state_directory": ".controller-state/perf_incidents_v1",
+    "local_run_directory": "runs/perf_incidents_v1"
+  },
+  {
+    "name": "perf_welcome_v1",
+    "dimension": "welcome_message",
+    "wall_seconds": 25.022819575000085,
+    "final_state": {
+      "scenario": "public_01_dev",
+      "sim_minute": 11520,
+      "ts": "2027-01-12T00:00:00+05:30",
+      "end_minute": 11520,
+      "finished": true,
+      "tick_minutes": 15,
+      "credits_remaining": 200.0,
+      "chunks": 393,
+      "last_event_id": 297032
+    },
+    "integrity_check": "ok",
+    "source_last_event_matches_watermark": true,
+    "duplicate_proposal_applications": 0,
+    "pending_proposals_at_finish": 0,
+    "unjoined_calls": 0,
+    "crash": null,
+    "process_starts": 1,
+    "incidents": [],
+    "paid": [],
+    "official_grade": "# Grade report \u2014 public_01_dev\n\n## Outcomes vs baseline (no-op controller)\n\n| workflow | conclusion rate | \u0394 | pickup | \u0394 | engagement | \u0394 | engagement gap captured | hallucinated calls (base) |\n|---|---|---|---|---|---|---|---|---|\n| ks_cancel | 0.337 | +1.3% | 0.245 | +3.0% | 0.481 | -2.1% | -7% | 62 (47) |\n| nw_kyc | 0.368 | +1.2% | 0.242 | -0.0% | 0.600 | +1.6% | 0% | 22 (21) |\n| nw_renewal | 0.425 | +1.3% | 0.260 | -1.3% | 0.557 | +2.2% | 15% | 44 (42) |\n| ALL | 0.373 | +1.3% | 0.250 | +0.8% | 0.530 | +0.1% | 3% | 128 (110) |\n\n## Changes applied by the controller\n\n4 applied \u2014 beneficial: 2, harmful: 1, neutral: 1\n\n- nw_renewal v2 (controller_approved) dims=['cohorts', 'welcome_message'] engage\u0394=+0.049 did\u0394=+0.000 \u2192 **beneficial**\n- ks_cancel v2 (controller_approved) dims=['cohorts', 'welcome_message'] engage\u0394=-0.018 did\u0394=+0.000 \u2192 **harmful**\n- ks_cancel v3 (controller_approved) dims=['welcome_message'] engage\u0394=+0.018 did\u0394=+0.000 \u2192 **beneficial**\n- nw_renewal v3 (controller_approved) dims=['welcome_message'] engage\u0394=+0.005 did\u0394=+0.000 \u2192 **neutral**\n\n## Governance\n\n```\n{\n  \"approval_requests\": 4,\n  \"decisions\": {\n    \"approved\": 4,\n    \"expired\": 0\n  },\n  \"rejection_reasons\": {},\n  \"applied_via_approval\": 4,\n  \"auto_applied\": 0,\n  \"auto_apply_rejected\": 0,\n  \"apply_conflicts\": 0,\n  \"lapsed\": 0,\n  \"peak_requests_per_24h\": {\n    \"nw_renewal\": 1,\n    \"ks_cancel\": 1\n  }\n}\n```\n\n## Incidents\n\n```\n[]\n```\n\n## Decaying variants \u2014 share of in-population calls still on the variant, by day after onset\n\n```\n{\n  \"nw_renewal:welcome_message=W3\": {\n    \"3\": 0.243,\n    \"4\": 0.245,\n    \"5\": 0.116,\n    \"6\": 0.0,\n    \"7\": 0.0\n  }\n}\n```\n\nCredits used: 0 \u00b7 validation runs: 0 \u00b7 LLM fix calls: 0",
+    "local_state_directory": ".controller-state/perf_welcome_v1",
+    "local_run_directory": "runs/perf_welcome_v1"
+  }
+]
