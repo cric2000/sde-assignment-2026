@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Verify packaged evidence, read-only supervisor HTTP routes and audit queries."""
+"""Check the submission offline; optionally exercise local audit/API state."""
 
+import argparse
 import ast
 import json
 import os
@@ -16,10 +17,10 @@ import httpx
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from controller.inspect import Reader
+from scripts.package_evidence import validate_evaluations
 
 
-def main():
-    provenance = json.loads((ROOT / "reports/provenance.json").read_text())
+def verify_live(provenance):
     db = ROOT / provenance["public_02"]["state_directory"] / "state.db"
     reader = Reader(db)
     try:
@@ -28,7 +29,8 @@ def main():
         ts = datetime.fromtimestamp((reader.meta()["origin"] + proposal["updated"]) * 60, timezone.utc).isoformat()
         audit = reader.why(proposal["workflow"], ts)
         assert audit["id"] == proposal["id"] and audit["approval"] == proposal["approval"]
-        (ROOT / "reports/public_02_audit.json").write_text(json.dumps(audit, indent=2) + "\n")
+        saved = json.loads((ROOT / "reports/public_02_audit.json").read_text())
+        assert saved["id"] == audit["id"] and saved["approval"] == audit["approval"]
         lead = reader.db.execute("SELECT lead FROM calls WHERE workflow=? AND prompt=? LIMIT 1",
                                  (proposal["workflow"], json.loads(proposal["body"])["proposed_config"]["prompt_version"])).fetchone()[0]
         assert reader.exposure(lead)["calls"]
@@ -57,6 +59,23 @@ def main():
         finally:
             server.terminate()
             server.wait(timeout=10)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--live", action="store_true", help="also check the retained incident DB and localhost API")
+    args = parser.parse_args()
+    required = ("run.sh", "requirements.txt", "requirements-tested.txt", "SUBMISSION.md", "SUBMISSION_TEMPLATE.md",
+                "docs/CONTROLLER.md", "docs/RUNBOOK.md", "reports/README.md", "reports/crash_recovery.md")
+    assert all((ROOT / path).is_file() for path in required), "missing required submission file"
+    assert os.access(ROOT / "run.sh", os.X_OK), "run.sh must be executable"
+    provenance = json.loads((ROOT / "reports/provenance.json").read_text())
+    assert {"public_01", "public_02", "public_03"} <= provenance.keys()
+    validate_evaluations(ROOT / "reports", {name: name for name in provenance})
+    for name, source in provenance.items():
+        assert (ROOT / f"reports/{name}.md").is_file()
+        metrics = json.loads((ROOT / f"reports/{name}_metrics.json").read_text())
+        assert metrics["name"] == source["evaluation_name"], name
     for path in (ROOT / "reports").glob("*.json"):
         json.loads(path.read_text())
     submission = (ROOT / "SUBMISSION.md").read_text()
@@ -74,7 +93,18 @@ def main():
                 assert not any(n.name == "sim" or n.name.startswith("sim.") for n in node.names)
             if isinstance(node, ast.ImportFrom):
                 assert not (node.module or "").startswith("sim")
-    print("Verified supervisor HTTP routes, real audit/exposure queries, JSON evidence, exact grade tables, submission headings, stakeholder word limits and HTTP-only import boundary.")
+    documents = [ROOT / "README.md", ROOT / "SUBMISSION.md", *(ROOT / "docs").glob("*.md"),
+                 *(ROOT / "reports").glob("*.md")]
+    for path in documents:
+        for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
+            if target.startswith(("http://", "https://", "#")):
+                continue
+            assert (path.parent / target.split("#")[0]).exists(), f"broken link in {path}: {target}"
+    print("Verified required artifacts, completed evidence, provenance, exact grade tables, submission headings, "
+          "stakeholder word limits, documentation links and HTTP-only import boundary.")
+    if args.live:
+        verify_live(provenance)
+        print("Verified retained audit/exposure state and real read-only supervisor HTTP routes.")
 
 
 if __name__ == "__main__":

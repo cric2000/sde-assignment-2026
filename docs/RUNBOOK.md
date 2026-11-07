@@ -6,6 +6,18 @@ Use a state directory per simulator world. A normal SIGTERM/SIGKILL is recovered
 
 The controller is intentionally single-owner. Production needs workflow leases/fencing in Postgres. A second driver with a different state directory can still race the simulator and is an operational error.
 
+## Complete evaluation runs
+
+Use the automated harness for both experiment modes. It starts and stops the simulator, requires a completed simulation before grading, and records the selected dimension in the metrics. Choose a new name and unused port for each run:
+
+```bash
+.venv/bin/python scripts/evaluate.py --scenario scenarios/public_01_dev.yaml --name welcome_check_v1 --baseline --dimension welcome_message --port 18714
+```
+
+The default dimension is `voice`. Add `--crash` to verify recovery with the same experiment dimension. Direct startup also accepts `./run.sh <SIM_URL> --dimension welcome_message`.
+
+Keep the simulator alive until the controller exits successfully. If the simulator stops before its clock finishes, discard that run's grade as incomplete and rerun with a fresh simulator and state directory. A new simulator process cannot resume the previous world from the controller's database. Compare candidate and baseline only after both complete the scenario.
+
 ## Pages and actions
 
 | Condition | Impact | Inspect and act |

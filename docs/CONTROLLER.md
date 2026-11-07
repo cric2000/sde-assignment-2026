@@ -7,11 +7,11 @@ The original README is the assignment brief. This guide describes the implementa
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-tested.txt
 python -m pytest -q tests
 ```
 
-The recorded test environment is Python 3.14 on Linux. requirements-tested.txt pins the six top-level versions used for the measurements and needs Python >=3.12 because of NumPy. The original requirements.txt allows the installer to select compatible versions on older Python; that combination is not separately validated here. Core code uses Python >=3.10 and standard-library SQLite with JSON functions. No extra stateful service or Docker is required.
+Use Python >=3.12 for the pinned dependencies. The measured environment was Python 3.14.4 on Linux. requirements-tested.txt pins the six top-level versions used for the measurements. The original requirements.txt retains broader version ranges; other combinations were not separately validated. Core code uses Python >=3.10 and standard-library SQLite with JSON functions. No extra stateful service or Docker is required.
 
 In terminal one:
 
@@ -37,6 +37,7 @@ These harness commands run baseline, simulator, controller and official grading.
 python scripts/evaluate.py --name check_dev --baseline --crash --port 18700
 python scripts/evaluate.py --scenario scenarios/public_02_incidents.yaml --name check_incidents --baseline --port 18701
 python scripts/evaluate.py --scenario scenarios/public_03_load.yaml --name check_load --port 18702
+python scripts/evaluate.py --name check_welcome --baseline --dimension welcome_message --port 18703
 ```
 
 By default the Linux harness restricts itself and its child processes to four available CPU cores. It samples combined simulator/controller RSS and records controller peak RSS. It does not impose an 8-GB memory cgroup; the report states this. For an isolated load measurement, run it without other evaluation processes.
@@ -45,11 +46,22 @@ The --crash mode waits for a persisted pending approval, sends SIGKILL, restarts
 
 Evaluation scripts may pass scenario paths to the official simulator and run the official grader. Controller modules never read those paths, import sim, or inspect simulator run directories. Reports are not controller inputs. Grade labels cannot be used to select variants.
 
+The harness requires completion before grading. Do not stop the simulator while the controller is running; a simulator restart creates a new world and requires a fresh evaluation name and state directory. Evaluation names appear in the metrics even when reports are later packaged under stable names.
+
+```bash
+python scripts/calibrate.py
+python scripts/verify_evidence.py
+```
+
+Calibration is a synthetic statistics check. The evidence verifier checks the submitted package offline, including required files, completion/integrity, provenance, exact grade tables, documentation links and the HTTP import boundary. `python scripts/verify_evidence.py --live` additionally needs the retained incident database listed in reports/provenance.json and an unused localhost port 18800; it checks audit/exposure queries and the read-only API. Runtime databases are ignored and must be recreated on a fresh clone.
+
+scripts/package_evidence.py selects completed evaluation reports under stable public_01/public_02/public_03 names, with optional `--welcome`, and archives superseded reports under ignored runs/report-archive/. It rejects incomplete/inconsistent evidence before changing files. After selecting another set, update the submission tables and the load/crash narratives from that set, then run the evidence verifier.
+
 ## Inspect and supervise
 
 ```bash
 python -m controller.inspect --db .controller-state/check_incidents/state.db overview
-python -m controller.inspect --db .controller-state/check_incidents/state.db why --workflow ks_cancel --at 2027-01-08T12:45:00+05:30
+python -m controller.inspect --db .controller-state/check_incidents/state.db why --workflow ks_cancel --at 2027-01-08T14:00:00+05:30
 python -m controller.inspect --db .controller-state/check_incidents/state.db timeline --workflow ks_cancel
 python -m controller.inspect --db .controller-state/check_incidents/state.db exposure --lead <lead_id>
 ```
@@ -68,7 +80,7 @@ Open /docs for GET /overview, /workflows/{id}/timeline and /metrics. This is a l
 
 - controller/preferences.json contains client preferences supplied by the stakeholder memos, separately from discovered workflow policy. Kestrel is capped at two human requests per rolling 24 hours, after 11:00; customer-facing agent changes voluntarily use human approval. This is business preference data, not hidden scenario truth.
 - Runtime workflow options, objectives, enforced policy and configs are fetched through HTTP. Refresh happens hourly and after observed config changes.
-- One-factor experimentation defaults to voice. The Python CLI supports `--dimension welcome_message` for a separate run; never launch two drivers against one simulator. The default submission does not optimise both dimensions or their interaction.
+- One-factor experimentation defaults to voice. Both `./run.sh <SIM_URL> --dimension welcome_message` and the evaluation harness support a separate welcome run; never launch two drivers against one simulator. The controller does not optimise both dimensions jointly.
 - Shared cohort logic is in model.Cohorts. At most one supported language cohort is newly formed, plus default, to limit traffic dilution. Existing configured cohorts are honoured. Every cohort creation goes through governance.
 - Statistics and policy functions are pure enough to test independently. Detector thresholds and protocol constants are explicit in incidents.py and experiments.py and appear in decision evidence; changes require re-running calibration and integration reports.
 - Paid requests have their own durable ledger. Done results are reused. In-flight/unknown responses are not automatically paid again, because the API has no documented idempotency or result lookup. A needs_review incident remains visible while monitoring continues.

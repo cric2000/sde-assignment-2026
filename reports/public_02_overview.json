@@ -1,147 +1,149 @@
 {
   "metrics": {
+    "process_starts": 1,
     "origin": 29983350,
     "scenario": "public_02_incidents",
     "started_ts": "2027-01-04T00:00:00+05:30",
     "observed_prompt:nw_renewal": "P1",
     "qa_epoch:nw_renewal": 0,
-    "qa_evaluated_answers:nw_renewal": 9423,
+    "qa_evaluated_answers:nw_renewal": 9271,
     "observed_prompt:nw_kyc": "P1",
     "qa_epoch:nw_kyc": 0,
-    "qa_evaluated_answers:nw_kyc": 4718,
+    "qa_evaluated_answers:nw_kyc": 4865,
     "observed_prompt:ks_cancel": "P3",
-    "qa_epoch:ks_cancel": 6570,
-    "qa_evaluated_answers:ks_cancel": 4940,
-    "event_watermark": 324314,
-    "events_ingested": 324314,
+    "qa_epoch:ks_cancel": 6600,
+    "qa_evaluated_answers:ks_cancel": 4751,
+    "event_watermark": 324315,
+    "events_ingested": 324315,
     "chunks_after_history": 0,
-    "ingest_seconds": 12.03886749402227,
-    "refreshed_config_event": 264302,
+    "ingest_seconds": 8.682764378023421,
+    "refreshed_config_event": 264303,
     "decision_lag_histogram": {
-      "1": 1775,
-      "10": 1250,
-      "11": 2000,
-      "12": 1275,
-      "13": 975,
-      "14": 2325,
-      "15": 925,
+      "1": 1800,
+      "10": 1450,
+      "11": 1625,
+      "12": 1550,
+      "13": 1100,
+      "14": 2425,
+      "15": 2275,
       "16": 1625,
       "17": 1600,
-      "18": 2125,
-      "19": 1550,
-      "2": 1750,
-      "20": 1700,
-      "21": 1725,
-      "22": 2075,
-      "23": 2075,
-      "24": 1025,
-      "25": 1550,
-      "26": 1850,
-      "27": 1475,
-      "28": 1775,
-      "29": 2400,
-      "3": 2125,
-      "30": 1450,
-      "31": 1600,
-      "32": 1975,
-      "33": 2050,
-      "34": 1750,
-      "35": 1225,
-      "36": 2550,
-      "37": 1550,
-      "38": 2000,
-      "39": 1675,
-      "4": 1775,
-      "40": 2075,
-      "41": 1600,
-      "42": 1350,
-      "43": 1475,
-      "44": 1700,
-      "45": 1425,
-      "46": 1500,
-      "47": 1450,
-      "48": 1975,
-      "49": 1350,
-      "5": 1675,
-      "50": 1400,
-      "51": 2600,
-      "52": 1725,
-      "53": 1800,
-      "54": 2475,
-      "55": 1100,
-      "56": 2050,
-      "57": 1350,
-      "58": 1800,
-      "59": 1725,
-      "6": 2350,
+      "18": 1375,
+      "19": 2100,
+      "2": 1350,
+      "20": 2175,
+      "21": 1225,
+      "22": 2250,
+      "23": 1600,
+      "24": 1250,
+      "25": 2700,
+      "26": 1475,
+      "27": 2000,
+      "28": 1625,
+      "29": 1325,
+      "3": 2100,
+      "30": 1675,
+      "31": 1925,
+      "32": 1875,
+      "33": 1550,
+      "34": 2550,
+      "35": 1675,
+      "36": 1625,
+      "37": 1875,
+      "38": 2500,
+      "39": 2125,
+      "4": 1825,
+      "40": 1125,
+      "41": 1800,
+      "42": 1100,
+      "43": 1425,
+      "44": 1725,
+      "45": 1125,
+      "46": 1575,
+      "47": 1300,
+      "48": 1725,
+      "49": 1300,
+      "5": 1925,
+      "50": 1575,
+      "51": 1750,
+      "52": 1700,
+      "53": 2050,
+      "54": 2100,
+      "55": 1675,
+      "56": 1700,
+      "57": 1625,
+      "58": 2125,
+      "59": 2100,
+      "6": 1275,
       "60": 1700,
-      "7": 1825,
-      "8": 1975,
+      "7": 1725,
+      "8": 1575,
       "9": 2000
     },
-    "last_decision_event": 324314,
-    "decision_seconds": 5.175150555001892,
+    "last_decision_event": 324315,
+    "decision_seconds": 4.245587301022169,
     "decision_cycles": 240,
     "decision_lag_minutes_max": 60,
-    "decision_compute_seconds_max": 0.46931688300173846,
+    "decision_compute_seconds_max": 0.3602309480011172,
     "sim_minute": 14400,
     "state": {
       "chunks": 491,
       "credits_remaining": 192.0,
       "end_minute": 14400,
       "finished": true,
-      "last_event_id": 324314,
+      "last_event_id": 324315,
       "scenario": "public_02_incidents",
       "sim_minute": 14400,
       "tick_minutes": 15,
       "ts": "2027-01-14T00:00:00+05:30"
     },
     "finished": true,
-    "peak_rss_kib": 96072,
-    "tick_seconds_max": 4.453513720000046,
+    "controller_wall_seconds": 21.65646906300026,
+    "peak_rss_kib": 96212,
+    "tick_seconds_max": 3.2648827350021747,
     "day_wall_markers": [
       {
-        "cumulative_wall_seconds": 4.471631611999328,
+        "cumulative_wall_seconds": 3.2789399889989,
         "sim_minute": 0
       },
       {
-        "cumulative_wall_seconds": 7.1942752319992,
+        "cumulative_wall_seconds": 6.077593188998435,
         "sim_minute": 1440
       },
       {
-        "cumulative_wall_seconds": 9.483732286000304,
+        "cumulative_wall_seconds": 7.665859831999114,
         "sim_minute": 2880
       },
       {
-        "cumulative_wall_seconds": 12.029247102000227,
+        "cumulative_wall_seconds": 9.327844735998951,
         "sim_minute": 4320
       },
       {
-        "cumulative_wall_seconds": 14.552237379000871,
+        "cumulative_wall_seconds": 11.007116472999769,
         "sim_minute": 5760
       },
       {
-        "cumulative_wall_seconds": 17.236968992001493,
+        "cumulative_wall_seconds": 12.837217142001464,
         "sim_minute": 7200
       },
       {
-        "cumulative_wall_seconds": 19.684495498000615,
+        "cumulative_wall_seconds": 14.4886665060003,
         "sim_minute": 8640
       },
       {
-        "cumulative_wall_seconds": 21.94454203799978,
+        "cumulative_wall_seconds": 16.069202275000862,
         "sim_minute": 10080
       },
       {
-        "cumulative_wall_seconds": 24.490288277000218,
+        "cumulative_wall_seconds": 17.75525900899811,
         "sim_minute": 11520
       },
       {
-        "cumulative_wall_seconds": 27.201463797999168,
+        "cumulative_wall_seconds": 19.632141613001295,
         "sim_minute": 12960
       },
       {
-        "cumulative_wall_seconds": 30.134774803002074,
+        "cumulative_wall_seconds": 21.656050541001605,
         "sim_minute": 14400
       }
     ],
@@ -153,8 +155,7 @@
     "caller_window:nw_kyc:D1": 14160,
     "caller_quarantine:ks_cancel": [
       "D2"
-    ],
-    "controller_wall_seconds": 30.13527052000063
+    ]
   },
   "workflows": [
     {
@@ -168,15 +169,15 @@
       },
       "counts": {
         "dials": 48000,
-        "connected": 9853,
-        "engaged": 4992,
-        "flagged": 213
+        "connected": 9741,
+        "engaged": 4876,
+        "flagged": 167
       },
-      "pickup_rate": 0.20527083333333335,
-      "engagement_rate": 0.5066477215061402,
+      "pickup_rate": 0.2029375,
+      "engagement_rate": 0.5005646237552612,
       "leads_uploaded": 15000,
-      "leads_concluded": 4500,
-      "business_outcome": 0.3,
+      "leads_concluded": 4349,
+      "business_outcome": 0.2899333333333333,
       "cohorts": [
         {
           "id": "language_hi",
@@ -297,15 +298,15 @@
       },
       "counts": {
         "dials": 20000,
-        "connected": 4856,
-        "engaged": 2910,
-        "flagged": 88
+        "connected": 4967,
+        "engaged": 2965,
+        "flagged": 72
       },
-      "pickup_rate": 0.2428,
-      "engagement_rate": 0.5992586490939045,
+      "pickup_rate": 0.24835,
+      "engagement_rate": 0.5969398026978056,
       "leads_uploaded": 7000,
-      "leads_concluded": 2638,
-      "business_outcome": 0.37685714285714284,
+      "leads_concluded": 2726,
+      "business_outcome": 0.3894285714285714,
       "cohorts": [
         {
           "id": "default",
@@ -325,15 +326,15 @@
       },
       "counts": {
         "dials": 36000,
-        "connected": 9423,
-        "engaged": 5172,
-        "flagged": 126
+        "connected": 9345,
+        "engaged": 5024,
+        "flagged": 135
       },
-      "pickup_rate": 0.26175,
-      "engagement_rate": 0.5488697866921363,
+      "pickup_rate": 0.25958333333333333,
+      "engagement_rate": 0.537613697164259,
       "leads_uploaded": 11000,
-      "leads_concluded": 4719,
-      "business_outcome": 0.429,
+      "leads_concluded": 4562,
+      "business_outcome": 0.4147272727272727,
       "cohorts": [
         {
           "id": "language_hi",
@@ -431,7 +432,7 @@
           }
         },
         "prompt": "P1",
-        "start": 720,
+        "start": 750,
         "status": "invalidated",
         "targets": {
           "default": 267,
@@ -444,93 +445,102 @@
   ],
   "proposals": [
     {
-      "id": "ctl_7e085442217b4ecda3f6f2520ae916e0",
+      "id": "ctl_fe796bd7cf8c4e19991e03fd41376411",
       "workflow": "ks_cancel",
       "minute": 0,
       "kind": "experiment_start",
-      "status": "applied",
+      "status": "rejected",
       "approval": "apr_00002",
-      "updated": 795
+      "updated": 765
     },
     {
-      "id": "ctl_27bc3eeab1cb46189c0f92f3fbd9df24",
+      "id": "ctl_949901ab8fd94b40b4c33edf2a033c8d",
       "workflow": "nw_renewal",
       "minute": 0,
       "kind": "experiment_start",
       "status": "applied",
       "approval": "apr_00001",
-      "updated": 720
+      "updated": 750
     },
     {
-      "id": "ctl_7a750c0c0e604013968b3f9d230cb60e",
+      "id": "ctl_c4ec299fbbd64de48fd5b520de5e2b82",
+      "workflow": "ks_cancel",
+      "minute": 960,
+      "kind": "experiment_start",
+      "status": "applied",
+      "approval": "apr_00003",
+      "updated": 1065
+    },
+    {
+      "id": "ctl_0b05c02442864973b014af132a8d4bbd",
       "workflow": "ks_cancel",
       "minute": 3720,
       "kind": "caller_id_rotation",
       "status": "applied",
-      "approval": "apr_00003",
-      "updated": 3765
+      "approval": "apr_00004",
+      "updated": 3810
     },
     {
-      "id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+      "id": "ctl_3f52058c8dc141cbb6d5aa8957dfa93f",
       "workflow": "ks_cancel",
-      "minute": 5460,
+      "minute": 6540,
       "kind": "hallucination_fix",
       "status": "applied",
-      "approval": "apr_00004",
-      "updated": 6555
+      "approval": "apr_00005",
+      "updated": 6600
     }
   ],
   "incidents": [
     {
-      "id": "inc_0484967b3c82d57a274539c8",
+      "id": "inc_5570566a96120306731536ca",
       "workflow": "ks_cancel",
       "kind": "caller_id",
       "status": "recovered",
       "minute": 3720,
       "payload": {
-        "applied_minute": 3765,
+        "applied_minute": 3810,
         "applied_version": 3,
         "baseline": {
           "D1": {
-            "connected": 1794,
-            "dials": 6437,
-            "engaged": 889,
+            "connected": 1823,
+            "dials": 6453,
+            "engaged": 909,
             "flagged": 31
           },
           "D2": {
-            "connected": 1785,
-            "dials": 6363,
-            "engaged": 878,
-            "flagged": 31
+            "connected": 1791,
+            "dials": 6347,
+            "engaged": 879,
+            "flagged": 30
           }
         },
         "before": {
-          "connected": 145,
+          "connected": 156,
           "dials": 800,
-          "engaged": 72,
-          "flagged": 0
+          "engaged": 85,
+          "flagged": 3
         },
         "last_attempt": 3720,
         "post_apply": {
-          "connected": 278,
+          "connected": 273,
           "dials": 1200,
-          "engaged": 146,
-          "flagged": 7
+          "engaged": 127,
+          "flagged": 2
         },
         "prompt": "P1",
-        "proposal_id": "ctl_7a750c0c0e604013968b3f9d230cb60e",
+        "proposal_id": "ctl_0b05c02442864973b014af132a8d4bbd",
         "recent": {
           "D1": {
-            "connected": 109,
-            "dials": 423,
-            "engaged": 50,
-            "flagged": 0
+            "connected": 120,
+            "dials": 397,
+            "engaged": 64,
+            "flagged": 2
           },
           "D2": {
             "connected": 36,
-            "dials": 377,
-            "engaged": 22,
-            "flagged": 0
+            "dials": 403,
+            "engaged": 21,
+            "flagged": 1
           }
         },
         "suspects": [
@@ -541,13 +551,13 @@
       }
     },
     {
-      "id": "inc_79b77f7882fd8c6ab90c6fa6",
+      "id": "inc_14c3782ca27dc2d38948a39f",
       "workflow": "ks_cancel",
       "kind": "hallucination",
       "status": "recovered",
-      "minute": 5460,
+      "minute": 6540,
       "payload": {
-        "applied_minute": 6555,
+        "applied_minute": 6600,
         "applied_version": 5,
         "baseline": {
           "connected": 16439,
@@ -556,20 +566,20 @@
           "flagged": 225
         },
         "detector": "prompt-epoch >=400 connected/10 flags; +3pp and 3-SE rise on two checks with >=200 new answers; overlapping evidence",
-        "last_attempt": 5460,
+        "last_attempt": 6540,
         "post_apply": {
-          "connected": 226,
+          "connected": 220,
           "dials": 1200,
-          "engaged": 118,
-          "flagged": 6
+          "engaged": 112,
+          "flagged": 4
         },
         "prompt": "P3",
-        "proposal_id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+        "proposal_id": "ctl_3f52058c8dc141cbb6d5aa8957dfa93f",
         "recent": {
-          "connected": 669,
-          "dials": 3000,
-          "engaged": 314,
-          "flagged": 43
+          "connected": 1130,
+          "dials": 5400,
+          "engaged": 537,
+          "flagged": 57
         },
         "trigger_prompt": "P2",
         "validated": {
@@ -580,30 +590,30 @@
             "n": 500,
             "pass_rate": 0.988,
             "prompt_version": "P3",
-            "ts": "2027-01-07T19:00:00+05:30",
+            "ts": "2027-01-08T13:00:00+05:30",
             "validation_run_id": "val_00001",
             "workflow_id": "ks_cancel"
           },
           "validation_run_id": "val_00001"
         },
-        "window_minutes": 435,
+        "window_minutes": 1515,
         "windows": 2
       }
     }
   ],
   "paid": [
     {
-      "id": "inc_79b77f7882fd8c6ab90c6fa6:suggest",
+      "id": "inc_14c3782ca27dc2d38948a39f:suggest",
       "workflow": "ks_cancel",
-      "minute": 5460,
+      "minute": 6540,
       "kind": "suggest",
       "cost": 3,
       "status": "done"
     },
     {
-      "id": "inc_79b77f7882fd8c6ab90c6fa6:validate:P3",
+      "id": "inc_14c3782ca27dc2d38948a39f:validate:P3",
       "workflow": "ks_cancel",
-      "minute": 5460,
+      "minute": 6540,
       "kind": "validation",
       "cost": 5,
       "status": "done"

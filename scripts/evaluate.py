@@ -42,6 +42,7 @@ def main():
     p.add_argument("--port", type=int, default=18700)
     p.add_argument("--baseline", action="store_true")
     p.add_argument("--crash", action="store_true")
+    p.add_argument("--dimension", choices=["voice", "welcome_message"], default="voice")
     p.add_argument("--probe", action="store_true")
     p.add_argument("--cpus", type=int, default=4, help="Linux CPU affinity inherited by simulator/controller")
     a = p.parse_args()
@@ -60,6 +61,7 @@ def main():
             subprocess.run([python, "-m", "sim", "baseline", "--scenario", a.scenario,
                             "--run-dir", str(output / "baseline")], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True)
     url = f"http://127.0.0.1:{a.port}"
+    controller_command = [str(ROOT / "run.sh"), url, "--dimension", a.dimension]
     env = os.environ | {"CONTROLLER_PYTHON": python, "CONTROLLER_STATE_DIR": str(state_dir)}
     with (output / "server.log").open("w") as server_log, (output / "controller.log").open("w") as controller_log:
         server_started = time.monotonic()
@@ -79,7 +81,7 @@ def main():
                     print(json.dumps(probe, indent=2))
                     return
                 started = time.monotonic()
-                controller = subprocess.Popen([str(ROOT / "run.sh"), url], cwd=ROOT, env=env,
+                controller = subprocess.Popen(controller_command, cwd=ROOT, env=env,
                                               stdout=controller_log, stderr=subprocess.STDOUT)
                 crash_evidence = None
                 if a.crash:
@@ -95,7 +97,7 @@ def main():
                                 controller.wait(timeout=10)
                                 crash_evidence = {"signal": "SIGKILL", "pending_proposal": pending, "checkpoint_before": checkpoint,
                                                   "killed_returncode": controller.returncode}
-                                controller = subprocess.Popen([str(ROOT / "run.sh"), url], cwd=ROOT, env=env,
+                                controller = subprocess.Popen(controller_command, cwd=ROOT, env=env,
                                                               stdout=controller_log, stderr=subprocess.STDOUT)
                                 break
                         except (sqlite3.Error, FileNotFoundError):
@@ -125,7 +127,8 @@ def main():
                 reader = Reader(state_dir / "state.db")
                 overview = reader.overview()
                 metrics = overview["metrics"]
-                summary = {"name": a.name, "scenario": a.scenario, "python": sys.version, "platform": platform.platform(),
+                summary = {"name": a.name, "scenario": a.scenario, "dimension": a.dimension,
+                           "python": sys.version, "platform": platform.platform(),
                            "cpu_count": os.cpu_count(), "cpu_affinity": sorted(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else None,
                            "simulator_bootstrap_seconds": simulator_bootstrap_seconds,
                            "peak_combined_rss_kib_sampled": peak_combined_rss, "memory_limit_imposed": False,

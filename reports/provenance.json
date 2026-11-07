@@ -1,23 +1,30 @@
 {
   "public_01": {
-    "evaluation_name": "public_01_recovery_final",
-    "state_directory": ".controller-state/public_01_recovery_final",
-    "controller_log": "runs/public_01_recovery_final/controller.log",
-    "simulator_baseline_and_candidate": "runs/public_01_recovery_final/",
+    "evaluation_name": "review_dev_v1",
+    "state_directory": ".controller-state/review_dev_v1",
+    "controller_log": "runs/review_dev_v1/controller.log",
+    "simulator_baseline_and_candidate": "runs/review_dev_v1/",
     "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
   },
   "public_02": {
-    "evaluation_name": "public_02_verified",
-    "state_directory": ".controller-state/public_02_verified",
-    "controller_log": "runs/public_02_verified/controller.log",
-    "simulator_baseline_and_candidate": "runs/public_02_verified/",
+    "evaluation_name": "review_incidents_v1",
+    "state_directory": ".controller-state/review_incidents_v1",
+    "controller_log": "runs/review_incidents_v1/controller.log",
+    "simulator_baseline_and_candidate": "runs/review_incidents_v1/",
     "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
   },
   "public_03": {
-    "evaluation_name": "public_03",
-    "state_directory": ".controller-state/public_03",
-    "controller_log": "runs/public_03/controller.log",
-    "simulator_baseline_and_candidate": "runs/public_03/",
+    "evaluation_name": "review_load_v1",
+    "state_directory": ".controller-state/review_load_v1",
+    "controller_log": "runs/review_load_v1/controller.log",
+    "simulator_baseline_and_candidate": "runs/review_load_v1/",
+    "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
+  },
+  "welcome_message": {
+    "evaluation_name": "review_welcome_v2",
+    "state_directory": ".controller-state/review_welcome_v2",
+    "controller_log": "runs/review_welcome_v2/controller.log",
+    "simulator_baseline_and_candidate": "runs/review_welcome_v2/",
     "note": "controller state and simulator output are separate; only the external harness reads grading outputs"
   }
 }

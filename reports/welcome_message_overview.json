@@ -1,0 +1,682 @@
+{
+  "metrics": {
+    "process_starts": 1,
+    "origin": 29983350,
+    "scenario": "public_01_dev",
+    "started_ts": "2027-01-04T00:00:00+05:30",
+    "observed_prompt:nw_renewal": "P1",
+    "qa_epoch:nw_renewal": 0,
+    "qa_evaluated_answers:nw_renewal": 7395,
+    "observed_prompt:nw_kyc": "P1",
+    "qa_epoch:nw_kyc": 0,
+    "qa_evaluated_answers:nw_kyc": 3724,
+    "observed_prompt:ks_cancel": "P1",
+    "qa_epoch:ks_cancel": 0,
+    "qa_evaluated_answers:ks_cancel": 9271,
+    "event_watermark": 297033,
+    "events_ingested": 297033,
+    "chunks_after_history": 0,
+    "ingest_seconds": 10.767677436999065,
+    "refreshed_config_event": 267352,
+    "decision_lag_histogram": {
+      "1": 1175,
+      "10": 1125,
+      "11": 1200,
+      "12": 1200,
+      "13": 1325,
+      "14": 1275,
+      "15": 1225,
+      "16": 1575,
+      "17": 1425,
+      "18": 1775,
+      "19": 1750,
+      "2": 950,
+      "20": 1525,
+      "21": 1550,
+      "22": 1575,
+      "23": 1550,
+      "24": 1375,
+      "25": 750,
+      "26": 800,
+      "27": 850,
+      "28": 850,
+      "29": 1650,
+      "3": 1650,
+      "30": 1800,
+      "31": 1625,
+      "32": 1200,
+      "33": 925,
+      "34": 1800,
+      "35": 1575,
+      "36": 1450,
+      "37": 1400,
+      "38": 1375,
+      "39": 1575,
+      "4": 2200,
+      "40": 1700,
+      "41": 1025,
+      "42": 1100,
+      "43": 1725,
+      "44": 1075,
+      "45": 1250,
+      "46": 1175,
+      "47": 2125,
+      "48": 1725,
+      "49": 1275,
+      "5": 1700,
+      "50": 1200,
+      "51": 600,
+      "52": 1900,
+      "53": 1450,
+      "54": 1750,
+      "55": 1175,
+      "56": 1375,
+      "57": 1475,
+      "58": 1000,
+      "59": 1275,
+      "6": 1725,
+      "60": 1300,
+      "7": 1225,
+      "8": 1600,
+      "9": 1225
+    },
+    "last_decision_event": 297033,
+    "decision_seconds": 4.139306631999148,
+    "decision_cycles": 192,
+    "decision_lag_minutes_max": 60,
+    "decision_compute_seconds_max": 0.37290073799999846,
+    "sim_minute": 11520,
+    "state": {
+      "chunks": 393,
+      "credits_remaining": 200.0,
+      "end_minute": 11520,
+      "finished": true,
+      "last_event_id": 297033,
+      "scenario": "public_01_dev",
+      "sim_minute": 11520,
+      "tick_minutes": 15,
+      "ts": "2027-01-12T00:00:00+05:30"
+    },
+    "finished": true,
+    "controller_wall_seconds": 28.54849761899993,
+    "peak_rss_kib": 95488,
+    "tick_seconds_max": 3.3132376349999504,
+    "day_wall_markers": [
+      {
+        "cumulative_wall_seconds": 3.329664927999943,
+        "sim_minute": 0
+      },
+      {
+        "cumulative_wall_seconds": 5.436348409999937,
+        "sim_minute": 1440
+      },
+      {
+        "cumulative_wall_seconds": 7.8718151140000145,
+        "sim_minute": 2880
+      },
+      {
+        "cumulative_wall_seconds": 11.539233945999968,
+        "sim_minute": 4320
+      },
+      {
+        "cumulative_wall_seconds": 15.431099769999946,
+        "sim_minute": 5760
+      },
+      {
+        "cumulative_wall_seconds": 19.252259242000036,
+        "sim_minute": 7200
+      },
+      {
+        "cumulative_wall_seconds": 22.761668420999968,
+        "sim_minute": 8640
+      },
+      {
+        "cumulative_wall_seconds": 25.60782695499995,
+        "sim_minute": 10080
+      },
+      {
+        "cumulative_wall_seconds": 28.547873498999934,
+        "sim_minute": 11520
+      }
+    ],
+    "chunks_after_events": 392,
+    "caller_window:ks_cancel:D1": 11400,
+    "caller_window:ks_cancel:D2": 11400,
+    "caller_window:nw_renewal:D1": 11400,
+    "caller_window:nw_renewal:D2": 11400,
+    "caller_window:nw_kyc:D1": 11280
+  },
+  "workflows": [
+    {
+      "workflow_id": "ks_cancel",
+      "tenant_id": "kestrel_finance",
+      "objective": {
+        "guardrail": {
+          "pickup_rate_max_drop": 0.02
+        },
+        "primary": "engagement_rate"
+      },
+      "counts": {
+        "dials": 38400,
+        "connected": 9271,
+        "engaged": 4481,
+        "flagged": 135
+      },
+      "pickup_rate": 0.24143229166666666,
+      "engagement_rate": 0.48333513105382375,
+      "leads_uploaded": 12000,
+      "leads_concluded": 3997,
+      "business_outcome": 0.33308333333333334,
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        },
+        {
+          "id": "default",
+          "where": {}
+        }
+      ],
+      "experiment": {
+        "alpha": 0.00625,
+        "controls": {
+          "default": "W1",
+          "language_hi": "W1"
+        },
+        "decay_hits": 0,
+        "design_mde": 0.15,
+        "dimension": "welcome_message",
+        "expected_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            },
+            "language_hi": {
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [
+            {
+              "id": "language_hi",
+              "where": {
+                "lang": [
+                  "hi"
+                ]
+              }
+            }
+          ],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "guardrail_alpha": 0.00625,
+        "last_harm_block": 19,
+        "look": 2,
+        "minimum_effect": 0.01,
+        "options": [
+          "W1",
+          "W2",
+          "W3"
+        ],
+        "original_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "promotion_results": {
+          "default": {
+            "W2": {
+              "guardrail": {
+                "candidate_n": 2146,
+                "candidate_people": 1632,
+                "candidate_rate": 0.23438956197576888,
+                "control_n": 4400,
+                "control_people": 2580,
+                "control_rate": 0.24954545454545454,
+                "difference": -0.015155892569685664,
+                "se": 0.011057552471195126
+              },
+              "guardrail_lower_bound": -0.0427744019105918,
+              "passed": false,
+              "primary": {
+                "candidate_n": 503,
+                "candidate_people": 481,
+                "candidate_rate": 0.48111332007952284,
+                "control_n": 1098,
+                "control_people": 991,
+                "control_rate": 0.48360655737704916,
+                "difference": -0.0024932372975263184,
+                "se": 0.026931723541180334
+              },
+              "primary_lower_bound": -0.06976075062169304
+            },
+            "W3": {
+              "guardrail": {
+                "candidate_n": 2128,
+                "candidate_people": 1585,
+                "candidate_rate": 0.2575187969924812,
+                "control_n": 4400,
+                "control_people": 2580,
+                "control_rate": 0.24954545454545454,
+                "difference": 0.00797334244702666,
+                "se": 0.011556405242724891
+              },
+              "guardrail_lower_bound": -0.020891154192255155,
+              "passed": false,
+              "primary": {
+                "candidate_n": 548,
+                "candidate_people": 522,
+                "candidate_rate": 0.44525547445255476,
+                "control_n": 1098,
+                "control_people": 991,
+                "control_rate": 0.48360655737704916,
+                "difference": -0.038351082924494406,
+                "se": 0.025984595854071958
+              },
+              "primary_lower_bound": -0.103252950239603
+            }
+          },
+          "language_hi": {
+            "W2": {
+              "guardrail": {
+                "candidate_n": 3386,
+                "candidate_people": 2574,
+                "candidate_rate": 0.25191966922622566,
+                "control_n": 6498,
+                "control_people": 3884,
+                "control_rate": 0.24530624807633117,
+                "difference": 0.006613421149894494,
+                "se": 0.009286897983269711
+              },
+              "guardrail_lower_bound": -0.016582514783227496,
+              "passed": false,
+              "primary": {
+                "candidate_n": 853,
+                "candidate_people": 824,
+                "candidate_rate": 0.5052754982415005,
+                "control_n": 1594,
+                "control_people": 1430,
+                "control_rate": 0.48180677540777916,
+                "difference": 0.023468722833721367,
+                "se": 0.021443497604930552
+              },
+              "primary_lower_bound": -0.030090818524662298
+            },
+            "W3": {
+              "guardrail": {
+                "candidate_n": 3242,
+                "candidate_people": 2475,
+                "candidate_rate": 0.24768661320172733,
+                "control_n": 6498,
+                "control_people": 3884,
+                "control_rate": 0.24530624807633117,
+                "difference": 0.002380365125396161,
+                "se": 0.009337134718676712
+              },
+              "guardrail_lower_bound": -0.020941047376768503,
+              "passed": false,
+              "primary": {
+                "candidate_n": 803,
+                "candidate_people": 760,
+                "candidate_rate": 0.43212951432129515,
+                "control_n": 1594,
+                "control_people": 1430,
+                "control_rate": 0.48180677540777916,
+                "difference": -0.049677261086484015,
+                "se": 0.021496968005870313
+              },
+              "primary_lower_bound": -0.10337035575801394
+            }
+          }
+        },
+        "prompt": "P1",
+        "start": 8295,
+        "status": "inconclusive",
+        "targets": {
+          "default": 248,
+          "language_hi": 248
+        },
+        "version": 3,
+        "winners": {}
+      }
+    },
+    {
+      "workflow_id": "nw_kyc",
+      "tenant_id": "northwind_life",
+      "objective": {
+        "guardrail": {
+          "engagement_rate_max_drop": 0.02
+        },
+        "primary": "pickup_rate"
+      },
+      "counts": {
+        "dials": 16000,
+        "connected": 3824,
+        "engaged": 2251,
+        "flagged": 55
+      },
+      "pickup_rate": 0.239,
+      "engagement_rate": 0.5886506276150628,
+      "leads_uploaded": 5600,
+      "leads_concluded": 2004,
+      "business_outcome": 0.3578571428571429,
+      "cohorts": [
+        {
+          "id": "default",
+          "where": {}
+        }
+      ],
+      "experiment": null
+    },
+    {
+      "workflow_id": "nw_renewal",
+      "tenant_id": "northwind_life",
+      "objective": {
+        "guardrail": {
+          "pickup_rate_max_drop": 0.02
+        },
+        "primary": "engagement_rate"
+      },
+      "counts": {
+        "dials": 28800,
+        "connected": 7523,
+        "engaged": 4228,
+        "flagged": 101
+      },
+      "pickup_rate": 0.26121527777777775,
+      "engagement_rate": 0.5620098365013957,
+      "leads_uploaded": 8800,
+      "leads_concluded": 3764,
+      "business_outcome": 0.42772727272727273,
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        },
+        {
+          "id": "default",
+          "where": {}
+        }
+      ],
+      "experiment": {
+        "alpha": 0.00625,
+        "controls": {
+          "default": "W1",
+          "language_hi": "W1"
+        },
+        "decay_hits": 0,
+        "design_mde": 0.15,
+        "dimension": "welcome_message",
+        "expected_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            },
+            "language_hi": {
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [
+            {
+              "id": "language_hi",
+              "where": {
+                "lang": [
+                  "hi"
+                ]
+              }
+            }
+          ],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "guardrail_alpha": 0.00625,
+        "last_harm_block": 18,
+        "look": 2,
+        "minimum_effect": 0.01,
+        "options": [
+          "W1",
+          "W2",
+          "W3"
+        ],
+        "original_config": {
+          "allocations": {
+            "default": {
+              "caller_id": {
+                "D1": 0.5,
+                "D2": 0.5
+              },
+              "voice": {
+                "V1": 1.0
+              },
+              "welcome_message": {
+                "W1": 1.0
+              }
+            }
+          },
+          "cohorts": [],
+          "prompt_version": "P1",
+          "schedule": {
+            "hour_weights": {},
+            "lead_preferred_hour": {}
+          }
+        },
+        "promotion_results": {
+          "default": {
+            "W2": {
+              "guardrail": {
+                "candidate_n": 1960,
+                "candidate_people": 1440,
+                "candidate_rate": 0.2530612244897959,
+                "control_n": 3926,
+                "control_people": 2247,
+                "control_rate": 0.25802343352012225,
+                "difference": -0.004962209030326348,
+                "se": 0.012239247551771427
+              },
+              "guardrail_lower_bound": -0.035532244643074085,
+              "passed": false,
+              "primary": {
+                "candidate_n": 496,
+                "candidate_people": 465,
+                "candidate_rate": 0.5806451612903226,
+                "control_n": 1013,
+                "control_people": 908,
+                "control_rate": 0.5202369200394866,
+                "difference": 0.06040824125083599,
+                "se": 0.0270523366470571
+              },
+              "primary_lower_bound": -0.007160528088165002
+            },
+            "W3": {
+              "guardrail": {
+                "candidate_n": 1929,
+                "candidate_people": 1454,
+                "candidate_rate": 0.25660964230171074,
+                "control_n": 3926,
+                "control_people": 2247,
+                "control_rate": 0.25802343352012225,
+                "difference": -0.0014137912184115087,
+                "se": 0.012054220821754932
+              },
+              "guardrail_lower_bound": -0.031521684554684425,
+              "passed": false,
+              "primary": {
+                "candidate_n": 495,
+                "candidate_people": 474,
+                "candidate_rate": 0.6121212121212121,
+                "control_n": 1013,
+                "control_people": 908,
+                "control_rate": 0.5202369200394866,
+                "difference": 0.09188429208172544,
+                "se": 0.027249231454783918
+              },
+              "primary_lower_bound": 0.0238237375035818
+            }
+          },
+          "language_hi": {
+            "W2": {
+              "guardrail": {
+                "candidate_n": 1963,
+                "candidate_people": 1437,
+                "candidate_rate": 0.25776872134488027,
+                "control_n": 3720,
+                "control_people": 2186,
+                "control_rate": 0.2645161290322581,
+                "difference": -0.006747407687377804,
+                "se": 0.01209008104452881
+              },
+              "guardrail_lower_bound": -0.03694486929838668,
+              "passed": false,
+              "primary": {
+                "candidate_n": 506,
+                "candidate_people": 485,
+                "candidate_rate": 0.6185770750988142,
+                "control_n": 984,
+                "control_people": 885,
+                "control_rate": 0.5213414634146342,
+                "difference": 0.09723561168418005,
+                "se": 0.026952548050386806
+              },
+              "primary_lower_bound": 0.029916084869366366
+            },
+            "W3": {
+              "guardrail": {
+                "candidate_n": 1952,
+                "candidate_people": 1458,
+                "candidate_rate": 0.26588114754098363,
+                "control_n": 3720,
+                "control_people": 2186,
+                "control_rate": 0.2645161290322581,
+                "difference": 0.0013650185087255573,
+                "se": 0.012339358901401738
+              },
+              "guardrail_lower_bound": -0.029455065770044617,
+              "passed": false,
+              "primary": {
+                "candidate_n": 519,
+                "candidate_people": 486,
+                "candidate_rate": 0.5895953757225434,
+                "control_n": 984,
+                "control_people": 885,
+                "control_rate": 0.5213414634146342,
+                "difference": 0.06825391230790923,
+                "se": 0.02716525935251061
+              },
+              "primary_lower_bound": 0.0004030953093115408
+            }
+          }
+        },
+        "prompt": "P1",
+        "start": 8010,
+        "status": "inconclusive",
+        "targets": {
+          "default": 246,
+          "language_hi": 247
+        },
+        "version": 3,
+        "winners": {}
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "id": "ctl_245ecf12e9f8464883b0ea08e0e312be",
+      "workflow": "ks_cancel",
+      "minute": 0,
+      "kind": "experiment_start",
+      "status": "applied",
+      "approval": "apr_00002",
+      "updated": 750
+    },
+    {
+      "id": "ctl_4a2ec06f020c46be99f339ef09e75f0a",
+      "workflow": "nw_renewal",
+      "minute": 0,
+      "kind": "experiment_start",
+      "status": "applied",
+      "approval": "apr_00001",
+      "updated": 750
+    },
+    {
+      "id": "ctl_a7d81bd2da604bd0a10a716e6be8028d",
+      "workflow": "nw_renewal",
+      "minute": 6720,
+      "kind": "experiment_inconclusive_restore",
+      "status": "applied",
+      "approval": "apr_00003",
+      "updated": 8010
+    },
+    {
+      "id": "ctl_96179b43b70948ac8ff70c5697948b3d",
+      "workflow": "ks_cancel",
+      "minute": 6900,
+      "kind": "experiment_inconclusive_restore",
+      "status": "rejected",
+      "approval": "apr_00004",
+      "updated": 7935
+    },
+    {
+      "id": "ctl_9d4012e7493949faaf2435cda4257d54",
+      "workflow": "ks_cancel",
+      "minute": 8160,
+      "kind": "experiment_inconclusive_restore",
+      "status": "applied",
+      "approval": "apr_00005",
+      "updated": 8295
+    }
+  ],
+  "incidents": [],
+  "paid": []
+}

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Local Python process; no Docker or dependency installation during a run.
 set -euo pipefail
-SIM_URL="${1:?usage: ./run.sh <SIM_URL>}"
+SIM_URL="${1:?usage: ./run.sh <SIM_URL> [controller options]}"
+shift
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
 if [[ -n "${CONTROLLER_PYTHON:-}" ]]; then
   PYTHON_BIN="$CONTROLLER_PYTHON"
@@ -10,4 +11,4 @@ elif [[ -x .venv/bin/python ]]; then
 else
   PYTHON_BIN=python3
 fi
-exec "$PYTHON_BIN" -m controller --url "$SIM_URL"
+exec "$PYTHON_BIN" -m controller --url "$SIM_URL" "$@"

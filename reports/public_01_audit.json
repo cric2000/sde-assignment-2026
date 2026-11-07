@@ -1,12 +1,12 @@
 {
-  "id": "ctl_cc2038c5922e47f4bb94feb92bd429d6",
+  "id": "ctl_9313103448e94f1781673a82dbd6bb20",
   "workflow": "nw_renewal",
-  "minute": 1020,
+  "minute": 900,
   "kind": "experiment_start",
   "status": "applied",
   "base": 1,
   "body": {
-    "affected_leads": 2397,
+    "affected_leads": 2466,
     "base_version": 1,
     "change_summary": "Test voice alternatives on supported cohorts; retain 50% reference traffic. No variant is a winner until measured primary lift and guardrail safety pass. Follow-up includes at least 200 newly answered calls since the prior rejection; no una",
     "diff": {
@@ -66,11 +66,11 @@
       }
     },
     "dry_run": {
-      "active_leads_upper_bound": 2397,
+      "active_leads_upper_bound": 2466,
       "cohort_definition": "43b4e43c7afcf61e1a1a7592",
       "cohorts": {
-        "default": 1207,
-        "language_hi": 1190
+        "default": 1244,
+        "language_hi": 1222
       },
       "counterfactual_lift": "unknown",
       "kind": "observed_population_exposure_replay",
@@ -78,20 +78,20 @@
       "mid_flight": "allowed",
       "priority_components": {
         "formula": "severity*(0.5+0.5*exposure)",
-        "observed_exposure_fraction": 0.7263636363636363,
+        "observed_exposure_fraction": 0.7472727272727273,
         "severity_or_conservative_lift": 0.1
       },
-      "unique_people": 2397
+      "unique_people": 2466
     },
     "evidence": {
       "follow_up": {
         "new_population_observations": {
-          "connected": 209,
+          "connected": 256,
           "dials": 900,
-          "engaged": 108,
-          "flagged": 1
+          "engaged": 142,
+          "flagged": 4
         },
-        "prior_proposal_id": "ctl_680439a360914af5b48a728ebe48ce7c",
+        "prior_proposal_id": "ctl_2a66c22c0cf6493db1ea4bb391d35975",
         "prior_status": "rejected",
         "treatment_outcomes_claimed": false
       },
@@ -158,8 +158,8 @@
       }
     },
     "expires_in_hours": 24,
-    "impact_score": 0.08631818181818182,
-    "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6",
+    "impact_score": 0.08736363636363637,
+    "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20",
     "proposed_config": {
       "allocations": {
         "default": {
@@ -209,12 +209,12 @@
     "evidence": {
       "follow_up": {
         "new_population_observations": {
-          "connected": 209,
+          "connected": 256,
           "dials": 900,
-          "engaged": 108,
-          "flagged": 1
+          "engaged": 142,
+          "flagged": 4
         },
-        "prior_proposal_id": "ctl_680439a360914af5b48a728ebe48ce7c",
+        "prior_proposal_id": "ctl_2a66c22c0cf6493db1ea4bb391d35975",
         "prior_status": "rejected",
         "treatment_outcomes_claimed": false
       },
@@ -351,8 +351,8 @@
     }
   },
   "approval": "apr_00003",
-  "submitted": 2040,
-  "updated": 2295,
+  "submitted": 900,
+  "updated": 1125,
   "authority": {
     "approval_id": "apr_00003",
     "approver": "simulated client approver; named identity not supplied"
@@ -361,7 +361,7 @@
     {
       "id": 10,
       "workflow": "nw_renewal",
-      "minute": 1020,
+      "minute": 900,
       "kind": "proposal_created",
       "payload": {
         "dimensions": [
@@ -371,12 +371,12 @@
         "evidence": {
           "follow_up": {
             "new_population_observations": {
-              "connected": 209,
+              "connected": 256,
               "dials": 900,
-              "engaged": 108,
-              "flagged": 1
+              "engaged": 142,
+              "flagged": 4
             },
-            "prior_proposal_id": "ctl_680439a360914af5b48a728ebe48ce7c",
+            "prior_proposal_id": "ctl_2a66c22c0cf6493db1ea4bb391d35975",
             "prior_status": "rejected",
             "treatment_outcomes_claimed": false
           },
@@ -443,13 +443,13 @@
           }
         },
         "kind": "experiment_start",
-        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+        "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20"
       }
     },
     {
       "id": 11,
       "workflow": "nw_renewal",
-      "minute": 2040,
+      "minute": 900,
       "kind": "proposal_sending",
       "payload": {
         "detail": {
@@ -459,52 +459,52 @@
           ]
         },
         "kind": "experiment_start",
-        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+        "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20"
       }
     },
     {
       "id": 12,
       "workflow": "nw_renewal",
-      "minute": 2040,
+      "minute": 900,
       "kind": "approval_submitted",
       "payload": {
         "approval_id": "apr_00003",
-        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+        "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20"
       }
     },
     {
       "id": 13,
       "workflow": "nw_renewal",
-      "minute": 2295,
+      "minute": 1125,
       "kind": "proposal_applying",
       "payload": {
         "detail": {
           "approval_id": "apr_00003",
           "remote_approval": {
-            "apply_by": "2027-01-05T15:49:00+05:30",
+            "apply_by": "2027-01-04T20:23:00+05:30",
             "approval_id": "apr_00003",
             "base_version": 1,
             "changed_dims": [
               "cohorts",
               "voice"
             ],
-            "created_at": "2027-01-05T10:00:00+05:30",
-            "decided_at": "2027-01-05T13:49:00+05:30",
-            "expires_at": "2027-01-06T10:00:00+05:30",
-            "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6",
+            "created_at": "2027-01-04T15:00:00+05:30",
+            "decided_at": "2027-01-04T18:23:00+05:30",
+            "expires_at": "2027-01-05T15:00:00+05:30",
+            "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20",
             "reasons": [],
             "status": "approved",
             "workflow_id": "nw_renewal"
           }
         },
         "kind": "experiment_start",
-        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+        "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20"
       }
     },
     {
       "id": 14,
       "workflow": "nw_renewal",
-      "minute": 2295,
+      "minute": 1125,
       "kind": "proposal_applied",
       "payload": {
         "detail": {
@@ -512,28 +512,28 @@
           "version": 2
         },
         "kind": "experiment_start",
-        "proposal_id": "ctl_cc2038c5922e47f4bb94feb92bd429d6"
+        "proposal_id": "ctl_9313103448e94f1781673a82dbd6bb20"
       }
     }
   ],
   "before": {
     "dials": 3600,
-    "connected": 891,
-    "engaged": 468,
-    "pickup_rate": 0.2475,
-    "engagement_rate": 0.5252525252525253,
-    "from_minute": 855,
-    "to_minute": 2295,
+    "connected": 928,
+    "engaged": 508,
+    "pickup_rate": 0.2577777777777778,
+    "engagement_rate": 0.5474137931034483,
+    "from_minute": -315,
+    "to_minute": 1125,
     "causal_claim": false
   },
   "after": {
     "dials": 3600,
-    "connected": 924,
-    "engaged": 492,
-    "pickup_rate": 0.25666666666666665,
-    "engagement_rate": 0.5324675324675324,
-    "from_minute": 2295,
-    "to_minute": 3735,
+    "connected": 931,
+    "engaged": 494,
+    "pickup_rate": 0.2586111111111111,
+    "engagement_rate": 0.5306122448979592,
+    "from_minute": 1125,
+    "to_minute": 2565,
     "causal_claim": false
   }
 }

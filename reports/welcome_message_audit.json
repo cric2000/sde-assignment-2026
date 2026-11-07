@@ -1,0 +1,830 @@
+{
+  "id": "ctl_9d4012e7493949faaf2435cda4257d54",
+  "workflow": "ks_cancel",
+  "minute": 8160,
+  "kind": "experiment_inconclusive_restore",
+  "status": "applied",
+  "base": 2,
+  "body": {
+    "affected_leads": 3499,
+    "base_version": 2,
+    "change_summary": "No conclusive welcome_message winner after two planned looks; restore the reference allocation. Follow-up includes at least 200 newly answered calls since the prior rejection; no unapproved treatment outcomes are claimed.",
+    "diff": {
+      "allocations": {
+        "after": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          },
+          "language_hi": {
+            "welcome_message": {
+              "W1": 1.0
+            }
+          }
+        },
+        "before": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 0.5,
+              "W2": 0.25,
+              "W3": 0.25
+            }
+          },
+          "language_hi": {
+            "welcome_message": {
+              "W1": 0.5,
+              "W2": 0.25,
+              "W3": 0.25
+            }
+          }
+        }
+      }
+    },
+    "dry_run": {
+      "active_leads_upper_bound": 3499,
+      "cohort_definition": "43b4e43c7afcf61e1a1a7592",
+      "cohorts": {
+        "default": 1396,
+        "language_hi": 2103
+      },
+      "counterfactual_lift": "unknown",
+      "kind": "observed_population_exposure_replay",
+      "limitation": "campaign-age filtered upper bound; remaining attempt/gap eligibility is not exposed",
+      "mid_flight": "allowed",
+      "priority_components": {
+        "formula": "severity*(0.5+0.5*exposure)",
+        "observed_exposure_fraction": 0.7775555555555556,
+        "severity_or_conservative_lift": 0.05
+      },
+      "unique_people": 3499
+    },
+    "evidence": {
+      "alpha": 0.00625,
+      "follow_up": {
+        "new_population_observations": {
+          "connected": 295,
+          "dials": 1200,
+          "engaged": 153,
+          "flagged": 4
+        },
+        "prior_proposal_id": "ctl_96179b43b70948ac8ff70c5697948b3d",
+        "prior_status": "rejected",
+        "treatment_outcomes_claimed": false
+      },
+      "look": 2,
+      "results": {
+        "default": {
+          "W2": {
+            "guardrail": {
+              "candidate_n": 2146,
+              "candidate_people": 1632,
+              "candidate_rate": 0.23438956197576888,
+              "control_n": 4400,
+              "control_people": 2580,
+              "control_rate": 0.24954545454545454,
+              "difference": -0.015155892569685664,
+              "se": 0.011057552471195126
+            },
+            "guardrail_lower_bound": -0.0427744019105918,
+            "passed": false,
+            "primary": {
+              "candidate_n": 503,
+              "candidate_people": 481,
+              "candidate_rate": 0.48111332007952284,
+              "control_n": 1098,
+              "control_people": 991,
+              "control_rate": 0.48360655737704916,
+              "difference": -0.0024932372975263184,
+              "se": 0.026931723541180334
+            },
+            "primary_lower_bound": -0.06976075062169304
+          },
+          "W3": {
+            "guardrail": {
+              "candidate_n": 2128,
+              "candidate_people": 1585,
+              "candidate_rate": 0.2575187969924812,
+              "control_n": 4400,
+              "control_people": 2580,
+              "control_rate": 0.24954545454545454,
+              "difference": 0.00797334244702666,
+              "se": 0.011556405242724891
+            },
+            "guardrail_lower_bound": -0.020891154192255155,
+            "passed": false,
+            "primary": {
+              "candidate_n": 548,
+              "candidate_people": 522,
+              "candidate_rate": 0.44525547445255476,
+              "control_n": 1098,
+              "control_people": 991,
+              "control_rate": 0.48360655737704916,
+              "difference": -0.038351082924494406,
+              "se": 0.025984595854071958
+            },
+            "primary_lower_bound": -0.103252950239603
+          }
+        },
+        "language_hi": {
+          "W2": {
+            "guardrail": {
+              "candidate_n": 3386,
+              "candidate_people": 2574,
+              "candidate_rate": 0.25191966922622566,
+              "control_n": 6498,
+              "control_people": 3884,
+              "control_rate": 0.24530624807633117,
+              "difference": 0.006613421149894494,
+              "se": 0.009286897983269711
+            },
+            "guardrail_lower_bound": -0.016582514783227496,
+            "passed": false,
+            "primary": {
+              "candidate_n": 853,
+              "candidate_people": 824,
+              "candidate_rate": 0.5052754982415005,
+              "control_n": 1594,
+              "control_people": 1430,
+              "control_rate": 0.48180677540777916,
+              "difference": 0.023468722833721367,
+              "se": 0.021443497604930552
+            },
+            "primary_lower_bound": -0.030090818524662298
+          },
+          "W3": {
+            "guardrail": {
+              "candidate_n": 3242,
+              "candidate_people": 2475,
+              "candidate_rate": 0.24768661320172733,
+              "control_n": 6498,
+              "control_people": 3884,
+              "control_rate": 0.24530624807633117,
+              "difference": 0.002380365125396161,
+              "se": 0.009337134718676712
+            },
+            "guardrail_lower_bound": -0.020941047376768503,
+            "passed": false,
+            "primary": {
+              "candidate_n": 803,
+              "candidate_people": 760,
+              "candidate_rate": 0.43212951432129515,
+              "control_n": 1594,
+              "control_people": 1430,
+              "control_rate": 0.48180677540777916,
+              "difference": -0.049677261086484015,
+              "se": 0.021496968005870313
+            },
+            "primary_lower_bound": -0.10337035575801394
+          }
+        }
+      }
+    },
+    "expires_in_hours": 12,
+    "impact_score": 0.04443888888888889,
+    "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54",
+    "proposed_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 0.5,
+            "D2": 0.5
+          },
+          "voice": {
+            "V1": 1.0
+          },
+          "welcome_message": {
+            "W1": 1.0
+          }
+        },
+        "language_hi": {
+          "welcome_message": {
+            "W1": 1.0
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P1",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    },
+    "rationale": "No conclusive welcome_message winner after two planned looks; restore the reference allocation. Follow-up includes at least 200 newly answered calls since the prior rejection; no unapproved treatment outcomes are claimed.",
+    "workflow_id": "ks_cancel"
+  },
+  "context": {
+    "evidence": {
+      "alpha": 0.00625,
+      "follow_up": {
+        "new_population_observations": {
+          "connected": 295,
+          "dials": 1200,
+          "engaged": 153,
+          "flagged": 4
+        },
+        "prior_proposal_id": "ctl_96179b43b70948ac8ff70c5697948b3d",
+        "prior_status": "rejected",
+        "treatment_outcomes_claimed": false
+      },
+      "look": 2,
+      "results": {
+        "default": {
+          "W2": {
+            "guardrail": {
+              "candidate_n": 2146,
+              "candidate_people": 1632,
+              "candidate_rate": 0.23438956197576888,
+              "control_n": 4400,
+              "control_people": 2580,
+              "control_rate": 0.24954545454545454,
+              "difference": -0.015155892569685664,
+              "se": 0.011057552471195126
+            },
+            "guardrail_lower_bound": -0.0427744019105918,
+            "passed": false,
+            "primary": {
+              "candidate_n": 503,
+              "candidate_people": 481,
+              "candidate_rate": 0.48111332007952284,
+              "control_n": 1098,
+              "control_people": 991,
+              "control_rate": 0.48360655737704916,
+              "difference": -0.0024932372975263184,
+              "se": 0.026931723541180334
+            },
+            "primary_lower_bound": -0.06976075062169304
+          },
+          "W3": {
+            "guardrail": {
+              "candidate_n": 2128,
+              "candidate_people": 1585,
+              "candidate_rate": 0.2575187969924812,
+              "control_n": 4400,
+              "control_people": 2580,
+              "control_rate": 0.24954545454545454,
+              "difference": 0.00797334244702666,
+              "se": 0.011556405242724891
+            },
+            "guardrail_lower_bound": -0.020891154192255155,
+            "passed": false,
+            "primary": {
+              "candidate_n": 548,
+              "candidate_people": 522,
+              "candidate_rate": 0.44525547445255476,
+              "control_n": 1098,
+              "control_people": 991,
+              "control_rate": 0.48360655737704916,
+              "difference": -0.038351082924494406,
+              "se": 0.025984595854071958
+            },
+            "primary_lower_bound": -0.103252950239603
+          }
+        },
+        "language_hi": {
+          "W2": {
+            "guardrail": {
+              "candidate_n": 3386,
+              "candidate_people": 2574,
+              "candidate_rate": 0.25191966922622566,
+              "control_n": 6498,
+              "control_people": 3884,
+              "control_rate": 0.24530624807633117,
+              "difference": 0.006613421149894494,
+              "se": 0.009286897983269711
+            },
+            "guardrail_lower_bound": -0.016582514783227496,
+            "passed": false,
+            "primary": {
+              "candidate_n": 853,
+              "candidate_people": 824,
+              "candidate_rate": 0.5052754982415005,
+              "control_n": 1594,
+              "control_people": 1430,
+              "control_rate": 0.48180677540777916,
+              "difference": 0.023468722833721367,
+              "se": 0.021443497604930552
+            },
+            "primary_lower_bound": -0.030090818524662298
+          },
+          "W3": {
+            "guardrail": {
+              "candidate_n": 3242,
+              "candidate_people": 2475,
+              "candidate_rate": 0.24768661320172733,
+              "control_n": 6498,
+              "control_people": 3884,
+              "control_rate": 0.24530624807633117,
+              "difference": 0.002380365125396161,
+              "se": 0.009337134718676712
+            },
+            "guardrail_lower_bound": -0.020941047376768503,
+            "passed": false,
+            "primary": {
+              "candidate_n": 803,
+              "candidate_people": 760,
+              "candidate_rate": 0.43212951432129515,
+              "control_n": 1594,
+              "control_people": 1430,
+              "control_rate": 0.48180677540777916,
+              "difference": -0.049677261086484015,
+              "se": 0.021496968005870313
+            },
+            "primary_lower_bound": -0.10337035575801394
+          }
+        }
+      }
+    },
+    "experiment": {
+      "alpha": 0.00625,
+      "controls": {
+        "default": "W1",
+        "language_hi": "W1"
+      },
+      "decay_hits": 0,
+      "design_mde": 0.15,
+      "dimension": "welcome_message",
+      "expected_config": {
+        "allocations": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 0.5,
+              "W2": 0.25,
+              "W3": 0.25
+            }
+          },
+          "language_hi": {
+            "welcome_message": {
+              "W1": 0.5,
+              "W2": 0.25,
+              "W3": 0.25
+            }
+          }
+        },
+        "cohorts": [
+          {
+            "id": "language_hi",
+            "where": {
+              "lang": [
+                "hi"
+              ]
+            }
+          }
+        ],
+        "prompt_version": "P1",
+        "schedule": {
+          "hour_weights": {},
+          "lead_preferred_hour": {}
+        }
+      },
+      "guardrail_alpha": 0.00625,
+      "last_harm_block": 19,
+      "look": 2,
+      "minimum_effect": 0.01,
+      "options": [
+        "W1",
+        "W2",
+        "W3"
+      ],
+      "original_config": {
+        "allocations": {
+          "default": {
+            "caller_id": {
+              "D1": 0.5,
+              "D2": 0.5
+            },
+            "voice": {
+              "V1": 1.0
+            },
+            "welcome_message": {
+              "W1": 1.0
+            }
+          }
+        },
+        "cohorts": [],
+        "prompt_version": "P1",
+        "schedule": {
+          "hour_weights": {},
+          "lead_preferred_hour": {}
+        }
+      },
+      "promotion_results": {
+        "default": {
+          "W2": {
+            "guardrail": {
+              "candidate_n": 2146,
+              "candidate_people": 1632,
+              "candidate_rate": 0.23438956197576888,
+              "control_n": 4400,
+              "control_people": 2580,
+              "control_rate": 0.24954545454545454,
+              "difference": -0.015155892569685664,
+              "se": 0.011057552471195126
+            },
+            "guardrail_lower_bound": -0.0427744019105918,
+            "passed": false,
+            "primary": {
+              "candidate_n": 503,
+              "candidate_people": 481,
+              "candidate_rate": 0.48111332007952284,
+              "control_n": 1098,
+              "control_people": 991,
+              "control_rate": 0.48360655737704916,
+              "difference": -0.0024932372975263184,
+              "se": 0.026931723541180334
+            },
+            "primary_lower_bound": -0.06976075062169304
+          },
+          "W3": {
+            "guardrail": {
+              "candidate_n": 2128,
+              "candidate_people": 1585,
+              "candidate_rate": 0.2575187969924812,
+              "control_n": 4400,
+              "control_people": 2580,
+              "control_rate": 0.24954545454545454,
+              "difference": 0.00797334244702666,
+              "se": 0.011556405242724891
+            },
+            "guardrail_lower_bound": -0.020891154192255155,
+            "passed": false,
+            "primary": {
+              "candidate_n": 548,
+              "candidate_people": 522,
+              "candidate_rate": 0.44525547445255476,
+              "control_n": 1098,
+              "control_people": 991,
+              "control_rate": 0.48360655737704916,
+              "difference": -0.038351082924494406,
+              "se": 0.025984595854071958
+            },
+            "primary_lower_bound": -0.103252950239603
+          }
+        },
+        "language_hi": {
+          "W2": {
+            "guardrail": {
+              "candidate_n": 3386,
+              "candidate_people": 2574,
+              "candidate_rate": 0.25191966922622566,
+              "control_n": 6498,
+              "control_people": 3884,
+              "control_rate": 0.24530624807633117,
+              "difference": 0.006613421149894494,
+              "se": 0.009286897983269711
+            },
+            "guardrail_lower_bound": -0.016582514783227496,
+            "passed": false,
+            "primary": {
+              "candidate_n": 853,
+              "candidate_people": 824,
+              "candidate_rate": 0.5052754982415005,
+              "control_n": 1594,
+              "control_people": 1430,
+              "control_rate": 0.48180677540777916,
+              "difference": 0.023468722833721367,
+              "se": 0.021443497604930552
+            },
+            "primary_lower_bound": -0.030090818524662298
+          },
+          "W3": {
+            "guardrail": {
+              "candidate_n": 3242,
+              "candidate_people": 2475,
+              "candidate_rate": 0.24768661320172733,
+              "control_n": 6498,
+              "control_people": 3884,
+              "control_rate": 0.24530624807633117,
+              "difference": 0.002380365125396161,
+              "se": 0.009337134718676712
+            },
+            "guardrail_lower_bound": -0.020941047376768503,
+            "passed": false,
+            "primary": {
+              "candidate_n": 803,
+              "candidate_people": 760,
+              "candidate_rate": 0.43212951432129515,
+              "control_n": 1594,
+              "control_people": 1430,
+              "control_rate": 0.48180677540777916,
+              "difference": -0.049677261086484015,
+              "se": 0.021496968005870313
+            },
+            "primary_lower_bound": -0.10337035575801394
+          }
+        }
+      },
+      "prompt": "P1",
+      "start": 750,
+      "status": "inconclusive",
+      "targets": {
+        "default": 248,
+        "language_hi": 248
+      },
+      "version": 2,
+      "winners": {}
+    },
+    "original_config": {
+      "allocations": {
+        "default": {
+          "caller_id": {
+            "D1": 0.5,
+            "D2": 0.5
+          },
+          "voice": {
+            "V1": 1.0
+          },
+          "welcome_message": {
+            "W1": 0.5,
+            "W2": 0.25,
+            "W3": 0.25
+          }
+        },
+        "language_hi": {
+          "welcome_message": {
+            "W1": 0.5,
+            "W2": 0.25,
+            "W3": 0.25
+          }
+        }
+      },
+      "cohorts": [
+        {
+          "id": "language_hi",
+          "where": {
+            "lang": [
+              "hi"
+            ]
+          }
+        }
+      ],
+      "prompt_version": "P1",
+      "schedule": {
+        "hour_weights": {},
+        "lead_preferred_hour": {}
+      }
+    }
+  },
+  "approval": "apr_00005",
+  "submitted": 8160,
+  "updated": 8295,
+  "authority": {
+    "approval_id": "apr_00005",
+    "approver": "simulated client approver; named identity not supplied"
+  },
+  "timeline": [
+    {
+      "id": 24,
+      "workflow": "ks_cancel",
+      "minute": 8160,
+      "kind": "proposal_created",
+      "payload": {
+        "dimensions": [
+          "welcome_message"
+        ],
+        "evidence": {
+          "alpha": 0.00625,
+          "follow_up": {
+            "new_population_observations": {
+              "connected": 295,
+              "dials": 1200,
+              "engaged": 153,
+              "flagged": 4
+            },
+            "prior_proposal_id": "ctl_96179b43b70948ac8ff70c5697948b3d",
+            "prior_status": "rejected",
+            "treatment_outcomes_claimed": false
+          },
+          "look": 2,
+          "results": {
+            "default": {
+              "W2": {
+                "guardrail": {
+                  "candidate_n": 2146,
+                  "candidate_people": 1632,
+                  "candidate_rate": 0.23438956197576888,
+                  "control_n": 4400,
+                  "control_people": 2580,
+                  "control_rate": 0.24954545454545454,
+                  "difference": -0.015155892569685664,
+                  "se": 0.011057552471195126
+                },
+                "guardrail_lower_bound": -0.0427744019105918,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 503,
+                  "candidate_people": 481,
+                  "candidate_rate": 0.48111332007952284,
+                  "control_n": 1098,
+                  "control_people": 991,
+                  "control_rate": 0.48360655737704916,
+                  "difference": -0.0024932372975263184,
+                  "se": 0.026931723541180334
+                },
+                "primary_lower_bound": -0.06976075062169304
+              },
+              "W3": {
+                "guardrail": {
+                  "candidate_n": 2128,
+                  "candidate_people": 1585,
+                  "candidate_rate": 0.2575187969924812,
+                  "control_n": 4400,
+                  "control_people": 2580,
+                  "control_rate": 0.24954545454545454,
+                  "difference": 0.00797334244702666,
+                  "se": 0.011556405242724891
+                },
+                "guardrail_lower_bound": -0.020891154192255155,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 548,
+                  "candidate_people": 522,
+                  "candidate_rate": 0.44525547445255476,
+                  "control_n": 1098,
+                  "control_people": 991,
+                  "control_rate": 0.48360655737704916,
+                  "difference": -0.038351082924494406,
+                  "se": 0.025984595854071958
+                },
+                "primary_lower_bound": -0.103252950239603
+              }
+            },
+            "language_hi": {
+              "W2": {
+                "guardrail": {
+                  "candidate_n": 3386,
+                  "candidate_people": 2574,
+                  "candidate_rate": 0.25191966922622566,
+                  "control_n": 6498,
+                  "control_people": 3884,
+                  "control_rate": 0.24530624807633117,
+                  "difference": 0.006613421149894494,
+                  "se": 0.009286897983269711
+                },
+                "guardrail_lower_bound": -0.016582514783227496,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 853,
+                  "candidate_people": 824,
+                  "candidate_rate": 0.5052754982415005,
+                  "control_n": 1594,
+                  "control_people": 1430,
+                  "control_rate": 0.48180677540777916,
+                  "difference": 0.023468722833721367,
+                  "se": 0.021443497604930552
+                },
+                "primary_lower_bound": -0.030090818524662298
+              },
+              "W3": {
+                "guardrail": {
+                  "candidate_n": 3242,
+                  "candidate_people": 2475,
+                  "candidate_rate": 0.24768661320172733,
+                  "control_n": 6498,
+                  "control_people": 3884,
+                  "control_rate": 0.24530624807633117,
+                  "difference": 0.002380365125396161,
+                  "se": 0.009337134718676712
+                },
+                "guardrail_lower_bound": -0.020941047376768503,
+                "passed": false,
+                "primary": {
+                  "candidate_n": 803,
+                  "candidate_people": 760,
+                  "candidate_rate": 0.43212951432129515,
+                  "control_n": 1594,
+                  "control_people": 1430,
+                  "control_rate": 0.48180677540777916,
+                  "difference": -0.049677261086484015,
+                  "se": 0.021496968005870313
+                },
+                "primary_lower_bound": -0.10337035575801394
+              }
+            }
+          }
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54"
+      }
+    },
+    {
+      "id": 25,
+      "workflow": "ks_cancel",
+      "minute": 8160,
+      "kind": "proposal_sending",
+      "payload": {
+        "detail": {
+          "auto_not_used": [
+            "shift:language_hi:welcome_message:0.5000",
+            "shift:default:welcome_message:0.5000",
+            "client_preference:human_for_agent_changes"
+          ]
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54"
+      }
+    },
+    {
+      "id": 26,
+      "workflow": "ks_cancel",
+      "minute": 8160,
+      "kind": "approval_submitted",
+      "payload": {
+        "approval_id": "apr_00005",
+        "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54"
+      }
+    },
+    {
+      "id": 27,
+      "workflow": "ks_cancel",
+      "minute": 8295,
+      "kind": "proposal_applying",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00005",
+          "remote_approval": {
+            "apply_by": "2027-01-09T19:50:00+05:30",
+            "approval_id": "apr_00005",
+            "base_version": 2,
+            "changed_dims": [
+              "welcome_message"
+            ],
+            "created_at": "2027-01-09T16:00:00+05:30",
+            "decided_at": "2027-01-09T17:50:00+05:30",
+            "expires_at": "2027-01-10T04:00:00+05:30",
+            "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54",
+            "reasons": [],
+            "status": "approved",
+            "workflow_id": "ks_cancel"
+          }
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54"
+      }
+    },
+    {
+      "id": 28,
+      "workflow": "ks_cancel",
+      "minute": 8295,
+      "kind": "proposal_applied",
+      "payload": {
+        "detail": {
+          "approval_id": "apr_00005",
+          "version": 3
+        },
+        "kind": "experiment_inconclusive_restore",
+        "proposal_id": "ctl_9d4012e7493949faaf2435cda4257d54"
+      }
+    }
+  ],
+  "before": {
+    "dials": 4800,
+    "connected": 1172,
+    "engaged": 574,
+    "pickup_rate": 0.24416666666666667,
+    "engagement_rate": 0.48976109215017066,
+    "from_minute": 6855,
+    "to_minute": 8295,
+    "causal_claim": false
+  },
+  "after": {
+    "dials": 4800,
+    "connected": 1119,
+    "engaged": 548,
+    "pickup_rate": 0.233125,
+    "engagement_rate": 0.4897229669347632,
+    "from_minute": 8295,
+    "to_minute": 9735,
+    "causal_claim": false
+  }
+}

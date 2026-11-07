@@ -1,12 +1,12 @@
 # Outcome-First Agent Loop — Submission
 
-**Name:** Anmol Lamba · **Date:** 6 November 2026 · **Hours actually spent:** 0.88 h AI-assisted implementation/evaluation elapsed through the timestamp in reports/work_session.json; independent human effort/review time not measured · **Language / storage:** Python / SQLite WAL
+**Name:** Anmol Lamba · **Date:** 7 November 2026 · **Hours actually spent:** Approximately 4 hours (estimated; AI-assisted implementation, testing and review) · **Language / storage:** Python / SQLite WAL
 
 ## 0. TL;DR
 
 HTTP-only controller with restart-safe ingestion, shared cohorts, governed experiments, caller-ID quarantine and validated prompt incident response.
-Public_01 concluded-lead rate improved 1.0% relative to baseline; public_02 improved 7.5% in the final recorded runs.
-Public_02 used 8/200 credits; the prompt fix took 1,545 simulated minutes from the supervisor edit, including approval delay.
+Public_01 concluded-lead rate improved 0.8% relative to baseline; public_02 improved 5.5% in the final recorded runs.
+Public_02 used 8/200 credits; the prompt fix took 1,590 simulated minutes from the supervisor edit, including approval delay.
 A real SIGKILL/restart recovered a pending approval with no duplicate applications and a complete event watermark.
 Per-person timing, joint welcome/voice optimisation, a polished frontend and production notification delivery are cut.
 
@@ -33,8 +33,8 @@ Per-person timing, joint welcome/voice optimisation, a polished frontend and pro
 | C3 | History bootstrap | Built | Baselines and cohort support before D0 | Faster precomputed feature aggregates |
 | C4 | Call-time optimisation | Cut | Sparse per-person evidence and selection bias; business capacity must remain intact | Randomised scheduling protocol and exposure analysis |
 | C5 | Caller-ID health | Partial | Detection, rotation, quarantine and verification built | Controlled re-entry/probing of quarantined IDs |
-| C6 | Welcome/voice experiments | Partial | Default voice engine; welcome is an alternative CLI mode, not a joint optimiser | Welcome end-to-end evidence and interaction design |
-| C7 | Promotion/decay rollback | Partial | Finite-look promotion and reference-based rollback implemented/tested | Public runs did not establish a conclusive promoted winner; broader empirical decay validation |
+| C6 | Welcome/voice experiments | Partial | Both single-dimension modes exercised end to end; not a joint optimiser | Joint interaction design and broader effectiveness evidence |
+| C7 | Promotion/decay rollback | Partial | Finite-look promotion exercised in the public_03 load run; reference-based rollback implemented/tested | Adverse decay through approved rollback still needs end-to-end evidence |
 | C8 | Hallucination response | Built, bounded | Suggest, validate, approve, apply and verify; escalate if unsafe or ambiguous | Production incident routing and alternative-fix recovery after engagement harm |
 | C9 | Governance | Built, narrow batching | Lifecycle, hours, rolling limits, stale bases, reconciliation and new-ID successors | General multi-intent batching/notification acknowledgement |
 | C10 | Proposal evidence | Built, bounded | Honest exposure upper bounds, exact diffs, transparent priority index | Better eligibility API and causal estimates where supported |
@@ -84,8 +84,6 @@ Accepted explicit cuts, low compute spend, measured scale and ownership document
 
 **Reply:** The implementation concentrates on five paths sharing durable evidence, deterministic statistics and governance. LLMs suggest prompt candidates only during supported safety incidents. I cut scheduling personalisation, joint welcome/voice optimisation and frontend polish. The submission includes load/recovery evidence, harmful as well as beneficial changes, rejected alternatives and a runbook. Production priorities are authoritative identity/policy integration, durable event ownership, paid-operation idempotency and shadow-mode validation before enabling a client workflow.
 
-These are draft submission replies, not messages sent externally.
-
 ## 4. Architecture
 
 ```mermaid
@@ -111,9 +109,9 @@ Modules separate HTTP, ingestion/storage, pure cohort/config rules, statistics, 
 
 **Winner:** Predeclare two information looks at N and 2N per arm. N uses historical rate, 80% target power, 15pp design MDE and Bonferroni alpha = 0.05 / (two looks × challengers × experimental cohorts), with a minimum 200 observations. This intentionally detects large effects first. Use the actual primary denominator, >=100 supported people per arm and person-clustered ratio-estimator standard errors. Promote only when the primary lower bound exceeds +1pp AND the guardrail lower bound exceeds minus the policy drop. No significant harm is not proof of noninferiority. Ties are deterministic. Spent looks/alpha survive restart and epoch changes. Recommendations can be re-proposed without another statistical test.
 
-**Calibration:** reports/statistical_calibration.json records 200 trials/case with repeated-person effects, three challengers and two looks: 1/200 null full passes (0.5%); 125/200 supported positive-effect full passes (62.5%); 0/200 full passes under a 15pp pickup harm. Primary-only positive power was 100%; the stricter guardrail costs power. This is fixture-specific asymptotic calibration, not an exact production error guarantee. The real public runs remained inconclusive for winner promotion; exploration is not labelled a win.
+**Calibration:** reports/statistical_calibration.json records 200 trials/case with repeated-person effects, three challengers and two looks: 1/200 null full passes (0.5%); 125/200 supported positive-effect full passes (62.5%); 0/200 full passes under a 15pp pickup harm. Primary-only positive power was 100%; the stricter guardrail costs power. This is fixture-specific asymptotic calibration, not an exact production error guarantee. Public_01/02 remained inconclusive for winner promotion; public_03 established one promotion. Exploration is not labelled a win.
 
-**Decay/rollback:** Promoted allocations keep 20% reference traffic. Non-overlapping 12-hour blocks require supported negative lift in two blocks before governed rollback. Early experiment harm is checked separately every six hours. Restore only the owned allocation dimension against current config. A prompt/caller-ID change starts a fresh evidence epoch without refreshing alpha. Supervisor changes to the experiment dimension/cohorts invalidate it. Public decay is not demonstrated because no conclusive winner was promoted; a repeated-window rollback and preserved-prompt regression test exercises the path.
+**Decay/rollback:** Promoted allocations keep 20% reference traffic. Non-overlapping 12-hour blocks require supported negative lift in two blocks before governed rollback. Early experiment harm is checked separately every six hours. Restore only the owned allocation dimension against current config. A prompt/caller-ID change starts a fresh evidence epoch without refreshing alpha. Supervisor changes to the experiment dimension/cohorts invalidate it. Public_03 promoted V4 on arav_cancel_2 at minute 2,115 and recorded seven decay checks, none adverse (the first lacked enough fresh evidence). An actual adverse decay through approved rollback remains unexercised end to end; a repeated-window rollback and preserved-prompt regression test exercises the decision path.
 
 **Call time/caller ID:** Timing is untouched. Caller-ID detection compares matching hours against history/recent prior days and peers where available. It requires >=200 fresh dials, >=400 baseline dials, a 3-SE drop and two distinct two-hour windows. Minimum practical drop is 5pp with peer support and 10pp without it. Rotation uses advertised alternatives; quarantined IDs cannot be silently reintroduced. Recovery checks are descriptive and can be superseded by another config epoch.
 
@@ -140,36 +138,35 @@ Recorded public_02 timeline (IST; D0 = 4 January 2027):
 | Event | Time | Evidence/authority |
 |---|---|---|
 | Caller ID flagged by world | D2 10:00 | Official grade onset; never a controller input |
-| Controller detects caller degradation | D2 14:00 | D2: 36/377 pickups versus historical 1,785/6,363; peer D1 109/423 |
-| Rotation applied | D2 14:45 | Human approval; quarantined ID has zero traffic from D3 onward in grade report |
-| Caller-ID recovery recorded | D2 18:00 | 278/1,200 pickups after rotation versus 145/800 before; no detected engagement deterioration |
+| Controller detects caller degradation | D2 14:00 | D2: 36/403 pickups versus historical 1,791/6,347; peer D1 120/397 |
+| Rotation applied | D2 15:30 | Human approval; quarantined ID has zero traffic from D3 onward in grade report |
+| Caller-ID recovery recorded | D2 19:00 | 273/1,200 pickups after rotation versus 156/800 before; no detected engagement deterioration |
 | Supervisor changes prompt | D3 11:30 | Observed config_changed event; preserved as its own authority |
-| Safety incident/proposal | D3 19:00 | 43 flags / 669 connected versus 225/16,439 baseline; validated pass 0.988 on 500 |
-| Request submitted | D4 11:00 | Kestrel's preference; maximum-latency cutoff prevents a late-night request |
-| Prompt fix applied | D4 13:15 | Same-workflow validation and human approval; onset-to-fix 1,545 min |
-| Verification recorded | D4 17:00 | 6 flags / 226 connected; engagement 118/226; no supported deterioration detected |
+| Safety detection, validation and request | D4 13:00 | 57 flags / 1,130 connected versus 225/16,439 baseline; validated pass 0.988 on 500 |
+| Prompt fix applied | D4 14:00 | Same-workflow validation and human approval; onset-to-fix 1,590 min |
+| Verification recorded | D4 17:00 | 4 flags / 220 connected; engagement 112/220; no supported deterioration detected |
 
-The official traffic-share report independently shows the suspect ID remained removed. Safety verification is not an engagement noninferiority proof. Approval timing dominates the prompt-fix delay; a production emergency response needs explicitly delegated authority rather than bypassing the boundary.
+The official traffic-share report independently shows the suspect ID remained removed. Safety verification is not an engagement noninferiority proof. Of the 1,590-minute prompt-fix delay, 1,530 minutes elapsed before detection and 60 minutes between detection/request and application. The detector's sustained-evidence gates reacted slowly in this trajectory; detection latency needs calibration on representative incident traffic. Faster emergency mitigation also needs explicitly delegated authority.
 
 ## 8. Scale
 
-The complete five-day public_03 run processed 9,737,471 events: 5,537,379 historical plus 4,200,092 live/control events. See reports/public_03_metrics.json and reports/public_03.md.
+The complete five-day public_03 run processed 9,737,474 events: 5,537,379 historical plus 4,200,095 live/control events. See reports/public_03_metrics.json and reports/public_03.md.
 
 | Measure | Recorded result |
 |---|---:|
 | CPU allocation | Four-core Linux affinity; host exposes 16 CPUs |
-| Ingest throughput (HTTP/parse/store/rollups, including bootstrap) | 33,241 events/sec |
-| Controller bootstrap wall time | 178.39 s |
-| Simulator history generation/startup | 51.95 s |
-| Full controller-driven five days, including controller bootstrap and simulator advance time | 412.80 s |
-| Mean per simulated day, amortising controller bootstrap | 82.56 s |
-| Day processing excluding bootstrap | 57.30, 39.86, 40.69, 45.35, 50.96 s |
-| First day including both simulator and controller bootstraps | 287.64 s; below the 600-second target |
-| Peak controller RSS | 129,980 KiB (126.93 MiB) |
-| Sampled combined simulator/controller RSS | 606,204 KiB (592.00 MiB) |
-| Event-to-decision simulated lag p50 / p95 / max | 30 / 57 / 60 min |
-| Maximum decision-cycle wall time | 14.48 s, dominated by initial history/cohort work |
-| SQLite DB size | 2,184,790,016 bytes |
+| Ingest throughput (HTTP/parse/store/rollups, including bootstrap) | 32,921 events/sec |
+| Controller bootstrap wall time | 177.60 s |
+| Simulator history generation/startup | 46.91 s |
+| Full controller-driven five days, including controller bootstrap and simulator advance time | 402.27 s |
+| Mean per simulated day, amortising controller bootstrap | 80.45 s |
+| Day processing excluding bootstrap | 58.66, 43.81, 36.77, 40.29, 44.79 s |
+| First day including both simulator and controller bootstraps | 283.18 s; below the 600-second target |
+| Peak controller RSS | 126,872 KiB (123.90 MiB) |
+| Sampled combined simulator/controller RSS | 584,832 KiB (571.12 MiB) |
+| Event-to-decision simulated lag p50 / p95 / max | 30 / 58 / 60 min |
+| Maximum decision-cycle wall time | 11.85 s, dominated by initial history/cohort work |
+| SQLite DB size | 2,184,712,192 bytes |
 | Final integrity / duplicates / missing feature joins | ok / 0 / 0 |
 
 All load measures separate controller RSS from sampled combined RSS. Four-core affinity is imposed; an 8-GB cgroup limit is not. The simulator waits while the controller computes, so simulated event-to-decision lag is a cadence/evidence-freshness measure, not a paced production-stream latency benchmark. The latter is not built. Full history bootstrap is measured separately from day processing.
@@ -189,22 +186,22 @@ GET/server failures use bounded backoff; mutation failures reconcile before retr
 The inspect CLI and local API read our SQLite store, not simulator files. For example:
 
 ```bash
-python -m controller.inspect --db .controller-state/public_02_verified/state.db why \
-  --workflow ks_cancel --at 2027-01-08T13:15:00+05:30
+python -m controller.inspect --db .controller-state/review_incidents_v1/state.db why \
+  --workflow ks_cancel --at 2027-01-08T14:00:00+05:30
 ```
 
-Recorded output is in reports/public_02_audit.json. Its essential chain is: sustained QA rise -> validation val_00001, pass rate 0.988/500 -> stored full prompt diff and exposure replay -> client approval -> applied version 5 -> incident verification. Full raw IDs/approval details and descriptive before/after windows are preserved in the JSON. For an exact supervisor edit, the command identifies the supervisor and explicitly reports rationale as unavailable. Exposure queries show actual call variants and separate prompt authority from campaign-locked agent config.
+Recorded output is in reports/public_02_audit.json. Its essential chain is: sustained QA rise -> validation val_00001, pass rate 0.988 on 500 conversations -> stored full prompt diff and exposure replay -> client approval -> applied version 5 -> incident verification. Full raw IDs/approval details and descriptive before/after windows are preserved in the JSON. For an exact supervisor edit, the command identifies the supervisor and explicitly reports rationale as unavailable. Exposure queries show actual call variants and separate prompt authority from campaign-locked agent config.
 
 Excerpt from that actual query output:
 
 ```json
 {
-  "id": "ctl_a54c7c84a6ff40c49375d7f1176720c3",
+  "id": "ctl_3f52058c8dc141cbb6d5aa8957dfa93f",
   "kind": "hallucination_fix",
   "status": "applied",
   "base": 4,
-  "approval": "apr_00004",
-  "updated": 6555
+  "approval": "apr_00005",
+  "updated": 6600
 }
 ```
 
@@ -218,23 +215,27 @@ Public_01:
 
 | workflow | conclusion rate | Δ | pickup | Δ | engagement | Δ | engagement gap captured | hallucinated calls (base) |
 |---|---|---|---|---|---|---|---|---|
-| ks_cancel | 0.351 | +5.5% | 0.241 | +1.0% | 0.508 | +3.4% | 10% | 54 (47) |
-| nw_kyc | 0.356 | -2.2% | 0.232 | -4.2% | 0.604 | +2.2% | 0% | 26 (21) |
-| nw_renewal | 0.411 | -2.0% | 0.259 | -1.5% | 0.542 | -0.7% | 1% | 47 (42) |
-| ALL | 0.372 | +1.0% | 0.245 | -0.9% | 0.538 | +1.5% | 4% | 127 (110) |
+| ks_cancel | 0.345 | +3.5% | 0.240 | +0.8% | 0.501 | +2.2% | 10% | 51 (47) |
+| nw_kyc | 0.360 | -0.9% | 0.241 | -0.5% | 0.588 | -0.4% | 0% | 27 (21) |
+| nw_renewal | 0.415 | -1.1% | 0.261 | -0.8% | 0.544 | -0.3% | 1% | 49 (42) |
+| ALL | 0.372 | +0.8% | 0.248 | -0.0% | 0.533 | +0.6% | 4% | 127 (110) |
 
 Public_02:
 
 | workflow | conclusion rate | Δ | pickup | Δ | engagement | Δ | engagement gap captured | hallucinated calls (base) |
 |---|---|---|---|---|---|---|---|---|
-| ks_cancel | 0.300 | +21.2% | 0.205 | +11.6% | 0.507 | +6.3% | 35% | 126 (330) |
-| nw_kyc | 0.377 | +0.6% | 0.243 | +0.3% | 0.599 | +1.2% | 0% | 36 (31) |
-| nw_renewal | 0.429 | +0.6% | 0.262 | -0.0% | 0.549 | +0.2% | 1% | 54 (55) |
-| ALL | 0.359 | +7.5% | 0.232 | +4.5% | 0.542 | +2.2% | 14% | 216 (416) |
+| ks_cancel | 0.290 | +17.1% | 0.203 | +10.4% | 0.501 | +5.1% | 35% | 94 (330) |
+| nw_kyc | 0.389 | +3.9% | 0.248 | +2.6% | 0.597 | +0.8% | 0% | 33 (31) |
+| nw_renewal | 0.415 | -2.8% | 0.260 | -0.8% | 0.538 | -1.9% | 0% | 53 (55) |
+| ALL | 0.353 | +5.5% | 0.231 | +4.2% | 0.535 | +0.9% | 14% | 180 (416) |
 
-Public_01 applied two changes: one beneficial and one neutral; one request was rejected by judgement. No harmful change was applied in that final run. A local inconclusive-restore draft remains visible at scenario end; it is not counted as applied evidence. An earlier development run showed that reverting after an inconclusive test can discard a slightly beneficial mixed allocation: “no conclusive winner” does not mean “reference is best.” This remains a stopping-policy trade-off. Public_02 applied four changes: two beneficial, one neutral, one harmful. Initial Northwind exploration was harmful under hidden truth, even though permission was valid; bounded exploration can still have real cost. The caller-ID and prompt fixes were beneficial. No applied change bought lift by bypassing governance.
+Public_01 applied two changes: one beneficial and one neutral; one request was rejected by judgement. No harmful change was applied. Both voice experiments remained inconclusive. Public_02 applied four changes: two beneficial, one neutral, one harmful. Initial Northwind exploration was harmful under hidden truth, even though permission was valid; bounded exploration can still have real cost. The caller-ID and prompt fixes were beneficial. No applied change bought lift by bypassing governance.
 
-Untouched workflows also differ from baseline across simulator trajectories. Do not attribute every aggregate delta to a specific action. Public_01/02 produced no expired/lapsed attempts or auto-apply denials in these final records; expiry/lapse/auto recovery are covered by tests. Next improvement: a predeclared, adequately powered cohort experiment with a lower design MDE and explicit exploration cost, rather than weakening confidence gates to improve a public score.
+Untouched workflows also differ from baseline across simulator trajectories. Do not attribute every aggregate delta to a specific action. Public_01/02 produced no expired/lapsed attempts or auto-apply denials; expiry/lapse/auto recovery have test coverage. The next statistical improvement is a predeclared, adequately powered cohort experiment with a lower design MDE and explicit exploration cost. Reverting after an inconclusive test can discard a beneficial mixed allocation: inconclusive does not establish that the reference is best.
+
+The separate welcome-message evaluation completed public_01 with +0.4% relative conclusion rate. Its four applications were two beneficial, one neutral and one harmful. Both experiments remained inconclusive and restored their reference allocations through approval. See reports/welcome_message.md. Public_03 demonstrated one approved voice promotion followed by seven decay checks; adverse decay through approved rollback remains unexercised end to end.
+
+All four submitted evaluations completed with source-matching watermarks, clean SQLite integrity, zero duplicate applications, zero unjoined calls and zero pending remote-intent states. reports/provenance.json records their exact evaluation names. These are the latest completed verification runs, selected by completion rather than highest outcome lift. Superseded reports and the interrupted welcome evaluation are archived locally outside the submitted evidence set.
 
 ## 12. Trade-offs & rejected alternatives
 
@@ -253,8 +254,8 @@ Untouched workflows also differ from baseline across simulator trajectories. Do 
 
 ## 13. Known weaknesses
 
-- Large-effect design and conservative guardrail noninferiority limit winner power; neither public run demonstrated a conclusive promotion/real decay rollback. The path has deterministic synthetic/unit evidence, not a production effectiveness claim.
-- Exploration can harm a cohort even with valid permission. Existing safety stops need enough fresh observations to react, and approvals can delay mitigation overnight.
+- Large-effect design and conservative guardrail noninferiority limit winner power. The public_03 load run demonstrates promotion and monitoring, but adverse decay through approved rollback still has decision-level regression evidence rather than a complete live integration run. Neither is a production effectiveness guarantee.
+- Exploration can harm a cohort even with valid permission. Existing safety stops need enough fresh observations to react, and detection or approvals can delay mitigation.
 - Language segmentation misses other feature interactions. Engagement is conditional on pickup; repeated-person clustering does not eliminate all survivor/selection effects.
 - Detector checks use approximate uncertainty and imperfect QA labels. Matching hours/peers reduces confounding but is not a causal identification strategy or globally controlled false-alert rate.
 - Safety verification detects deterioration; it does not prove engagement noninferiority. An engagement-harming safe fix is escalated rather than automatically searching indefinitely.
