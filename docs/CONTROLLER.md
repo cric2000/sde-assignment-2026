@@ -1,6 +1,6 @@
 # Running and extending the controller
 
-The original README is the assignment brief. This guide describes the implementation; SUBMISSION.md records scope, evidence and trade-offs. The controller uses only HTTP to interact with the simulator. Evaluation scripts start the official simulator/grader separately.
+The main [README](../README.md) provides the reviewer quickstart; [ASSIGNMENT.md](../ASSIGNMENT.md) preserves the original assignment brief. This guide describes the implementation; SUBMISSION.md records scope, evidence and trade-offs. The controller uses only HTTP to interact with the simulator. Evaluation scripts start the official simulator/grader separately.
 
 ## Setup and run
 

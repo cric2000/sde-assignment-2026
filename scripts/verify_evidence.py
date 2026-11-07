@@ -65,7 +65,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true", help="also check the retained incident DB and localhost API")
     args = parser.parse_args()
-    required = ("run.sh", "requirements.txt", "requirements-tested.txt", "SUBMISSION.md", "SUBMISSION_TEMPLATE.md",
+    required = ("README.md", "ASSIGNMENT.md", "run.sh", "requirements.txt", "requirements-tested.txt", "SUBMISSION.md", "SUBMISSION_TEMPLATE.md",
                 "docs/CONTROLLER.md", "docs/RUNBOOK.md", "reports/README.md", "reports/crash_recovery.md")
     assert all((ROOT / path).is_file() for path in required), "missing required submission file"
     assert os.access(ROOT / "run.sh", os.X_OK), "run.sh must be executable"
@@ -93,7 +93,7 @@ def main():
                 assert not any(n.name == "sim" or n.name.startswith("sim.") for n in node.names)
             if isinstance(node, ast.ImportFrom):
                 assert not (node.module or "").startswith("sim")
-    documents = [ROOT / "README.md", ROOT / "SUBMISSION.md", *(ROOT / "docs").glob("*.md"),
+    documents = [ROOT / "README.md", ROOT / "ASSIGNMENT.md", ROOT / "SUBMISSION.md", *(ROOT / "docs").glob("*.md"),
                  *(ROOT / "reports").glob("*.md")]
     for path in documents:
         for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
